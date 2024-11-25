@@ -4,12 +4,14 @@
 \alias{negbin_p2t}
 \title{Probability of coalescence of two lineages when the offspring distribution is Negative-Binomial}
 \usage{
-negbin_p2t(nt, r)
+negbin_p2t(nt, r, log = F)
 }
 \arguments{
 \item{nt}{Population size at time t}
 
 \item{r}{Dispersion parameter of Negative-Binomial}
+
+\item{log}{Whether to return the log of the probability}
 }
 \value{
 Probability of coalescence

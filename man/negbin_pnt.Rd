@@ -4,7 +4,7 @@
 \alias{negbin_pnt}
 \title{Probability of coalescence of n lineages when the offspring distribution is Negative-Binomial}
 \usage{
-negbin_pnt(n, nt, r)
+negbin_pnt(n, nt, r, log = F)
 }
 \arguments{
 \item{n}{Number of lineages}
@@ -12,6 +12,8 @@ negbin_pnt(n, nt, r)
 \item{nt}{Population size at time t}
 
 \item{r}{Dispersion parameter of Negative-Binomial}
+
+\item{log}{Whether to return the log of the probability}
 }
 \value{
 Probability of coalescence

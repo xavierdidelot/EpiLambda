@@ -4,10 +4,12 @@
 \alias{pois_p2t}
 \title{Probability of coalescence of two lineages when the offspring distribution is Poisson}
 \usage{
-pois_p2t(nt)
+pois_p2t(nt, log = F)
 }
 \arguments{
 \item{nt}{Population size at time t}
+
+\item{log}{Whether to return the log of the probability}
 }
 \value{
 Probability of coalescence
