@@ -62,7 +62,7 @@ Work by Li and Fraser \citep{Li2017,Fraser2017}.
 Lambda-coalescent models \citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,donnellyParticleRepresentationsMeasureValued1999}. 
 Beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} is a specific type of Lambda-coalescent. 
 Was used in \citep{Hoscheit2019} and \citep{Menardo2021}. 
-David's paper \citep{Helekal2024}.
+David's paper on inference of multiple mergers while dating a pathogen phylogeny \citep{Helekal2024}.
 
 \section{Coalescence probabilities}
 
@@ -92,7 +92,7 @@ The probability of coalescence for $n$ lines is:
 p_{n,t}=\frac{1}{N_t^{n-1}}
 \end{equation}
 
-\subsection{NegBin case}
+\subsection{Negative-Binomial case}
 
 Here the offspring distribution is Negative-Binomial with mean $R_t$ and variance $v_t$.
 The parameters of this distribution are 
@@ -112,6 +112,7 @@ p_{n,t}=\frac{\prod_{i=1}^{n-1}r+i}{\prod_{i=1}^{n-1}N_t r+i}
 
 \subsection{Example}
 
+Let the offspring distribution have a mean of $R_t=2$. In the Poisson case the offspring distribution is Poisson(2). We consider NegBin cases with the same mean and varying dispersion parameters $r$. When $r$ is high the dispersion is low and the NegBin behaves almost like a Poisson.
 See Figure \ref{fig:probs}.
 
 \begin{figure}[t!]
@@ -121,6 +122,37 @@ See Figure \ref{fig:probs}.
 \caption{(A) Offspring distribution. (B) Probability of coalescence.
 \label{fig:probs}}
 \end{figure}
+
+\section{Lambda-coalescent}
+
+A lambda-coalescent model is defined by a probability measure 
+$\Lambda(\mathrm{d} x)$ on the interval $[0,1]$, from which we can deduce
+the rate $\lambda_{n,k}$ at which any subset of $k$ lineages within a set of $n$ observed lineages 
+coalesce:
+
+\begin{equation}
+    \lambda_{n,k} = \int_{0}^{1}{x^{k-2}(1-x)^{n-k}\,\Lambda(\mathrm{d} x)}
+\end{equation}
+
+\subsection{Beta-coalescent}
+
+Let the Beta function be denoted as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$.
+The Beta$(2-\alpha,\alpha)$-coalescent model \citep{schweinsbergCoalescentProcessesObtained2003}
+has a single parameter $\alpha \in [0,2]$ and is defined as:
+
+\begin{equation}
+\Lambda(\mathrm{d}x)=\frac{x^{1-\alpha}(1-x)^{\alpha-1}}{\mathrm{B}(2-\alpha,2)}\mathrm{d}x
+\end{equation}
+
+from which we can deduce that:
+
+\begin{equation}
+\lambda_{n,k}=\frac{\mathrm{B}(k-\alpha,n-k+\alpha)}{\mathrm{B}(2-\alpha,\alpha)}
+\end{equation}
+
+Special cases include $\alpha=2$ corresponding to the Kingman coalescent,
+$\alpha=1$ which is known as the Bolthausen-Sznitman coalescent
+and $\alpha=0$ for which the phylogeny is always star-shaped.
 
 \section{Implementation}
 
