@@ -1,0 +1,50 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/"
+)
+set.seed(0)
+```
+
+# Introduction
+
+The aim of this package is to implement the epidemic lambda-coalescent model.
+
+## Installation
+
+You can install EpiLambda from github with:
+
+```{r gh-installation, eval = FALSE}
+devtools::install_github("xavierdidelot/EpiLambda")
+```
+
+The package can then be loaded using:
+```{r}
+library(EpiLambda)
+```
+
+## Example
+
+Consider that the offspring distribution is Negative-Binomial with dispersion parameter $r=0.5$.
+The population size at time $t$ is $N_t=10$. 
+The probability that $n=5$ lines existing at time $t+1$ coalesce together at time $t$ is given by:
+
+```{r}
+negbin_pnt(n=5,nt=10,r=0.5)
+```
+
+## More information and getting help
+
+For more detailed examples of how to use EpiLambda, see the vignettes [here](https://github.com/xavierdidelot/EpiLambda/tree/master/vignettes).
+See also the help included in the package using the R command
+`help(package='EpiLambda')`. 
+
+If you have any problem or question please create an issue [here](https://github.com/xavierdidelot/EpiLambda/issues) 
+or get in touch by emailing `xavier.didelot@gmail.com`

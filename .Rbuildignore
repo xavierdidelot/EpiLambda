@@ -1,0 +1,4 @@
+^.*\.Rproj$
+^run$
+^README\.Rmd$
+^draft$
