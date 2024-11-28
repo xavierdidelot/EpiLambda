@@ -9,6 +9,8 @@ compare_simu(
   vt = 10,
   nt = 10,
   nt1 = 20,
+  n = 15,
+  type = "inclusive",
   nrep = 1000,
   method = "multinomial"
 )
@@ -21,6 +23,10 @@ compare_simu(
 \item{nt}{Population size at time t}
 
 \item{nt1}{Population size at time t+1}
+
+\item{n}{Number of observed lineages}
+
+\item{type}{Either 'inclusive' or 'exclusive'}
 
 \item{nrep}{Number of repeats to simulate}
 

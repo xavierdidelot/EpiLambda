@@ -7,7 +7,7 @@
 negbin_inclusive(k, nt, r, log = F)
 }
 \arguments{
-\item{k}{Number of lineages}
+\item{k}{Number of lineages to coalesce}
 
 \item{nt}{Population size at time t}
 
