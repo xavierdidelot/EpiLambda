@@ -68,46 +68,46 @@ David's paper on inference of multiple mergers while dating a pathogen phylogeny
 
 \subsection{General case}
 
-Discrete time $t$. Non-overlapping generations of infected individuals. At time $t$ there are $N_t$ infected individuals. Each of them creates a number $k_{t,i}$ of secondary infections at time $t+1$, following the offspring distribution $\alpha_t(k)$. The mean of this distribution is the basic reproduction number $R_t$ and the variance is $v_t$. We have:
+Discrete time $t$. Non-overlapping generations of infected individuals. At time $t$ there are $N_t$ infected individuals. Each of them creates a number $s_{t,i}$ of secondary infections at time $t+1$, following the offspring distribution $\alpha_t(s)$. The mean of this distribution is the basic reproduction number $R_t$ and the variance is $V_t$. We have:
 
 \begin{equation}
-N_{t+1}=\sum_{i=1}^{N_t} k_{t,i}
+N_{t+1}=\sum_{i=1}^{N_t} s_{t,i}
 \label{eq:summation}
 \end{equation}
 
-Let $p_{n,t}$ be the probability that $n$ individuals at time $t+1$ have the same infector at time $t$.
+Let $p_{k,t}$ be the probability that $k$ individuals at time $t+1$ have the same infector at time $t$.
 
 \subsection{Poisson case}
 
 Here the offspring distribution is Poisson($R_t$).
 
-The probability of coalescence for two lines is:
+The inclusive probability of coalescence for two lines is:
 \begin{equation}
 p_{2,t}=\frac{1}{N_t}
 \end{equation}
 
-The probability of coalescence for $n$ lines is:
+The inclusive probability of coalescence for $n$ lines is:
 
 \begin{equation}
-p_{n,t}=\frac{1}{N_t^{n-1}}
+p_{k,t}=\frac{1}{N_t^{k-1}}
 \end{equation}
 
 \subsection{Negative-Binomial case}
 
-Here the offspring distribution is Negative-Binomial with mean $R_t$ and variance $v_t$.
+Here the offspring distribution is Negative-Binomial with mean $R_t$ and variance $V_t$.
 The parameters of this distribution are 
-$r=R_t^2/(v_t-R_t)$ and $p=R_t/v_t$.
+$r=R_t^2/(V_t-R_t)$ and $p=R_t/V_t$.
 
-The probability of coalescence for two lines is:
+The inclusive probability of coalescence for two lines is:
 
 \begin{equation}
 p_{2,t}=\frac{r+1}{N_t r+1}
 \end{equation}
 
-The probability of coalescence for $n$ lines is:
+The inclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
-p_{n,t}=\frac{\prod_{i=1}^{n-1}r+i}{\prod_{i=1}^{n-1}N_t r+i}
+p_{k,t}=\prod_{i=1}^{k-1}\frac{r+i}{N_t r+i}
 \end{equation}
 
 \subsection{Example}
@@ -119,7 +119,7 @@ See Figure \ref{fig:probs}.
 \begin{center}
 \includegraphics[width=15cm]{../run/figure.pdf}
 \end{center}
-\caption{(A) Offspring distribution. (B) Probability of coalescence.
+\caption{(A) Offspring distribution. (B) Inclusive probability of coalescence. (C) Exclusive probability of coalescence.
 \label{fig:probs}}
 \end{figure}
 

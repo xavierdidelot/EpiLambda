@@ -25,9 +25,20 @@ for (i in 1:length(rs)) {
 data$Distribution=factor(data$Distribution,levels=unique(data$Distribution))#forces order to remain as input
 plot2<-ggplot(data, aes(x=x)) +
   geom_line(aes(y = y, colour = Distribution)) + geom_point(aes(y=y,colour=Distribution))+
-  xlab('Size of multimerger event')+ylab('Probability') + scale_y_log10()
+  xlab('Size of multimerger event')+ylab('Inclusive Probability') + scale_y_log10()
 
-pdf('figure.pdf',10,5)
-plot1+plot2+plot_layout(ncol = 2, nrow = 1, guides = "collect")+plot_annotation(tag_levels = 'A')
+data=data.frame()
+v=sapply(2:10, function(k) pois_exclusive(k,n=15,nt=nt))
+data=rbind(data,data.frame(x=2:10,y=v,Distribution='Poisson'))
+for (i in 1:length(rs)) {
+  v=sapply(2:10, function(k) negbin_exclusive(k,n=15,nt=nt,r=rs[i]))
+  data=rbind(data,data.frame(x=2:10,y=v,Distribution=paste0('NegBin(r=',rs[i],')')))}
+data$Distribution=factor(data$Distribution,levels=unique(data$Distribution))#forces order to remain as input
+plot3<-ggplot(data, aes(x=x)) +
+  geom_line(aes(y = y, colour = Distribution)) + geom_point(aes(y=y,colour=Distribution))+
+  xlab('Size of multimerger event')+ylab('Exclusive Probability') + scale_y_log10()
+
+pdf('figure.pdf',7,7)
+plot1+plot2+plot3+guide_area()+plot_layout(ncol = 2, nrow = 2, guides = "collect")+plot_annotation(tag_levels = 'A')
 dev.off()
 system('open figure.pdf')
