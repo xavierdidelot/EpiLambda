@@ -17,10 +17,10 @@ plot1<-ggplot(data, aes(x=x)) +
 
 nt=10
 data=data.frame()
-v=sapply(2:10, function(n) pois_pnt(n,nt=nt))
+v=sapply(2:10, function(k) pois_inclusive(k,nt=nt))
 data=rbind(data,data.frame(x=2:10,y=v,Distribution='Poisson'))
 for (i in 1:length(rs)) {
-  v=sapply(2:10, function(n) negbin_pnt(n,nt=nt,r=rs[i]))
+  v=sapply(2:10, function(k) negbin_inclusive(k,nt=nt,r=rs[i]))
   data=rbind(data,data.frame(x=2:10,y=v,Distribution=paste0('NegBin(r=',rs[i],')')))}
 data$Distribution=factor(data$Distribution,levels=unique(data$Distribution))#forces order to remain as input
 plot2<-ggplot(data, aes(x=x)) +
