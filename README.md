@@ -25,11 +25,11 @@ library(EpiLambda)
 
 Consider that the offspring distribution is Negative-Binomial with
 dispersion parameter $r=0.5$. The population size at time $t$ is
-$N_t=10$. The probability that $n=5$ lines existing at time $t+1$
+$N_t=10$. The probability that $k=5$ lines existing at time $t+1$
 coalesce together at time $t$ is given by:
 
 ``` r
-negbin_pnt(n=5,nt=10,r=0.5)
+negbin_inclusive(k=5,nt=10,r=0.5)
 #> [1] 0.01953125
 ```
 
