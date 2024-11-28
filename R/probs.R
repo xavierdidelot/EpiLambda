@@ -49,3 +49,20 @@ negbin_inclusive=function(k,nt,r,log=F) {
   else
     return(sum(log(r+seq(1,k-1)))-sum(log(nt*r+seq(1,k-1))))
 }
+
+#' Exclusive probability of coalescence of k lineages when the offspring distribution is Negative-Binomial
+#'
+#' @param k Number of lineages to coalesce
+#' @param n Number of observed lineages
+#' @param nt Population size at time t
+#' @param r Dispersion parameter of Negative-Binomial
+#' @param log Whether to return the log of the probability
+#'
+#' @return Probability of coalescence
+#' @export
+#'
+negbin_exclusive=function(k,n,nt,r,log=F) {
+  if (k==1) p=prod(r+seq(0,n-2))/prod(nt*r+seq(1,n-1)) else
+  p=prod(r+seq(1,k-1))*r^(k<n)*(r+k-1)^max(0,n-k-1)/prod(nt*r+seq(1,n-1))
+  if (log==F) return(p) else return(log(p))
+}

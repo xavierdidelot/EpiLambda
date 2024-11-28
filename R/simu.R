@@ -70,7 +70,7 @@ compare_simu=function(rt=1.5,vt=10,nt=10,nt1=20,n=15,type='inclusive',nrep=1e3,m
     if (rt==vt) p=pois_exclusive(1:n,n,nt)
     else {
       r=rt^2/(vt-rt)
-      p=sapply(1:nt1,function(k) negbin_exclusive(k,n,nt,r))
+      p=sapply(1:n,function(k) negbin_exclusive(k,n,nt,r))
     }
   }
 
