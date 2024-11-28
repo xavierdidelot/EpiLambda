@@ -62,7 +62,11 @@ negbin_inclusive=function(k,nt,r,log=F) {
 #' @export
 #'
 negbin_exclusive=function(k,n,nt,r,log=F) {
-  p=prod(r + 1:(k-1)) * prod((nt-1) * r + 1:(n-k) - 1) / prod(nt * r + 1:(n-1))
+  if (k == 1){
+    p=prod((nt-1) * r + 1:(n-1) - 1) / prod(nt * r + 1:(n-1))
+  } else {
+    p=prod(r + 0:(k-1)) * prod((nt-1) * r + 0:(n-k-1)) / prod(nt * r + 0:(n-1))
+  }
 
   if (log) return(log(p))
   else return(p)
