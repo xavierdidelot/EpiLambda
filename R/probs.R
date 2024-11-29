@@ -44,9 +44,9 @@ pois_exclusive=function(k,n,nt,log=F) {
 negbin_inclusive=function(k,nt,r,log=F) {
   #prod(r+seq(1,k-1))/prod(nt*r+seq(1,k-1))
   if (log==F)
-    return(gamma(nt*r+1)*gamma(r+k)/gamma(r+1)/gamma(nt*r+k))
+    return(beta(nt*r+1,r+k)/beta(r+1,nt*r+k))
   else
-    return(lgamma(nt*r+1)+lgamma(r+k)-lgamma(r+1)-lgamma(nt*r+k))
+    return(lbeta(nt*r+1,r+k)-lbeta(r+1,nt*r+k))
 }
 
 #' Exclusive probability of coalescence of k lineages when the offspring distribution is Negative-Binomial
