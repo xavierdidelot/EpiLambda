@@ -42,12 +42,11 @@ pois_exclusive=function(k,n,nt,log=F) {
 #' @export
 #'
 negbin_inclusive=function(k,nt,r,log=F) {
-  if (k==1 && log==F) return(1)
-  if (k==1 && log==T) return(0)
+  #prod(r+seq(1,k-1))/prod(nt*r+seq(1,k-1))
   if (log==F)
-    return(prod(r+seq(1,k-1))/prod(nt*r+seq(1,k-1)))
+    return(gamma(nt*r+1)*gamma(r+k)/gamma(r+1)/gamma(nt*r+k))
   else
-    return(sum(log(r+seq(1,k-1)))-sum(log(nt*r+seq(1,k-1))))
+    return(lgamma(nt*r+1)+lgamma(r+k)-lgamma(r+1)-lgamma(nt*r+k))
 }
 
 #' Exclusive probability of coalescence of k lineages when the offspring distribution is Negative-Binomial
@@ -63,8 +62,8 @@ negbin_inclusive=function(k,nt,r,log=F) {
 #'
 negbin_exclusive=function(k,n,nt,r,log=F) {
   # p=nt * prod(r + 0:(k-1)) * prod((nt-1) * r + 0:(n-k-1)) / prod(nt * r + 0:(n-1))
-  p=nt * beta(k+r, n-k+(nt-1)*r) / beta(r, (nt-1)*r)
-
-  if (log) return(log(p))
-  else return(p)
+  if (log==F)
+    return(nt * beta(k+r, n-k+(nt-1)*r) / beta(r, (nt-1)*r))
+  else
+    return(log(nt) + lbeta(k+r, n-k+(nt-1)*r) - lbeta(r, (nt-1)*r))
 }
