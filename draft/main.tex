@@ -90,13 +90,15 @@ Inclusive coalescence probability $p_{k,t}(N_t, N_{t+1})$ is the probability tha
 Given full information about offspring counts from individuals in generation $t$ ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$, we have
 
 {\color{red} Don't use all of these: -Ian}
+{\allowdisplaybreaks
 	\begin{align}
 		p_{k,t}({\bf s}_t, N_t)
 			& = \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \\
-			& = \sum_{i=1}^{N_t} \frac{s_{t,i}! (N_{t+1}-k)!}{(s_{t,i}-k)! N_{t+1}!} \\
+			& = \sum_{i=1}^{N_t} \frac{s_{t,i}!}{(s_{t,i}-k)!} \frac{(N_{t+1}-k)!}{N_{t+1}!} \\
 			& = \sum_{i=1}^{N_t} \frac{\Gamma(s_{t,i}+1) \Gamma(N_{t+1}-k+1)}{\Gamma(s_{t,i}-k+1) \Gamma(N_{t+1})} \\
 			& = \sum_{i=1}^{N_t} \frac{s_{t,i} (s_{t,i} - 1) \dots (s_{t,i} - k + 1)}{N_{t+1} (N_{t+1} - 1) \dots (N_{t+1} - k+1)}.
 	\end{align}
+}
 
 Full information $\{s_{t,i}\}$ yields the population size $N_{t+1}$ but is not feasible to observe in practice.
 We can instead express the inclusive coalescence probability conditioning on the next population size $N_{t+1}$ by summing over possible offspring counts ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$ conditional on the total generation size
@@ -105,14 +107,15 @@ We can instead express the inclusive coalescence probability conditioning on the
 	To-do/To-discuss:
 	\begin{itemize}
 		\item Almost certainly should be an appendix not a main-body derivation, doesn't fundamentally change anything but I think this looks horrific
-		\item Sum subscripts over ${\bf s}_t$ rather than ${\bf s}_t : ...$ (at least L1-3)? We have probability 0 if sum does not equal $N_{t+1}$ anyway
+		\item Sum subscripts over ${\bf s}_t \in \mathbb{N}_0^{N_t}$ rather than ${\bf s}_t : ...$ (c.f. exclusive probability derivation)? We have probability 0 if sum does not equal $N_{t+1}$ anyway
 		\item Change ${\bf s}_t \mapsto {\bf s}$ and $s_{t,i} \mapsto s_i$ for clarity/brevity? Should maintain $S_{t,i}$ etc. for consistent notation ($S_{t,i} = s_i$ etc.)
 		\item Define $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$ notation
 		\item Where to stop? Leave as conditional expectation of binomial coefficients, or convert to factorials etc? Factorials are slightly clearer that this is just a `falling factorial moment' computed from probability generating function
 	\end{itemize}
 }
 
-\begin{align}
+{\allowdisplaybreaks
+	\begin{align}
 	p_{k,t}(N_t, N_{t+1})
 		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] p_{k,t}({\bf s}_t, N_t) \\
 		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \\
@@ -123,12 +126,36 @@ We can instead express the inclusive coalescence probability conditioning on the
 			& \phantom{=}\qquad \times \underbrace{\sum_{{\bf s}_t^{-(1)} : \sum_{i=2}^{N_t} s_{i,t} = N_{t+1} - s_{1,t}} \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s_{1,t} \bigg]}_{=1} \\
 		& = \frac{N_t}{\binom{N_{t+1}}{k}} \mathbb{E}\bigg[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \\
 		& = N_t \frac{(N_{t+1} - k)!}{N_{t+1}!} \mathbb{E} \bigg[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]. \label{eq:GeneralInclusiveProb}
-\end{align}
+	\end{align}
+}
 
 The falling factorial moments $\mathbb{E} \big[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \big | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \big]$ in \eqref{eq:GeneralInclusiveProb} can be readily obtained by differentiating the probability generating function of $S_{t,1} | (\sum_{i=1}^{N_t} S_{t,i} = N_{t+1})$.
 
 \subsubsection*{Exclusive Coalescence Probability}
 
+Generally, we observe a sample of individuals from each generation rather than the entire population.
+In this case, we are interested in the exclusive coalescence probability $p_{nkt}(N_t, N_{t+1})$ that exactly $k$ individuals from a sample of $n$ arose from a common ancestor one generation in the past given knowlege of the total population sizes $N_t$ and $N_{t+1}$.
+
+Given full information about offspring counts of the parents of sampled individuals at the present, ${\bf x}_t = (x_{t,1}, \dots, x_{t,N_t})$, we have
+	\begin{align}
+		p_{nkt}({\bf x}_t, N_t)
+			& = \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \}\\
+			& = \sum_{i=1}^{N_t} \frac{x_{t,i}!}{(x_{t,i} - k)!} \frac{(n-k)!}{n!} \mathbb{I} \{ x_{t,i} = k \}.
+	\end{align}
+
+Similarly to the exclusive coalescence probability, we can use this to evaluate the exclusive probability given $N_t$ and $N_{t+1}$ by summing over possible parent offspring configurations (for $k \leq n$),
+
+{\allowdisplaybreaks
+	\begin{align}
+		p_{nkt}(N_t, N_{t+1})
+			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] p_{n,k,t} (N_t, N_{t+1}) \\
+			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \} \\
+			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \binom{x_{t,1}}{k} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \mathbb{I} \{x_{t,1} = k \} \\
+			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t^{-(1)} : \sum_{i=2}^n x_{t,i} = n-k} \binom{k}{k} \mathbb{P}\bigg[X_{t,1} = k, {\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \\
+			& = \frac{N_t}{\binom{n}{k}} \mathbb{P}[X_{t,1} = k \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \sum_{{\bf x}_t^{-(1)} : \sum_{i=2}^n x_{t,i} = n-k} \mathbb{P}\bigg[{\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n, X_{t,1} = k \bigg] \\
+			& = \frac{N_t}{\binom{n}{k}} \mathbb{P} \bigg[ X_{t,1} = k \bigg| \sum_{i=1}^{N_t} X_{i,t} = n \bigg]. \label{eq:GeneralExclusiveProb}
+	\end{align}
+}
 
 
 \subsection{Poisson case}
@@ -142,7 +169,8 @@ and
 	\[
 		S_{t,1} | (\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}) \sim \text{Binomial}(N_{t+1}, \frac{1}{N_t}).
 	\]
-Analogously to the Wright-Fisher model in which individuals select a parent uniformly at random from the previous generation, we find that the inclusive probability of coalescence for two lines is
+Analogously to the Wright-Fisher model, individuals select a parent uniformly at random from the previous generation.
+The inclusive probability of coalescence for two lines is
 %
 %The inclusive probability of coalescence for two lines is:
 \begin{equation}
@@ -152,6 +180,15 @@ and more generally the inclusive probability of coalescence for $n$ lines is
 \begin{equation}
 	p_{k,t}=\frac{1}{N_t^{k-1}}.
 \end{equation}
+
+The exclusive probability of coalescence for two lines from a sample of $n$ $(n \geq 2)$ is
+	\begin{equation}
+		p_{n,2,t} = \frac{(N_t-1)^{n-2}}{N_t^n},
+	\end{equation}
+and more generally the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n \geq k)$ is
+	\begin{equation}
+		p_{n,k,t} = \frac{(N_t-1)^{n-k}}{N_t^n}.
+	\end{equation}
 
 \subsection{Negative-Binomial case}
 
@@ -230,7 +267,8 @@ We acknowledge funding from the National Institute for Health Research (NIHR) He
 
 \newpage
 \bibliographystyle{elsarticle-harv}
-\bibliography{biblio,/Users/u1775021/all.bib}
+%\bibliography{biblio,/Users/u1775021/all.bib}
+\bibliography{biblio}
 
 \end{document}
 
