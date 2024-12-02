@@ -6,7 +6,7 @@
 \setcitestyle{aysep={}} 
 \usepackage{graphicx}
 \usepackage{color}
-\usepackage{amsmath}
+\usepackage{amsfonts, amsmath}
 \usepackage{setspace}
 \usepackage{amsmath}
 \usepackage{mathtools}
@@ -20,6 +20,12 @@
 \hyphenpenalty=10000
 \pretolerance=10000
 \usepackage{lineno}
+
+% Line numbering works around align environment without requiring paragraph break
+\let\oldalign\align
+\let\oldendalign\endalign
+\renewenvironment{align}{\linenomathNonumbers\oldalign}{\oldendalign\endlinenomath}
+
 \linenumbers
 
 \makeatletter
@@ -77,19 +83,74 @@ N_{t+1}=\sum_{i=1}^{N_t} s_{t,i}
 
 Let $p_{k,t}$ be the probability that $k$ individuals at time $t+1$ have the same infector at time $t$.
 
+\subsubsection*{Inclusive Coalescence Probability}
+
+Inclusive coalescence probability $p_{k,t}(N_t, N_{t+1})$ is the probability that exactly $k$ randomly-sampled individuals from generation $t+1$ find a common ancestor in generation $t$ {\it (conditioning on population sizes $N_t$ and $N_{t+1}$.}
+
+Given full information about offspring counts from individuals in generation $t$ ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$, we have
+
+{\color{red} Don't use all of these: -Ian}
+	\begin{align}
+		p_{k,t}({\bf s}_t, N_t)
+			& = \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \\
+			& = \sum_{i=1}^{N_t} \frac{s_{t,i}! (N_{t+1}-k)!}{(s_{t,i}-k)! N_{t+1}!} \\
+			& = \sum_{i=1}^{N_t} \frac{\Gamma(s_{t,i}+1) \Gamma(N_{t+1}-k+1)}{\Gamma(s_{t,i}-k+1) \Gamma(N_{t+1})} \\
+			& = \sum_{i=1}^{N_t} \frac{s_{t,i} (s_{t,i} - 1) \dots (s_{t,i} - k + 1)}{N_{t+1} (N_{t+1} - 1) \dots (N_{t+1} - k+1)}.
+	\end{align}
+
+Full information $\{s_{t,i}\}$ yields the population size $N_{t+1}$ but is not feasible to observe in practice.
+We can instead express the inclusive coalescence probability conditioning on the next population size $N_{t+1}$ by summing over possible offspring counts ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$ conditional on the total generation size
+
+{\color{red}
+	To-do/To-discuss:
+	\begin{itemize}
+		\item Almost certainly should be an appendix not a main-body derivation, doesn't fundamentally change anything but I think this looks horrific
+		\item Sum subscripts over ${\bf s}_t$ rather than ${\bf s}_t : ...$ (at least L1-3)? We have probability 0 if sum does not equal $N_{t+1}$ anyway
+		\item Change ${\bf s}_t \mapsto {\bf s}$ and $s_{t,i} \mapsto s_i$ for clarity/brevity? Should maintain $S_{t,i}$ etc. for consistent notation ($S_{t,i} = s_i$ etc.)
+		\item Define $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$ notation
+		\item Where to stop? Leave as conditional expectation of binomial coefficients, or convert to factorials etc? Factorials are slightly clearer that this is just a `falling factorial moment' computed from probability generating function
+	\end{itemize}
+}
+
+\begin{align}
+	p_{k,t}(N_t, N_{t+1})
+		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] p_{k,t}({\bf s}_t, N_t) \\
+		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \\
+		& = \sum_{i=1}^{N_t} \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \mathbb{P} \bigg[S_{t,1} = s_{t,1}, {\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \\
+		& = \frac{N_t}{\binom{N_{t+1}}{k}} \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \binom{s_{t,1}}{k} \mathbb{P} \bigg[S_{t,1} = s_{t,1} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber \\
+			& \phantom{=}\qquad \times \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| S_{t,1} = s_{t,1}, \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \\
+		& = \frac{N_t}{\binom{N_{t+1}}{k}} \sum_{s_{t,1} = 0}^{N_{t+1}} \binom{s_{t,1}}{k} \mathbb{P} \bigg[S_{t,1} = s_{t,1} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber \\
+			& \phantom{=}\qquad \times \underbrace{\sum_{{\bf s}_t^{-(1)} : \sum_{i=2}^{N_t} s_{i,t} = N_{t+1} - s_{1,t}} \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s_{1,t} \bigg]}_{=1} \\
+		& = \frac{N_t}{\binom{N_{t+1}}{k}} \mathbb{E}\bigg[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \\
+		& = N_t \frac{(N_{t+1} - k)!}{N_{t+1}!} \mathbb{E} \bigg[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]. \label{eq:GeneralInclusiveProb}
+\end{align}
+
+The falling factorial moments $\mathbb{E} \big[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \big | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \big]$ in \eqref{eq:GeneralInclusiveProb} can be readily obtained by differentiating the probability generating function of $S_{t,1} | (\sum_{i=1}^{N_t} S_{t,i} = N_{t+1})$.
+
+\subsubsection*{Exclusive Coalescence Probability}
+
+
+
 \subsection{Poisson case}
 
-Here the offspring distribution is Poisson($R_t$).
-
-The inclusive probability of coalescence for two lines is:
+Here the offspring distribution is $\text{Poisson}(R_t)$.
+In this case, we have 
+	\[
+		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Poisson}(N_t R_t)
+	\]
+and
+	\[
+		S_{t,1} | (\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}) \sim \text{Binomial}(N_{t+1}, \frac{1}{N_t}).
+	\]
+Analogously to the Wright-Fisher model in which individuals select a parent uniformly at random from the previous generation, we find that the inclusive probability of coalescence for two lines is
+%
+%The inclusive probability of coalescence for two lines is:
 \begin{equation}
-p_{2,t}=\frac{1}{N_t}
+	p_{2,t}=\frac{1}{N_t},
 \end{equation}
-
-The inclusive probability of coalescence for $n$ lines is:
-
+and more generally the inclusive probability of coalescence for $n$ lines is
 \begin{equation}
-p_{k,t}=\frac{1}{N_t^{k-1}}
+	p_{k,t}=\frac{1}{N_t^{k-1}}.
 \end{equation}
 
 \subsection{Negative-Binomial case}
