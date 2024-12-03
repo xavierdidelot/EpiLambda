@@ -20,3 +20,8 @@ test_that("Inclusive and exclusive probabilities are equal if n=k.", {
   expect_equal(pois_inclusive(k=5,nt=10),pois_exclusive(k=5,n=5,nt=10))
   expect_equal(negbin_inclusive(k=5,nt=10,r=5),negbin_exclusive(k=5,n=5,nt=10,r=5))
 })
+
+test_that("Exclusive probabilities add up to one.", {
+  n=8;nt=10;k=1:n;expect_equal(sum(pois_exclusive(n=n,k=k,nt=nt)*choose(n-1,k-1)),1)
+  n=8;nt=10;k=1:n;expect_equal(sum(negbin_exclusive(n=n,k=k,nt=nt,r=0.2)*choose(n-1,k-1)),1)
+})

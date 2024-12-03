@@ -1,4 +1,4 @@
- \documentclass{article}
+\documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage[top=3cm, bottom=3cm, left=3cm,right=3cm]{geometry}
 %\usepackage[numbers,round]{natbib}
@@ -89,14 +89,13 @@ Inclusive coalescence probability $p_{k,t}(N_t, N_{t+1})$ is the probability tha
 
 Given full information about offspring counts from individuals in generation $t$ ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$, we have
 
-{\color{red} Don't use all of these: -Ian}
 {\allowdisplaybreaks
 	\begin{align}
 		p_{k,t}({\bf s}_t, N_t)
 			& = \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \\
-			& = \sum_{i=1}^{N_t} \frac{s_{t,i}!}{(s_{t,i}-k)!} \frac{(N_{t+1}-k)!}{N_{t+1}!} \\
-			& = \sum_{i=1}^{N_t} \frac{\Gamma(s_{t,i}+1) \Gamma(N_{t+1}-k+1)}{\Gamma(s_{t,i}-k+1) \Gamma(N_{t+1})} \\
-			& = \sum_{i=1}^{N_t} \frac{s_{t,i} (s_{t,i} - 1) \dots (s_{t,i} - k + 1)}{N_{t+1} (N_{t+1} - 1) \dots (N_{t+1} - k+1)}.
+%			& = \sum_{i=1}^{N_t} \frac{s_{t,i}!}{(s_{t,i}-k)!} \frac{(N_{t+1}-k)!}{N_{t+1}!} \\
+			& = \sum_{i=1}^{N_t} \frac{\Gamma(s_{t,i}+1) \Gamma(N_{t+1}-k+1)}{\Gamma(s_{t,i}-k+1) \Gamma(N_{t+1})}.% \\
+%			& = \sum_{i=1}^{N_t} \frac{s_{t,i} (s_{t,i} - 1) \dots (s_{t,i} - k + 1)}{N_{t+1} (N_{t+1} - 1) \dots (N_{t+1} - k+1)}.
 	\end{align}
 }
 
@@ -205,7 +204,19 @@ p_{2,t}=\frac{r+1}{N_t r+1}
 The inclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
-p_{k,t}=\prod_{i=1}^{k-1}\frac{r+i}{N_t r+i}
+p_{k,t}=\prod_{i=1}^{k-1}\frac{r+i}{N_t r+i}=\frac{\mathrm{B}(N_t r+1,r+k)}{\mathrm{B}(r+1,N_t r+k)}
+\end{equation}
+
+The exclusive probability of coalescence for $k$ lines is:
+
+\begin{equation}
+p_{nkt}=\frac{N_t \mathrm{B}(k+r, n-k+N_t r-r)}{\mathrm{B}(r, N_t r-r)}
+\end{equation}
+
+Somewhere need to note that for any offspring distribution we have:
+
+\begin{equation}
+\sum_{k=1}^n p_{nkt} \binom{n-1}{k-1}=1
 \end{equation}
 
 \subsection{Example}
@@ -239,7 +250,7 @@ The Beta$(2-\alpha,\alpha)$-coalescent model \citep{schweinsbergCoalescentProces
 has a single parameter $\alpha \in [0,2]$ and is defined as:
 
 \begin{equation}
-\Lambda(\mathrm{d}x)=\frac{x^{1-\alpha}(1-x)^{\alpha-1}}{\mathrm{B}(2-\alpha,2)}\mathrm{d}x
+\Lambda(\mathrm{d}x)=\frac{x^{1-\alpha}(1-x)^{\alpha-1}}{\mathrm{B}(2-\alpha,\alpha)}\mathrm{d}x
 \end{equation}
 
 from which we can deduce that:
