@@ -81,7 +81,7 @@ N_{t+1}=\sum_{i=1}^{N_t} s_{t,i}
 
 Let $p_{k,t}$ be the probability that $k$ individuals at time $t+1$ have the same infector at time $t$.
 
-\subsection{Inclusive Coalescence Probability}
+\subsection{Inclusive coalescence probability}
 
 Inclusive coalescence probability $p_{k,t}(N_t, N_{t+1})$ is the probability that exactly $k$ randomly-sampled individuals from generation $t+1$ find a common ancestor in generation $t$ {\it (conditioning on population sizes $N_t$ and $N_{t+1}$.}
 
@@ -128,7 +128,7 @@ We can instead express the inclusive coalescence probability conditioning on the
 
 The falling factorial moments $\mathbb{E} \big[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \big | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \big]$ in \eqref{eq:GeneralInclusiveProb} can be readily obtained by differentiating the probability generating function of $S_{t,1} | (\sum_{i=1}^{N_t} S_{t,i} = N_{t+1})$.
 
-\subsection{Exclusive Coalescence Probability}
+\subsection{Exclusive coalescence probability}
 
 Generally, we observe a sample of individuals from each generation rather than the entire population.
 In this case, we are interested in the exclusive coalescence probability $p_{nkt}(N_t, N_{t+1})$ that exactly $k$ individuals from a sample of $n$ arose from a common ancestor one generation in the past given knowlege of the total population sizes $N_t$ and $N_{t+1}$.
@@ -145,16 +145,41 @@ Similarly to the exclusive coalescence probability, we can use this to evaluate 
 {\allowdisplaybreaks
 	\begin{align}
 		p_{nkt}(N_t, N_{t+1})
-			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] p_{n,k,t} ({\bf x}_t, N_t) \\
-			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \} \\
-			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \binom{x_{t,1}}{k} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \mathbb{I} \{x_{t,1} = k \} \\
-			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t^{-(1)} : \sum_{i=2}^n x_{t,i} = n-k} \binom{k}{k} \mathbb{P}\bigg[X_{t,1} = k, {\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \\
-			& = \frac{N_t}{\binom{n}{k}} \mathbb{P}[X_{t,1} = k \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \sum_{{\bf x}_t^{-(1)} : \sum_{i=2}^n x_{t,i} = n-k} \mathbb{P}\bigg[{\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n, X_{t,1} = k \bigg] \\
+			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] p_{n,k,t} ({\bf x}_t, N_t) \nonumber\\
+			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \} \nonumber\\
+			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \binom{x_{t,1}}{k} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \mathbb{I} \{x_{t,1} = k \} \nonumber\\
+			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t^{-(1)} : \sum_{i=2}^n x_{t,i} = n-k} \binom{k}{k} \mathbb{P}\bigg[X_{t,1} = k, {\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \nonumber\\
+			& = \frac{N_t}{\binom{n}{k}} \mathbb{P}[X_{t,1} = k \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \sum_{{\bf x}_t^{-(1)} : \sum_{i=2}^n x_{t,i} = n-k} \mathbb{P}\bigg[{\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n, X_{t,1} = k \bigg] \nonumber\\
 			& = \frac{N_t}{\binom{n}{k}} \mathbb{P} \bigg[ X_{t,1} = k \bigg| \sum_{i=1}^{N_t} X_{i,t} = n \bigg]. \label{eq:GeneralExclusiveProb}
 	\end{align}
 }
 
+\subsection{Complementarity of exclusive coalescence probabilities}
 
+Note that for any offspring distribution we have:
+
+\begin{equation}
+\sum_{k=1}^n p_{nkt} \binom{n-1}{k-1}=1
+\end{equation}
+
+	\begin{align}
+		\sum_{k=1}^n \binom{n-1}{k-1} p_{nkt}
+			& = \sum_{k=1}^n \binom{n-1}{k-1} \frac{N_t}{\binom{n}{k}} \mathbb{P}[X_1 = k | \sum_{i=1}^{N_t} X_i = n] \\
+			& = \sum_{k=1}^n N_t \frac{k}{n} \mathbb{P}[X_1=k | \sum_{i=1}^{N_t} X_i = n] \\
+			& = \frac{N_t}{n} \sum_{k=0}^n k \mathbb{P}[X_1 = k | \sum_{i=1}^{N_t} X_i = n] \tag{lower limit $k=0$ makes no difference overall}\\
+			& = \frac{N_t}{n} \mathbb{E}[X_1 | \sum_{i=1}^{N_t} X_i = n ] \\
+			& = p_{1,t} (N_t, n) = 1 \tag{see below}
+	\end{align}
+	
+	Taken from \href{https://math.stackexchange.com/questions/2508465/conditional-expectation-of-random-variable-given-a-sum}{stackexchange (link)}
+	
+	\begin{align}
+		\mathbb{E}[X_1 | \sum_{i=1}^{N_t} X_i = n]
+			& = \frac{1}{N_t} \sum_{i=1}^{N_t} \mathbb{E}[X_i | \sum_{i=1}^{N_t} X_i = n] \tag{$X_i$ i.i.d.} \\
+			& = \frac{1}{N_t} \mathbb{E}[ \sum_{i=1}^{N_t} X_i | \sum_{i=1}^{N_t} X_i = n] \tag{Swap expectation, sum \it (possibly questionable?)} \\
+			& = \frac{n}{N_t}
+	\end{align}
+	
 \section{Poisson case}
 
 Here the offspring distribution is $\text{Poisson}(R_t)$.
@@ -164,7 +189,7 @@ In this case, we have
 \end{equation}
 and
 \begin{equation}
-		S_{t,1} | (\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}) \sim \text{Binomial}(N_{t+1}, \frac{1}{N_t}).
+		S_{t,1} | \left(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}\right) \sim \text{Binomial}\left(N_{t+1}, \frac{1}{N_t}\right).
 \end{equation}
 Analogously to the Wright-Fisher model, individuals select a parent uniformly at random from the previous generation.
 The inclusive probability of coalescence for two lines is
@@ -213,38 +238,7 @@ The exclusive probability of coalescence for $k$ lines is:
 p_{nkt}=\frac{N_t \mathrm{B}(k+r, n-k+N_t r-r)}{\mathrm{B}(r, N_t r-r)}
 \end{equation}
 
-{\color{red}
-Somewhere (not here) need to note that for any offspring distribution we have:
-
-\begin{equation}
-\sum_{k=1}^n p_{nkt} \binom{n-1}{k-1}=1
-\end{equation}
-}
-
-<<<<<<< Updated upstream
-{\color{red} 
-
-	\begin{align}
-		\sum_{k=1}^n \binom{n-1}{k-1} p_{nkt}
-			& = \sum_{k=1}^n \binom{n-1}{k-1} \frac{N_t}{\binom{n}{k}} \mathbb{P}[X_1 = k | \sum_{i=1}^{N_t} X_i = n] \\
-			& = \sum_{k=1}^n N_t \frac{k}{n} \mathbb{P}[X_1=k | \sum_{i=1}^{N_t} X_i = n] \\
-			& = \frac{N_t}{n} \sum_{k=0}^n k \mathbb{P}[X_1 = k | \sum_{i=1}^{N_t} X_i = n] \tag{lower limit $k=0$ makes no difference overall}\\
-			& = \frac{N_t}{n} \mathbb{E}[X_1 | \sum_{i=1}^{N_t} X_i = n ] \\
-			& = p_{1,t} (N_t, n) = 1 \tag{see below}
-	\end{align}
-	
-	Taken from \href{https://math.stackexchange.com/questions/2508465/conditional-expectation-of-random-variable-given-a-sum}{stackexchange (link)}
-	
-	\begin{align}
-		\mathbb{E}[X_1 | \sum_{i=1}^{N_t} X_i = n]
-			& = \frac{1}{N_t} \sum_{i=1}^{N_t} \mathbb{E}[X_i | \sum_{i=1}^{N_t} X_i = n] \tag{$X_i$ i.i.d.} \\
-			& = \frac{1}{N_t} \mathbb{E}[ \sum_{i=1}^{N_t} X_i | \sum_{i=1}^{N_t} X_i = n] \tag{Swap expectation, sum \it (possibly questionable?)} \\
-			& = \frac{n}{N_t}
-	\end{align}
-
--Ian} 
-
-\subsection{Example}
+\section{Example}
 
 Let the offspring distribution have a mean of $R_t=2$. In the Poisson case the offspring distribution is Poisson(2). We consider NegBin cases with the same mean and varying dispersion parameters $r$. When $r$ is high the dispersion is low and the NegBin behaves almost like a Poisson.
 See Figure \ref{fig:probs}.
