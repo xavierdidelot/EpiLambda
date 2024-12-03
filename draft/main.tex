@@ -227,8 +227,16 @@ Somewhere need to note that for any offspring distribution we have:
 			& = \sum_{k=1}^n N_t \frac{k}{n} \mathbb{P}[X_1=k | \sum_{i=1}^{N_t} X_i = n] \\
 			& = \frac{N_t}{n} \sum_{k=0}^n k \mathbb{P}[X_1 = k | \sum_{i=1}^{N_t} X_i = n] \tag{lower limit $k=0$ makes no difference overall}\\
 			& = \frac{N_t}{n} \mathbb{E}[X_1 | \sum_{i=1}^{N_t} X_i = n ] \\
-			& = p_{1,t} (N_t, n) \\
-			& = 1 \text{ by definition (although I can't actually show this in practice...)}
+			& = p_{1,t} (N_t, n) = 1 \tag{see below}
+	\end{align}
+	
+	Taken from \href{https://math.stackexchange.com/questions/2508465/conditional-expectation-of-random-variable-given-a-sum}{stackexchange}
+	
+	\begin{align}
+		\mathbb{E}[X_1 | \sum_{i=1}^{N_t} X_i = n]
+			& = \frac{1}{N_t} \sum_{i=1}^{N_t} \mathbb{E}[X_i | \sum_{i=1}^{N_t} X_i = n] \tag{$X_i$ i.i.d.} \\
+			& = \frac{1}{N_t} \mathbb{E}[ \sum_{i=1}^{N_t} X_i | \sum_{i=1}^{N_t} X_i = n] \tag{Swap expectation, sum \it (possibly questionable?)} \\
+			& = \frac{n}{N_t}
 	\end{align}
 
 -Ian} 
