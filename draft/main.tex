@@ -70,9 +70,7 @@ Beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} is a specifi
 Was used in \citep{Hoscheit2019} and \citep{Menardo2021}. 
 David's paper on inference of multiple mergers while dating a pathogen phylogeny \citep{Helekal2024}.
 
-\section{Coalescence probabilities}
-
-\subsection{General case}
+\section{General case}
 
 Discrete time $t$. Non-overlapping generations of infected individuals. At time $t$ there are $N_t$ infected individuals. Each of them creates a number $s_{t,i}$ of secondary infections at time $t+1$, following the offspring distribution $\alpha_t(s)$. The mean of this distribution is the basic reproduction number $R_t$ and the variance is $V_t$. We have:
 
@@ -83,7 +81,7 @@ N_{t+1}=\sum_{i=1}^{N_t} s_{t,i}
 
 Let $p_{k,t}$ be the probability that $k$ individuals at time $t+1$ have the same infector at time $t$.
 
-\subsubsection*{Inclusive Coalescence Probability}
+\subsection{Inclusive Coalescence Probability}
 
 Inclusive coalescence probability $p_{k,t}(N_t, N_{t+1})$ is the probability that exactly $k$ randomly-sampled individuals from generation $t+1$ find a common ancestor in generation $t$ {\it (conditioning on population sizes $N_t$ and $N_{t+1}$.}
 
@@ -92,7 +90,7 @@ Given full information about offspring counts from individuals in generation $t$
 {\allowdisplaybreaks
 	\begin{align}
 		p_{k,t}({\bf s}_t, N_t)
-			& = \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \\
+			& = \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \nonumber\\
 %			& = \sum_{i=1}^{N_t} \frac{s_{t,i}!}{(s_{t,i}-k)!} \frac{(N_{t+1}-k)!}{N_{t+1}!} \\
 			& = \sum_{i=1}^{N_t} \frac{\Gamma(s_{t,i}+1) \Gamma(N_{t+1}-k+1)}{\Gamma(s_{t,i}-k+1) \Gamma(N_{t+1})}.% \\
 %			& = \sum_{i=1}^{N_t} \frac{s_{t,i} (s_{t,i} - 1) \dots (s_{t,i} - k + 1)}{N_{t+1} (N_{t+1} - 1) \dots (N_{t+1} - k+1)}.
@@ -116,21 +114,21 @@ We can instead express the inclusive coalescence probability conditioning on the
 {\allowdisplaybreaks
 	\begin{align}
 	p_{k,t}(N_t, N_{t+1})
-		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] p_{k,t}({\bf s}_t, N_t) \\
-		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \\
-		& = \sum_{i=1}^{N_t} \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \mathbb{P} \bigg[S_{t,1} = s_{t,1}, {\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \\
+		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] p_{k,t}({\bf s}_t, N_t) \nonumber\\
+		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \nonumber\\
+		& = \sum_{i=1}^{N_t} \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \mathbb{P} \bigg[S_{t,1} = s_{t,1}, {\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber\\
 		& = \frac{N_t}{\binom{N_{t+1}}{k}} \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \binom{s_{t,1}}{k} \mathbb{P} \bigg[S_{t,1} = s_{t,1} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber \\
-			& \phantom{=}\qquad \times \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| S_{t,1} = s_{t,1}, \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \\
+			& \phantom{=}\qquad \times \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| S_{t,1} = s_{t,1}, \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber\\
 		& = \frac{N_t}{\binom{N_{t+1}}{k}} \sum_{s_{t,1} = 0}^{N_{t+1}} \binom{s_{t,1}}{k} \mathbb{P} \bigg[S_{t,1} = s_{t,1} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber \\
-			& \phantom{=}\qquad \times \underbrace{\sum_{{\bf s}_t^{-(1)} : \sum_{i=2}^{N_t} s_{i,t} = N_{t+1} - s_{1,t}} \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s_{1,t} \bigg]}_{=1} \\
-		& = \frac{N_t}{\binom{N_{t+1}}{k}} \mathbb{E}\bigg[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \\
+			& \phantom{=}\qquad \times \underbrace{\sum_{{\bf s}_t^{-(1)} : \sum_{i=2}^{N_t} s_{i,t} = N_{t+1} - s_{1,t}} \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s_{1,t} \bigg]}_{=1} \nonumber\\
+		& = \frac{N_t}{\binom{N_{t+1}}{k}} \mathbb{E}\bigg[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber\\
 		& = N_t \frac{(N_{t+1} - k)!}{N_{t+1}!} \mathbb{E} \bigg[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]. \label{eq:GeneralInclusiveProb}
 	\end{align}
 }
 
 The falling factorial moments $\mathbb{E} \big[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \big | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \big]$ in \eqref{eq:GeneralInclusiveProb} can be readily obtained by differentiating the probability generating function of $S_{t,1} | (\sum_{i=1}^{N_t} S_{t,i} = N_{t+1})$.
 
-\subsubsection*{Exclusive Coalescence Probability}
+\subsection{Exclusive Coalescence Probability}
 
 Generally, we observe a sample of individuals from each generation rather than the entire population.
 In this case, we are interested in the exclusive coalescence probability $p_{nkt}(N_t, N_{t+1})$ that exactly $k$ individuals from a sample of $n$ arose from a common ancestor one generation in the past given knowlege of the total population sizes $N_t$ and $N_{t+1}$.
@@ -138,7 +136,7 @@ In this case, we are interested in the exclusive coalescence probability $p_{nkt
 Given full information about offspring counts of the parents of sampled individuals at the present, ${\bf x}_t = (x_{t,1}, \dots, x_{t,N_t})$, we have
 	\begin{align}
 		p_{nkt}({\bf x}_t, N_t)
-			& = \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \}\\
+			& = \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \}\nonumber\\
 			& = \sum_{i=1}^{N_t} \frac{x_{t,i}!}{(x_{t,i} - k)!} \frac{(n-k)!}{n!} \mathbb{I} \{ x_{t,i} = k \}.
 	\end{align}
 
@@ -157,17 +155,17 @@ Similarly to the exclusive coalescence probability, we can use this to evaluate 
 }
 
 
-\subsection{Poisson case}
+\section{Poisson case}
 
 Here the offspring distribution is $\text{Poisson}(R_t)$.
 In this case, we have 
-	\[
+\begin{equation}
 		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Poisson}(N_t R_t)
-	\]
+\end{equation}
 and
-	\[
+\begin{equation}
 		S_{t,1} | (\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}) \sim \text{Binomial}(N_{t+1}, \frac{1}{N_t}).
-	\]
+\end{equation}
 Analogously to the Wright-Fisher model, individuals select a parent uniformly at random from the previous generation.
 The inclusive probability of coalescence for two lines is
 %
@@ -189,7 +187,7 @@ and more generally the exclusive probability of coalescence for $k$ lines from a
 		p_{n,k,t} = \frac{(N_t-1)^{n-k}}{N_t^{n-1}}.
 	\end{equation}
 
-\subsection{Negative-Binomial case}
+\section{Negative-Binomial case}
 
 Here the offspring distribution is Negative-Binomial with mean $R_t$ and variance $V_t$.
 The parameters of this distribution are 
@@ -207,18 +205,23 @@ The inclusive probability of coalescence for $k$ lines is:
 p_{k,t}=\prod_{i=1}^{k-1}\frac{r+i}{N_t r+i}=\frac{\mathrm{B}(N_t r+1,r+k)}{\mathrm{B}(r+1,N_t r+k)}
 \end{equation}
 
+\noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$.
+
 The exclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
 p_{nkt}=\frac{N_t \mathrm{B}(k+r, n-k+N_t r-r)}{\mathrm{B}(r, N_t r-r)}
 \end{equation}
 
-Somewhere need to note that for any offspring distribution we have:
+{\color{red}
+Somewhere (not here) need to note that for any offspring distribution we have:
 
 \begin{equation}
 \sum_{k=1}^n p_{nkt} \binom{n-1}{k-1}=1
 \end{equation}
+}
 
+<<<<<<< Updated upstream
 {\color{red} 
 
 	\begin{align}
@@ -265,9 +268,6 @@ coalesce:
     \lambda_{n,k} = \int_{0}^{1}{x^{k-2}(1-x)^{n-k}\,\Lambda(\mathrm{d} x)}
 \end{equation}
 
-\subsection{Beta-coalescent}
-
-Let the Beta function be denoted as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$.
 The Beta$(2-\alpha,\alpha)$-coalescent model \citep{schweinsbergCoalescentProcessesObtained2003}
 has a single parameter $\alpha \in [0,2]$ and is defined as:
 
