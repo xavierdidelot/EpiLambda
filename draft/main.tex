@@ -147,7 +147,7 @@ Similarly to the exclusive coalescence probability, we can use this to evaluate 
 {\allowdisplaybreaks
 	\begin{align}
 		p_{nkt}(N_t, N_{t+1})
-			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] p_{n,k,t} (N_t, N_{t+1}) \\
+			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] p_{n,k,t} ({\bf x}_t, N_t) \\
 			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \} \\
 			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \binom{x_{t,1}}{k} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \mathbb{I} \{x_{t,1} = k \} \\
 			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t^{-(1)} : \sum_{i=2}^n x_{t,i} = n-k} \binom{k}{k} \mathbb{P}\bigg[X_{t,1} = k, {\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \\
@@ -218,6 +218,20 @@ Somewhere need to note that for any offspring distribution we have:
 \begin{equation}
 \sum_{k=1}^n p_{nkt} \binom{n-1}{k-1}=1
 \end{equation}
+
+{\color{red} 
+
+	\begin{align}
+		\sum_{k=1}^n \binom{n-1}{k-1} p_{nkt}
+			& = \sum_{k=1}^n \binom{n-1}{k-1} \frac{N_t}{\binom{n}{k}} \mathbb{P}[X_1 = k | \sum_{i=1}^{N_t} X_i = n] \\
+			& = \sum_{k=1}^n N_t \frac{k}{n} \mathbb{P}[X_1=k | \sum_{i=1}^{N_t} X_i = n] \\
+			& = \frac{N_t}{n} \sum_{k=0}^n k \mathbb{P}[X_1 = k | \sum_{i=1}^{N_t} X_i = n] \tag{lower limit $k=0$ makes no difference overall}\\
+			& = \frac{N_t}{n} \mathbb{E}[X_1 | \sum_{i=1}^{N_t} X_i = n ] \\
+			& = p_{1,t} (N_t, n) \\
+			& = 1 \text{ by definition (although I can't actually show this in practice...)}
+	\end{align}
+
+-Ian} 
 
 \subsection{Example}
 
