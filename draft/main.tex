@@ -145,7 +145,6 @@ Given full information about offspring counts of the parents of sampled individu
 
 Similarly to the exclusive coalescence probability, we can use this to evaluate the exclusive probability given $N_t$ and $N_{t+1}$ by summing over possible parent offspring configurations (for $k \leq n$),
 
-{\allowdisplaybreaks
 	\begin{align}
 		p_{nkt}(N_t, N_{t+1})
 			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] p_{n,k,t} ({\bf x}_t, N_t) \nonumber\\
@@ -159,7 +158,9 @@ Similarly to the exclusive coalescence probability, we can use this to evaluate 
 				\underbrace{\sum_{{\bf x}_t^{-(1)} \in \mathbb{N}_0^{N_t - 1}} \mathbb{P}\bigg[{\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n, X_{t,1} = k \bigg]}_{=1} \nonumber\\
 			& = \frac{N_t}{\binom{n}{k}} \mathbb{P} \bigg[ X_{t,1} = k \bigg| \sum_{i=1}^{N_t} X_{i,t} = n \bigg]. \label{eq:GeneralExclusiveProb}
 	\end{align}
-}
+
+Note that $X_{t,i}$ does not follow the same offspring distribution as $S_{t,i}$.
+$(X_{t,1}, \dots, X_{t, N_t})$ consists of $n$ individuals sampled from generation $t+1$ without replacement - there is no guarantee that all offspring from any given parent are included in the sample.
 
 \subsection{Complementarity of exclusive coalescence probabilities}
 
