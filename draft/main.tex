@@ -101,11 +101,8 @@ Full information $\{s_{t,i}\}$ yields the population size $N_{t+1}$ but is not f
 We can instead express the inclusive coalescence probability conditioning on the next population size $N_{t+1}$ by summing over possible offspring counts ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$ conditional on the total generation size
 
 {\color{red}
-	To-do/To-discuss:
+	To-do:
 	\begin{itemize}
-		\item Almost certainly should be an appendix not a main-body derivation, doesn't fundamentally change anything but I think this looks horrific
-		\item Sum subscripts over ${\bf s}_t \in \mathbb{N}_0^{N_t}$ rather than ${\bf s}_t : ...$ (c.f. exclusive probability derivation)? We have probability 0 if sum does not equal $N_{t+1}$ anyway
-		\item Change ${\bf s}_t \mapsto {\bf s}$ and $s_{t,i} \mapsto s_i$ for clarity/brevity? Should maintain $S_{t,i}$ etc. for consistent notation ($S_{t,i} = s_i$ etc.)
 		\item Define $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$ notation
 	\end{itemize}
 }
@@ -113,13 +110,20 @@ We can instead express the inclusive coalescence probability conditioning on the
 {\allowdisplaybreaks
 	\begin{align}
 	p_{k,t}(N_t, N_{t+1})
-		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] p_{k,t}({\bf s}_t, N_t) \nonumber\\
-		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \nonumber\\
-		& = \sum_{i=1}^{N_t} \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \mathbb{P} \bigg[S_{t,1} = s_{t,1}, {\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber\\
-		& = \frac{N_t}{\binom{N_{t+1}}{k}} \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} \binom{s_{t,1}}{k} \mathbb{P} \bigg[S_{t,1} = s_{t,1} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber \\
+%		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} 
+		& = \sum_{{\bf s}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] p_{k,t}({\bf s}_t, N_t) \nonumber\\
+%		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} 
+		& = \sum_{{\bf s}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \nonumber\\
+%		& = \sum_{i=1}^{N_t} \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} 
+		& = \sum_{i=1}^{N_t} \sum_{{\bf s}_t \in \mathbb{N}_0^{N_t}}\frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \mathbb{P} \bigg[S_{t,1} = s_{t,1}, {\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber\\
+		& = \frac{N_t}{\binom{N_{t+1}}{k}} 
+%		\sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}}
+		\sum_{{\bf s}_t \in \mathbb{N}_0^{N_t}} \binom{s_{t,1}}{k} \mathbb{P} \bigg[S_{t,1} = s_{t,1} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber \\
 			& \phantom{=}\qquad \times \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| S_{t,1} = s_{t,1}, \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber\\
 		& = \frac{N_t}{\binom{N_{t+1}}{k}} \sum_{s_{t,1} = 0}^{N_{t+1}} \binom{s_{t,1}}{k} \mathbb{P} \bigg[S_{t,1} = s_{t,1} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber \\
-			& \phantom{=}\qquad \times \underbrace{\sum_{{\bf s}_t^{-(1)} : \sum_{i=2}^{N_t} s_{i,t} = N_{t+1} - s_{1,t}} \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s_{1,t} \bigg]}_{=1} \nonumber\\
+			& \phantom{=}\qquad \times \underbrace{
+				%\sum_{{\bf s}_t^{-(1)} : \sum_{i=2}^{N_t} s_{i,t} = N_{t+1} - s_{1,t}} 
+				\sum_{{\bf s}_t^{-(1)} \in \mathbb{N}_0^{N_t - 1}} \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s_{1,t} \bigg]}_{=1} \nonumber\\
 		& = \frac{N_t}{\binom{N_{t+1}}{k}} \mathbb{E}\bigg[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \label{eq:GeneralInclusiveProb} %\nonumber\\
 %		& = N_t \frac{(N_{t+1} - k)!}{N_{t+1}!} \mathbb{E} \bigg[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]. \label{eq:GeneralInclusiveProb}
 	\end{align}
@@ -147,8 +151,12 @@ Similarly to the exclusive coalescence probability, we can use this to evaluate 
 			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] p_{n,k,t} ({\bf x}_t, N_t) \nonumber\\
 			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \} \nonumber\\
 			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \binom{x_{t,1}}{k} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \mathbb{I} \{x_{t,1} = k \} \nonumber\\
-			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t^{-(1)} : \sum_{i=2}^n x_{t,i} = n-k} \binom{k}{k} \mathbb{P}\bigg[X_{t,1} = k, {\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \nonumber\\
-			& = \frac{N_t}{\binom{n}{k}} \mathbb{P}[X_{t,1} = k \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \sum_{{\bf x}_t^{-(1)} : \sum_{i=2}^n x_{t,i} = n-k} \mathbb{P}\bigg[{\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n, X_{t,1} = k \bigg] \nonumber\\
+			& = \frac{N_t}{\binom{n}{k}}
+%				\sum_{{\bf x}_t^{-(1)} : \sum_{i=2}^n x_{t,i} = n-k} 
+				\sum_{{\bf x}_t^{-(1)} \in \mathbb{N}_0^{N_t - 1}} \binom{k}{k} \mathbb{P}\bigg[X_{t,1} = k, {\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \nonumber\\
+			& = \frac{N_t}{\binom{n}{k}} \mathbb{P}[X_{t,1} = k \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg]
+%				\sum_{{\bf x}_t^{-(1)} : \sum_{i=2}^n x_{t,i} = n-k} 
+				\underbrace{\sum_{{\bf x}_t^{-(1)} \in \mathbb{N}_0^{N_t - 1}} \mathbb{P}\bigg[{\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n, X_{t,1} = k \bigg]}_{=1} \nonumber\\
 			& = \frac{N_t}{\binom{n}{k}} \mathbb{P} \bigg[ X_{t,1} = k \bigg| \sum_{i=1}^{N_t} X_{i,t} = n \bigg]. \label{eq:GeneralExclusiveProb}
 	\end{align}
 }
