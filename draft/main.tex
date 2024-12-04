@@ -107,7 +107,6 @@ We can instead express the inclusive coalescence probability conditioning on the
 		\item Sum subscripts over ${\bf s}_t \in \mathbb{N}_0^{N_t}$ rather than ${\bf s}_t : ...$ (c.f. exclusive probability derivation)? We have probability 0 if sum does not equal $N_{t+1}$ anyway
 		\item Change ${\bf s}_t \mapsto {\bf s}$ and $s_{t,i} \mapsto s_i$ for clarity/brevity? Should maintain $S_{t,i}$ etc. for consistent notation ($S_{t,i} = s_i$ etc.)
 		\item Define $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$ notation
-		\item Where to stop? Leave as conditional expectation of binomial coefficients, or convert to factorials etc? Factorials are slightly clearer that this is just a `falling factorial moment' computed from probability generating function
 	\end{itemize}
 }
 
@@ -121,8 +120,8 @@ We can instead express the inclusive coalescence probability conditioning on the
 			& \phantom{=}\qquad \times \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| S_{t,1} = s_{t,1}, \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber\\
 		& = \frac{N_t}{\binom{N_{t+1}}{k}} \sum_{s_{t,1} = 0}^{N_{t+1}} \binom{s_{t,1}}{k} \mathbb{P} \bigg[S_{t,1} = s_{t,1} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber \\
 			& \phantom{=}\qquad \times \underbrace{\sum_{{\bf s}_t^{-(1)} : \sum_{i=2}^{N_t} s_{i,t} = N_{t+1} - s_{1,t}} \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s_{1,t} \bigg]}_{=1} \nonumber\\
-		& = \frac{N_t}{\binom{N_{t+1}}{k}} \mathbb{E}\bigg[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber\\
-		& = N_t \frac{(N_{t+1} - k)!}{N_{t+1}!} \mathbb{E} \bigg[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]. \label{eq:GeneralInclusiveProb}
+		& = \frac{N_t}{\binom{N_{t+1}}{k}} \mathbb{E}\bigg[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \label{eq:GeneralInclusiveProb} %\nonumber\\
+%		& = N_t \frac{(N_{t+1} - k)!}{N_{t+1}!} \mathbb{E} \bigg[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]. \label{eq:GeneralInclusiveProb}
 	\end{align}
 }
 
@@ -182,26 +181,45 @@ Note that for any offspring distribution we have:
 	
 \section{Poisson case}
 
-Here the offspring distribution is $\text{Poisson}(R_t)$.
+Here the offspring distribution is $\alpha_t = \text{Poisson}(R_t)$.
 In this case, we have 
+	\begin{equation}
+		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Poisson}(N_t R_t),
+	\end{equation}
+and conditional distribution
+{\allowdisplaybreaks
+	\begin{align}
+		\mathbb{P}\bigg[S_{t,1} = s \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]
+			& = \frac{\displaystyle\mathbb{P}\bigg[S_{t,1} = s, \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]}{\displaystyle\mathbb{P}\bigg[\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]} \\
+			& = \frac{\displaystyle\alpha_t (s) \, \mathbb{P}\bigg[ \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s \bigg]}{\displaystyle\mathbb{P}\bigg[\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]} \\
+			& = \frac{\displaystyle\frac{R_t^s e^{-R_t}}{s!} \cdot \frac{((N_t - 1)R_t)^{N_{t+1} - s}}{(N_{t+1} - s)!}}{\displaystyle\frac{(N_t R_t)^{N_{t+1}} e^{-N_t R_t}}{N_{t+1}!}} \\
+			& = \binom{N_{t+1}}{s} \left( \frac{1}{N_t} \right)^s \left( 1 - \frac{1}{N_t} \right)^{N_{t+1} - s}, 
+	\end{align}
+}
+that is
+	\begin{equation}
+		S_{t,1} \bigg| \left(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}\right) \sim \text{Binomial}\left(N_{t+1}, \frac{1}{N_t}\right).
+	\end{equation}
+
+The inclusive probability of coalescence for $k$ lines is given by \eqref{eq:GeneralInclusiveProb} with the falling factorial moments
 \begin{equation}
-		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Poisson}(N_t R_t)
+	\mathbb{E} \left[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
+		= \frac{1}{k!} \mathbb{E} \left[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
+		= \frac{1}{k!} \, \frac{N_{t+1}!}{(N_{t+1} - k)!} \left( \frac{1}{N_t} \right)^k,
 \end{equation}
-and
-\begin{equation}
-		S_{t,1} | \left(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}\right) \sim \text{Binomial}\left(N_{t+1}, \frac{1}{N_t}\right).
-\end{equation}
-Analogously to the Wright-Fisher model, individuals select a parent uniformly at random from the previous generation.
-The inclusive probability of coalescence for two lines is
-%
-%The inclusive probability of coalescence for two lines is:
+taken from \cite{Potts1953}.
+
+Consequently, the inclusive probability of coalescence for two lines is
 \begin{equation}
 	p_{2,t}=\frac{1}{N_t},
 \end{equation}
-and more generally the inclusive probability of coalescence for $n$ lines is
+and more generally the inclusive probability of coalescence for $k$ lines is
 \begin{equation}
 	p_{k,t}=\frac{1}{N_t^{k-1}}.
 \end{equation}
+The inclusive probability of coalescence for two lines is analogous to the Wright-Fisher model, with each individual at generation $t+1$ selecting a parent uniformly at random from generation $t$.
+
+
 
 The exclusive probability of coalescence for two lines from a sample of $n$ $(n \geq 2)$ is
 	\begin{equation}
