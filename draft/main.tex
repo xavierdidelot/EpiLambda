@@ -129,7 +129,7 @@ We can instead express the inclusive coalescence probability conditioning on the
 	\end{align}
 }
 
-The falling factorial moments $\mathbb{E} \big[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \big | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \big]$ in \eqref{eq:GeneralInclusiveProb} can be readily obtained by differentiating the probability generating function of $S_{t,1} | (\sum_{i=1}^{N_t} S_{t,i} = N_{t+1})$.
+The falling factorial moments $\mathbb{E} \big[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \big | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \big]$ in Equation \eqref{eq:GeneralInclusiveProb} can be readily obtained by differentiating the probability generating function of $S_{t,1} | (\sum_{i=1}^{N_t} S_{t,i} = N_{t+1})$.
 
 \subsection{Exclusive coalescence probability}
 
@@ -203,9 +203,9 @@ and conditional distribution
 {\allowdisplaybreaks
 	\begin{align}
 		\mathbb{P}\bigg[S_{t,1} = s \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]
-			& = \frac{\displaystyle\mathbb{P}\bigg[S_{t,1} = s, \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]}{\displaystyle\mathbb{P}\bigg[\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]} \\
-			& = \frac{\displaystyle\alpha_t (s) \, \mathbb{P}\bigg[ \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s \bigg]}{\displaystyle\mathbb{P}\bigg[\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]} \\
-			& = \frac{\displaystyle\frac{R_t^s e^{-R_t}}{s!} \cdot \frac{((N_t - 1)R_t)^{N_{t+1} - s}}{(N_{t+1} - s)!}}{\displaystyle\frac{(N_t R_t)^{N_{t+1}} e^{-N_t R_t}}{N_{t+1}!}} \\
+			& = \frac{\displaystyle\mathbb{P}\bigg[S_{t,1} = s, \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]}{\displaystyle\mathbb{P}\bigg[\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]} \nonumber\\
+			& = \frac{\displaystyle\alpha_t (s) \, \mathbb{P}\bigg[ \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s \bigg]}{\displaystyle\mathbb{P}\bigg[\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]} \nonumber\\
+			& = \frac{\displaystyle\frac{R_t^s e^{-R_t}}{s!} \cdot \frac{((N_t - 1)R_t)^{N_{t+1} - s}}{(N_{t+1} - s)!}}{\displaystyle\frac{(N_t R_t)^{N_{t+1}} e^{-N_t R_t}}{N_{t+1}!}} \nonumber\\
 			& = \binom{N_{t+1}}{s} \left( \frac{1}{N_t} \right)^s \left( 1 - \frac{1}{N_t} \right)^{N_{t+1} - s}, 
 	\end{align}
 }
@@ -214,31 +214,22 @@ that is
 		S_{t,1} \bigg| \left(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}\right) \sim \text{Binomial}\left(N_{t+1}, \frac{1}{N_t}\right).
 	\end{equation}
 
-The inclusive probability of coalescence for $k$ lines is given by \eqref{eq:GeneralInclusiveProb} with the falling factorial moments
+The inclusive probability of coalescence for $k$ lines is given by Equation \eqref{eq:GeneralInclusiveProb} by injecting the falling factorial moments of a Binomial distribution 
+\citep{Potts1953}, resulting in:
 \begin{equation}
 	\mathbb{E} \left[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
 		= \frac{1}{k!} \mathbb{E} \left[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
 		= \frac{1}{k!} \, \frac{N_{t+1}!}{(N_{t+1} - k)!} \left( \frac{1}{N_t} \right)^k,
 \end{equation}
-taken from \cite{Potts1953}.
 
-Consequently, the inclusive probability of coalescence for two lines is
+Consequently, the inclusive probability of coalescence for $k$ lines is
 \begin{equation}
-	p_{2,t}=\frac{1}{N_t},
+	p_{k,t}=\frac{1}{N_t^{k-1}}.\label{eq:PoisInclusiveProb}
 \end{equation}
-and more generally the inclusive probability of coalescence for $k$ lines is
-\begin{equation}
-	p_{k,t}=\frac{1}{N_t^{k-1}}.
-\end{equation}
-The inclusive probability of coalescence for two lines is analogous to the Wright-Fisher model, with each individual at generation $t+1$ selecting a parent uniformly at random from generation $t$.
 
-
-
-The exclusive probability of coalescence for two lines from a sample of $n$ $(n \geq 2)$ is
-	\begin{equation}
-		p_{n,2,t} = \frac{(N_t-1)^{n-2}}{N_t^{n-1}},
-	\end{equation}
-and more generally the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n \geq k)$ is
+By injecting the probability mass function of a binomial distribution in Equation 
+\ref{eq:GeneralExclusiveProb} we deduce that 
+the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n \geq k)$ is
 	\begin{equation}
 		p_{n,k,t} = \frac{(N_t-1)^{n-k}}{N_t^{n-1}}.\label{eq:PoisExclusiveProb}
 	\end{equation}
@@ -262,7 +253,7 @@ Here the offspring distribution is Negative-Binomial with mean $R_t$ and varianc
 The parameters of this distribution are 
 $r=R_t^2/(V_t-R_t)$ and $p=R_t/V_t$.
 
-The factorial moments of $X \sim \mathrm{BetaBinomial}(\alpha,\beta)$ are \citep{tripathiEstimationParametersBeta1994}:
+The factorial moments of $X \sim \mathrm{BetaBinomial}(\alpha,\beta)$ are \citep{Tripathi1994}:
 
 \begin{equation}
 \mathbb{E}\left[\frac{X!}{(X-r)!}\right]=\binom{n}{r} \frac{\mathrm{B}(\alpha+r,\beta)r!}{\mathrm{B}(\alpha,\beta)}
