@@ -134,7 +134,7 @@ The falling factorial moments $\mathbb{E} \big[ \frac{S_{t,1}!}{(S_{t,1} - k)!} 
 \subsection{Exclusive coalescence probability}
 
 Generally, we observe a sample of individuals from each generation rather than the entire population.
-In this case, we are interested in the exclusive coalescence probability $p_{nkt}(N_t, N_{t+1})$ that exactly $k$ individuals from a sample of $n$ arose from a common ancestor one generation in the past given knowlege of the total population sizes $N_t$ and $N_{t+1}$.
+In this case, we are interested in the exclusive coalescence probability $p_{n,k,t}(N_t, N_{t+1})$ that exactly $k$ individuals from a sample of $n$ arose from a common ancestor one generation in the past given knowlege of the total population sizes $N_t$ and $N_{t+1}$.
 
 Given full information about offspring counts of the parents of sampled individuals at the present, ${\bf x}_t = (x_{t,1}, \dots, x_{t,N_t})$, we have
 	\begin{align}
@@ -171,7 +171,7 @@ If we consider one of the lines observed amongst a set of $n$, it can either rem
 \sum_{k=1}^n \binom{n-1}{k-1} p_{n,k,t} =1
 \end{equation}
 
-We can show that it is indeed satisfied by the formula in Equation \ref{eq:GeneralExclusiveProb}:
+We can show that it is indeed satisfied by the formula in Equation \eqref{eq:GeneralExclusiveProb}:
 
 	\begin{align}
 		\sum_{k=1}^n \binom{n-1}{k-1} p_{n,k,t}
@@ -228,7 +228,7 @@ Consequently, the inclusive probability of coalescence for $k$ lines is
 \end{equation}
 
 By injecting the probability mass function of a binomial distribution in Equation 
-\ref{eq:GeneralExclusiveProb} we deduce that 
+\eqref{eq:GeneralExclusiveProb} we deduce that 
 the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n \geq k)$ is
 	\begin{equation}
 		p_{n,k,t} = \frac{(N_t-1)^{n-k}}{N_t^{n-1}}.\label{eq:PoisExclusiveProb}
@@ -237,12 +237,12 @@ the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n 
 It is interesting to note that neither the inclusive nor the exclusive coalescence probability
 depend on the mean $R_t$ of the Poisson offspring distribution or the size $N_{t+1}$
 of the population at time $t+1$.
-The inclusive coalescent probability (Equation \ref{eq:PoisInclusiveProb}) 
+The inclusive coalescent probability in Equation \eqref{eq:PoisInclusiveProb}
 can also be obtained conceptually by considering
 that among the $k$ lines, the first one has an ancestor with probability one, 
 and the remaining $k-1$ need to have the same ancestor among a set of $N_t$ from
 which they choose uniformly at random so that the probability of picking the same ancestor
-is $1/N_t$. The exclusive coalescent probability (Equation \ref{eq:PoisExclusiveProb}) 
+is $1/N_t$. The exclusive coalescent probability in Equation \eqref{eq:PoisExclusiveProb} 
 can be derived likewise by considering
 that in addition to the above, each of the $n-k$ other lines need to choose a different
 ancestor, which happens with probability $(N_t-1)/N_t$.
@@ -261,7 +261,7 @@ The factorial moments of $X \sim \mathrm{BetaBinomial}(\alpha,\beta)$ are \citep
 
 \noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$.
 
-By injecting this formula in Equation \ref{eq:GeneralInclusiveProb}, we deduce that the inclusive probability of coalescence for $k$ lines is:
+By injecting this formula in Equation \eqref{eq:GeneralInclusiveProb}, we deduce that the inclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
 p_{k,t}=
@@ -270,7 +270,7 @@ p_{k,t}=
 \end{equation}
 
 By injecting the probability mass function of a beta-binomial distribution in Equation 
-\ref{eq:GeneralExclusiveProb} we deduce that 
+\eqref{eq:GeneralExclusiveProb} we deduce that 
 the exclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
@@ -296,9 +296,44 @@ See Figure \ref{fig:probs}.
 
 \section{Limit when the population size is large}
 
-Here we can relate the inclusive coalescent probability for two lines $p_{2,t}$ to previous results from
+Consider that $N_t$ is large.
+
+Show that inclusive probabilities $p_{k,t}$ for $k>2$ are small compared to $p_{2,t}$.
+
+Show that exclusive probabilities $p_{n,k,t}$ for $k>2$ is small compared to $p_{n,2,t}$.
+
+Show that inclusive and exclusive probabilities become equal.
+
+For Poisson offspring distribution we have:
+
+\begin{equation}
+p_{2,t}=p_{n,2,t}=\frac{1}{N_t}
+\end{equation}
+
+For Negative-Binomial offspring distribution we have:
+
+\begin{equation}
+p_{2,t}=p_{n,2,t}=\frac{r+1}{N_t r +1}
+\end{equation}
+
+Then we can relate the inclusive coalescent probability for two lines $p_{2,t}$ to 
+previous results from
 \citep{Volz2012a}, \citep{koelleRatesCoalescenceCommon2012} and
  \citep{Li2017,Fraser2017}.
+ 
+\citep{Fraser2017} has:
+ \begin{equation}
+ p_{2,t}=\frac{V_t+R_t^2-R_t}{N_t R_t -R_t}
+ \end{equation}
+
+For Poisson case we have $V_t=R_t$ so this reduces to $R_t/N_t$.
+
+For NegBin case we have:
+
+\begin{equation}
+p_{2,t}=\frac{V_t+R_t^2-R_t}{N_t R_t -R_t}=\frac{1/p+R-1}{N-1}=\frac{r+R+Rr-r}{Nr-r}
+=\frac{Rr+R}{Nr-r}
+\end{equation}
 
 \section{Lambda-coalescent}
 
