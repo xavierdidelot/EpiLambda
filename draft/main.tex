@@ -83,7 +83,7 @@ Let $p_{k,t}$ be the probability that $k$ individuals at time $t+1$ have the sam
 
 \subsection{Inclusive coalescence probability}
 
-Inclusive coalescence probability $p_{k,t}(N_t, N_{t+1})$ is the probability that exactly $k$ randomly-sampled individuals from generation $t+1$ find a common ancestor in generation $t$ {\it (conditioning on population sizes $N_t$ and $N_{t+1}$.}
+Inclusive coalescence probability $p_{k,t}(N_t, N_{t+1})$ is the probability that a specific set of $k$ individuals from generation $t+1$ find a common ancestor in generation $t$, conditional on population sizes $N_t$ and $N_{t+1}$.
 
 Given full information about offspring counts from individuals in generation $t$ ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$, we have
 
@@ -138,7 +138,7 @@ In this case, we are interested in the exclusive coalescence probability $p_{nkt
 
 Given full information about offspring counts of the parents of sampled individuals at the present, ${\bf x}_t = (x_{t,1}, \dots, x_{t,N_t})$, we have
 	\begin{align}
-		p_{nkt}({\bf x}_t, N_t)
+		p_{n,k,t}({\bf x}_t, N_t)
 			& = \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \}\nonumber\\
 			& = \sum_{i=1}^{N_t} \frac{x_{t,i}!}{(x_{t,i} - k)!} \frac{(n-k)!}{n!} \mathbb{I} \{ x_{t,i} = k \}.
 	\end{align}
@@ -146,7 +146,7 @@ Given full information about offspring counts of the parents of sampled individu
 Similarly to the exclusive coalescence probability, we can use this to evaluate the exclusive probability given $N_t$ and $N_{t+1}$ by summing over possible parent offspring configurations (for $k \leq n$),
 
 	\begin{align}
-		p_{nkt}(N_t, N_{t+1})
+		p_{n,k,t}(N_t, N_{t+1})
 			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] p_{n,k,t} ({\bf x}_t, N_t) \nonumber\\
 			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \} \nonumber\\
 			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \binom{x_{t,1}}{k} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \mathbb{I} \{x_{t,1} = k \} \nonumber\\
@@ -164,28 +164,32 @@ $(X_{t,1}, \dots, X_{t, N_t})$ consists of $n$ individuals sampled from generati
 
 \subsection{Complementarity of exclusive coalescence probabilities}
 
-Note that for any offspring distribution we have:
+If we consider one of the lines observed amongst a set of $n$, it can either remain uncoalesced
+(with probability $p_{n1t}$) or coalesce in an event of size $k$ (with probability $p_{n,k,t}$) with any set of $k-1$ lines among the $n-1$ other lines, leading to the following complementarity equation: 
 
 \begin{equation}
-\sum_{k=1}^n p_{nkt} \binom{n-1}{k-1}=1
+\sum_{k=1}^n \binom{n-1}{k-1} p_{n,k,t} =1
 \end{equation}
 
+We can show that it is indeed satisfied by the formula in Equation \ref{eq:GeneralExclusiveProb}:
+
 	\begin{align}
-		\sum_{k=1}^n \binom{n-1}{k-1} p_{nkt}
-			& = \sum_{k=1}^n \binom{n-1}{k-1} \frac{N_t}{\binom{n}{k}} \mathbb{P}[X_1 = k | \sum_{i=1}^{N_t} X_i = n] \\
-			& = \sum_{k=1}^n N_t \frac{k}{n} \mathbb{P}[X_1=k | \sum_{i=1}^{N_t} X_i = n] \\
-			& = \frac{N_t}{n} \sum_{k=0}^n k \mathbb{P}[X_1 = k | \sum_{i=1}^{N_t} X_i = n] \tag{lower limit $k=0$ makes no difference overall}\\
-			& = \frac{N_t}{n} \mathbb{E}[X_1 | \sum_{i=1}^{N_t} X_i = n ] \\
-			& = p_{1,t} (N_t, n) = 1 \tag{see below}
-	\end{align}
-	
-	Taken from \href{https://math.stackexchange.com/questions/2508465/conditional-expectation-of-random-variable-given-a-sum}{stackexchange (link)}
-	
-	\begin{align}
-		\mathbb{E}[X_1 | \sum_{i=1}^{N_t} X_i = n]
-			& = \frac{1}{N_t} \sum_{i=1}^{N_t} \mathbb{E}[X_i | \sum_{i=1}^{N_t} X_i = n] \tag{$X_i$ i.i.d.} \\
-			& = \frac{1}{N_t} \mathbb{E}[ \sum_{i=1}^{N_t} X_i | \sum_{i=1}^{N_t} X_i = n] \tag{Swap expectation, sum \it (possibly questionable?)} \\
-			& = \frac{n}{N_t}
+		\sum_{k=1}^n \binom{n-1}{k-1} p_{n,k,t}
+			& = \sum_{k=1}^n \binom{n-1}{k-1} \frac{N_t}{\binom{n}{k}} \mathbb{P}\left[X_1 = k \bigg| \sum_{i=1}^{N_t} X_i = n\right] \nonumber\\
+			& = \sum_{k=1}^n N_t \frac{k}{n} \mathbb{P}\left[X_1=k \bigg| \sum_{i=1}^{N_t} X_i = n\right] \nonumber\\
+			& = \frac{N_t}{n} \sum_{k=0}^n k \mathbb{P}\left[X_1 = k \bigg| \sum_{i=1}^{N_t} X_i = n\right] 
+			%\tag{lower limit $k=0$ makes no difference overall}
+			\nonumber\\
+			& = \frac{N_t}{n} \mathbb{E}\left[X_1 \bigg| \sum_{i=1}^{N_t} X_i = n \right] \nonumber\\
+%			& = p_{1,t} (N_t, n) = 1 %\tag{see below}
+%	\end{align*}
+%	Taken from \href{https://math.stackexchange.com/questions/2508465/conditional-expectation-of-random-variable-given-a-sum}{stackexchange (link)}
+%	\begin{align}
+%		\mathbb{E}[X_1 | \sum_{i=1}^{N_t} X_i = n]
+			& = \frac{1}{n} \sum_{i=1}^{N_t} \mathbb{E}\left[X_i \bigg| \sum_{i=1}^{N_t} X_i = n\right] %\tag{$X_i$ i.i.d.} 
+			\nonumber\\
+			& = \frac{1}{n} \mathbb{E}\left[ \sum_{i=1}^{N_t} X_i \bigg| \sum_{i=1}^{N_t} X_i = n\right] \nonumber\\%\tag{Swap expectation, sum \it (possibly questionable?)} \\
+			& = 1%\frac{n}{N_t}
 	\end{align}
 	
 \section{Poisson case}
@@ -236,8 +240,21 @@ The exclusive probability of coalescence for two lines from a sample of $n$ $(n 
 	\end{equation}
 and more generally the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n \geq k)$ is
 	\begin{equation}
-		p_{n,k,t} = \frac{(N_t-1)^{n-k}}{N_t^{n-1}}.
+		p_{n,k,t} = \frac{(N_t-1)^{n-k}}{N_t^{n-1}}.\label{eq:PoisExclusiveProb}
 	\end{equation}
+	
+It is interesting to note that neither the inclusive nor the exclusive coalescence probability
+depend on the mean $R_t$ of the Poisson offspring distribution or the size $N_{t+1}$
+of the population at time $t+1$.
+The inclusive coalescent probability (Equation \ref{eq:PoisInclusiveProb}) 
+can also be obtained conceptually by considering
+that among the $k$ lines, the first one has an ancestor with probability one, 
+and the remaining $k-1$ need to have the same ancestor among a set of $N_t$ from
+which they choose uniformly at random so that the probability of picking the same ancestor
+is $1/N_t$. The exclusive coalescent probability (Equation \ref{eq:PoisExclusiveProb}) 
+can be derived likewise by considering
+that in addition to the above, each of the $n-k$ other lines need to choose a different
+ancestor, which happens with probability $(N_t-1)/N_t$.
 
 \section{Negative-Binomial case}
 
@@ -245,25 +262,33 @@ Here the offspring distribution is Negative-Binomial with mean $R_t$ and varianc
 The parameters of this distribution are 
 $r=R_t^2/(V_t-R_t)$ and $p=R_t/V_t$.
 
-The inclusive probability of coalescence for two lines is:
+The factorial moments of $X \sim \mathrm{BetaBinomial}(\alpha,\beta)$ are \citep{tripathiEstimationParametersBeta1994}:
 
 \begin{equation}
-p_{2,t}=\frac{r+1}{N_t r+1}
-\end{equation}
-
-The inclusive probability of coalescence for $k$ lines is:
-
-\begin{equation}
-p_{k,t}=\prod_{i=1}^{k-1}\frac{r+i}{N_t r+i}=\frac{\mathrm{B}(N_t r+1,r+k)}{\mathrm{B}(r+1,N_t r+k)}
+\mathbb{E}\left[\frac{X!}{(X-r)!}\right]=\binom{n}{r} \frac{\mathrm{B}(\alpha+r,\beta)r!}{\mathrm{B}(\alpha,\beta)}
 \end{equation}
 
 \noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$.
 
-The exclusive probability of coalescence for $k$ lines is:
+By injecting this formula in Equation \ref{eq:GeneralInclusiveProb}, we deduce that the inclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
-p_{nkt}=\frac{N_t \mathrm{B}(k+r, n-k+N_t r-r)}{\mathrm{B}(r, N_t r-r)}
+p_{k,t}=
+%\prod_{i=1}^{k-1}\frac{r+i}{N_t r+i}=
+\frac{\mathrm{B}(N_t r+1,r+k)}{\mathrm{B}(r+1,N_t r+k)}
 \end{equation}
+
+By injecting the probability mass function of a beta-binomial distribution in Equation 
+\ref{eq:GeneralExclusiveProb} we deduce that 
+the exclusive probability of coalescence for $k$ lines is:
+
+\begin{equation}
+p_{n,k,t}=\frac{N_t \mathrm{B}(k+r, n-k+N_t r-r)}{\mathrm{B}(r, N_t r-r)}
+\end{equation}
+
+It is interesting to note that as for the Poisson case, the inclusive and exclusive coalescence probabilities do not depend on the size $N_{t+1}$ of the population at time $t+1$.
+They both depend on the 
+Negative-Binomial offspring distribution only through the dispersion parameter $r$.
 
 \section{Example}
 
@@ -277,6 +302,12 @@ See Figure \ref{fig:probs}.
 \caption{(A) Offspring distribution. (B) Inclusive probability of coalescence. (C) Exclusive probability of coalescence.
 \label{fig:probs}}
 \end{figure}
+
+\section{Limit when the population size is large}
+
+Here we can relate the inclusive coalescent probability for two lines $p_{2,t}$ to previous results from
+\citep{Volz2012a}, \citep{koelleRatesCoalescenceCommon2012} and
+ \citep{Li2017,Fraser2017}.
 
 \section{Lambda-coalescent}
 
