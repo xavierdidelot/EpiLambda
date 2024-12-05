@@ -36,7 +36,7 @@
 %\renewcommand\footnote[2][]{\relax}
 
 \begin{document}
-{\Large The epidemic lambda-coalescent model}
+{\Large Coalescent process for epidemic models with superspreading}
 
 %Journal target:  Journal of Theoretical Biology? Theoretical Population Biology?
 
@@ -49,10 +49,10 @@ $^2$ Department of Statistics, University of Warwick, United Kingdom\\\\
 $^*$ Corresponding author. Tel: 0044 (0)2476 572827. Email: \verb+xavier.didelot@gmail.com+
 
 \vspace*{2cm}
-Running title: Epidemic lambda-coalescent
+Running title: Coalescent for epidemic with superspreading
 
 \vspace*{2cm}
-Keywords: lambda-coalescent model; pathogen phylogenetics; multiple mergers; offspring distribution
+Keywords: infectious disease epidemiology modelling; offspring distribution; superspreading; lambda-coalescent model; multiple mergers
 
 %\newpage
 %\section*{Abstract}
@@ -98,14 +98,8 @@ Given full information about offspring counts from individuals in generation $t$
 }
 
 Full information $\{s_{t,i}\}$ yields the population size $N_{t+1}$ but is not feasible to observe in practice.
-We can instead express the inclusive coalescence probability conditioning on the next population size $N_{t+1}$ by summing over possible offspring counts ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$ conditional on the total generation size
-
-{\color{red}
-	To-do:
-	\begin{itemize}
-		\item Define $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$ notation
-	\end{itemize}
-}
+We can instead express the inclusive coalescence probability conditioning on the next population size $N_{t+1}$ by summing over possible offspring counts ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$ conditional on the total generation size.
+Let $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$.
 
 {\allowdisplaybreaks
 	\begin{align}
@@ -219,7 +213,7 @@ The inclusive probability of coalescence for $k$ lines is given by Equation \eqr
 \begin{equation}
 	\mathbb{E} \left[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
 		= \frac{1}{k!} \mathbb{E} \left[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
-		= \frac{1}{k!} \, \frac{N_{t+1}!}{(N_{t+1} - k)!} \left( \frac{1}{N_t} \right)^k,
+		= \frac{1}{k!} \, \frac{N_{t+1}!}{(N_{t+1} - k)!} \left( \frac{1}{N_t} \right)^k.
 \end{equation}
 
 Consequently, the inclusive probability of coalescence for $k$ lines is
@@ -283,7 +277,9 @@ Negative-Binomial offspring distribution only through the dispersion parameter $
 
 \section{Example}
 
-Let the offspring distribution have a mean of $R_t=2$. In the Poisson case the offspring distribution is Poisson(2). We consider NegBin cases with the same mean and varying dispersion parameters $r$. When $r$ is high the dispersion is low and the NegBin behaves almost like a Poisson.
+Let the offspring distribution have a mean of $R_t=2$. In the Poisson case the offspring distribution is Poisson(2). We consider NegBin cases with the same mean and varying dispersion parameters $r$. 
+When $r=1$ the NegBin reduces to a Geometric distribution.
+When $r$ is high the dispersion is low and the NegBin behaves almost like a Poisson.
 See Figure \ref{fig:probs}.
 
 \begin{figure}[t!]
@@ -296,13 +292,13 @@ See Figure \ref{fig:probs}.
 
 \section{Limit when the population size is large}
 
-Consider that $N_t$ is large.
+Consider that $N_t$ is large. 
 
 Show that inclusive probabilities $p_{k,t}$ for $k>2$ are small compared to $p_{2,t}$.
 
-Show that exclusive probabilities $p_{n,k,t}$ for $k>2$ is small compared to $p_{n,2,t}$.
+Show that exclusive probabilities $p_{n,k,t}$ for $k>2$ is small compared to $p_{n,2,t}$, when $n<<N_t$.
 
-Show that inclusive and exclusive probabilities become equal.
+Show that inclusive and exclusive probabilities become equal, when $n<<N_t$ in exclusive probabilities.
 
 For Poisson offspring distribution we have:
 
@@ -313,7 +309,7 @@ p_{2,t}=p_{n,2,t}=\frac{1}{N_t}
 For Negative-Binomial offspring distribution we have:
 
 \begin{equation}
-p_{2,t}=p_{n,2,t}=\frac{r+1}{N_t r +1}
+p_{2,t}=p_{n,2,t}=\frac{r+1}{N_t r +1} \approx \frac{r+1}{N_t r}\label{eq:negbinapprox}
 \end{equation}
 
 Then we can relate the inclusive coalescent probability for two lines $p_{2,t}$ to 
@@ -321,19 +317,27 @@ previous results from
 \citep{Volz2012a}, \citep{koelleRatesCoalescenceCommon2012} and
  \citep{Li2017,Fraser2017}.
  
-\citep{Fraser2017} has:
- \begin{equation}
- p_{2,t}=\frac{V_t+R_t^2-R_t}{N_t R_t -R_t}
- \end{equation}
+\citep{Fraser2017} have as their main result an estimate of the effective population size $N_e(t)$ 
+as a function of the actual population size $N(t)$ and the mean and variance of the offspring distribution $R$ and $\sigma^2$:
+\begin{equation}
+N_e(t)=\frac{N(t)}{\sigma^2/R+R-1}
+\end{equation}
 
-For Poisson case we have $V_t=R_t$ so this reduces to $R_t/N_t$.
-
-For NegBin case we have:
+In our notation, this is equivalent to:
 
 \begin{equation}
-p_{2,t}=\frac{V_t+R_t^2-R_t}{N_t R_t -R_t}=\frac{1/p+R-1}{N-1}=\frac{r+R+Rr-r}{Nr-r}
-=\frac{Rr+R}{Nr-r}
+ p_{2,t}=\frac{V_t/R_t+R_t-1}{N_t R_t}
+ \end{equation}
+
+In the Poisson case we have $V_t=R_t$ so this reduces to $p_{2,t}=1/N_t$.
+
+For the Negative-Binomial case we have $V_t/R_t=1/p=(r+R_t)/r$ so that:
+
+\begin{equation}
+p_{2,t}=\frac{V_t/R_t+R_t-1}{N_t R_t}=\frac{r+R_t+rR_t-r}{rN_t R_t}=\frac{r+1}{rN_t}
 \end{equation}
+
+which is the same as in Equation \eqref{eq:negbinapprox}.
 
 \section{Lambda-coalescent}
 
