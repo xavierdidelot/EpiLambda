@@ -243,19 +243,32 @@ ancestor, which happens with probability $(N_t-1)/N_t$.
 
 \section{Negative-Binomial case}
 
-Here the offspring distribution is Negative-Binomial with mean $R_t$ and variance $V_t$.
-The parameters of this distribution are 
-$r=R_t^2/(V_t-R_t)$ and $p=R_t/V_t$.
+Here the offspring distribution is $\alpha_t=\text{Negative-Binomial}(r,p)$ with parameters $(r,p)$ set my moment-matching mean $R_t$ and variance $V_t$.
+The resulting parameters for this distribution are $r=R_t^2/(V_t-R_t)$ and $p=R_t/V_t$.
+In this case, we have
+	\begin{equation}
+		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Negative-Binomial}(N_t r,p),
+	\end{equation}
+and similarly to the Poisson$(\lambda)$ offspring distribution identify the conditional distribution of $S_{t,1} | \sum_{i=1}^{N_t} S_{t,i}$ as follows,
 
-The factorial moments of $X \sim \mathrm{BetaBinomial}(\alpha,\beta)$ are \citep{Tripathi1994}:
+{\allowdisplaybreaks
+	\begin{align}
+		\mathbb{P}\bigg[ S_{t,1} = s \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]
+			& = \frac{\alpha_t(s) \cdot \mathbb{P} \bigg[\sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s \bigg]}{\mathbb{P}\bigg[\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]} \\
+			& = \frac{\displaystyle\frac{\Gamma(r+s)}{s! \Gamma(r)} (1-p)^s p^r \cdot \frac{\Gamma\big((N_t - 1)r+(N_{t+1} - s)\big)}{(N_{t+1} - s)! \Gamma((N_t - 1) r)} (1-p)^{N_{t+1} - s} p^{(N_t-1)r}}{\displaystyle\frac{\Gamma(N_tr+N_{t+1})}{N_{t+1}! \Gamma(N_t r)} (1-p)^{N_{t+1}} p^{N_t r}} \\
+			& = \frac{N_{t+1}!}{s! (N_{t+1} - s)!} \frac{\Gamma(r+s) \Gamma\big( (N_t - 1)r + (N_{t+1} - s) \big)}{\Gamma(N_t r + N_{t+1})} \frac{\Gamma(N_t r)}{\Gamma(r) \Gamma\big((N_t - 1)r \big)} \\
+			& = \binom{N_{t+1}}{s} \frac{\mathrm{B}(s + r, N_{t+1} - s + (N_t-1)r)}{\mathrm{B}(r, (N_t-1)r)},
+	\end{align}
+}
+that is $S_{t,1} \bigg| \bigg(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg) \sim \text{Beta-Binomial}(r, (N_t - 1)r)$.
+
+The falling factorial moments of $X \sim \text{Beta-Binomial}(\alpha,\beta)$ are \citep{Tripathi1994}:
 
 \begin{equation}
-\mathbb{E}\left[\frac{X!}{(X-r)!}\right]=\binom{n}{r} \frac{\mathrm{B}(\alpha+r,\beta)r!}{\mathrm{B}(\alpha,\beta)}
+	\mathbb{E}\left[\frac{X!}{(X-r)!}\right]=\binom{n}{r} \frac{\mathrm{B}(\alpha+r,\beta)r!}{\mathrm{B}(\alpha,\beta)}
 \end{equation}
 
-\noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$.
-
-By injecting this formula in Equation \eqref{eq:GeneralInclusiveProb}, we deduce that the inclusive probability of coalescence for $k$ lines is:
+\noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$, and injecting this formula into Equation \eqref{eq:GeneralInclusiveProb}, we deduce that the inclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
 p_{k,t}=
