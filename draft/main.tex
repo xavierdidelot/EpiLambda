@@ -79,8 +79,6 @@ N_{t+1}=\sum_{i=1}^{N_t} s_{t,i}
 \label{eq:summation}
 \end{equation}
 
-Let $p_{k,t}$ be the probability that $k$ individuals at time $t+1$ have the same infector at time $t$.
-
 \subsection{Inclusive coalescence probability}
 
 Inclusive coalescence probability $p_{k,t}(N_t, N_{t+1})$ is the probability that a specific set of $k$ individuals from generation $t+1$ find a common ancestor in generation $t$, conditional on population sizes $N_t$ and $N_{t+1}$.
@@ -208,8 +206,15 @@ that is
 		S_{t,1} \bigg| \left(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}\right) \sim \text{Binomial}\left(N_{t+1}, \frac{1}{N_t}\right).
 	\end{equation}
 
-The inclusive probability of coalescence for $k$ lines is given by Equation \eqref{eq:GeneralInclusiveProb} by injecting the falling factorial moments of a Binomial distribution 
-\citep{Potts1953}, resulting in:
+The falling factorial moments of $X \sim \mathrm{Binomial}(n,p)$ are
+\citep{Potts1953}:
+
+\begin{equation}
+	\mathbb{E}\left[\frac{X!}{(X-r)!}\right]=\binom{n}{r} p^r r!
+\end{equation}
+
+By injecting this formula into Equation \eqref{eq:GeneralInclusiveProb} 
+we obtain the inclusive probability of coalescence for $k$ lines:
 \begin{equation}
 	\mathbb{E} \left[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
 		= \frac{1}{k!} \mathbb{E} \left[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
@@ -254,9 +259,9 @@ and similarly to the Poisson$(\lambda)$ offspring distribution identify the cond
 {\allowdisplaybreaks
 	\begin{align}
 		\mathbb{P}\bigg[ S_{t,1} = s \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]
-			& = \frac{\alpha_t(s) \cdot \mathbb{P} \bigg[\sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s \bigg]}{\mathbb{P}\bigg[\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]} \\
-			& = \frac{\displaystyle\frac{\Gamma(r+s)}{s! \Gamma(r)} (1-p)^s p^r \cdot \frac{\Gamma\big((N_t - 1)r+(N_{t+1} - s)\big)}{(N_{t+1} - s)! \Gamma((N_t - 1) r)} (1-p)^{N_{t+1} - s} p^{(N_t-1)r}}{\displaystyle\frac{\Gamma(N_tr+N_{t+1})}{N_{t+1}! \Gamma(N_t r)} (1-p)^{N_{t+1}} p^{N_t r}} \\
-			& = \frac{N_{t+1}!}{s! (N_{t+1} - s)!} \frac{\Gamma(r+s) \Gamma\big( (N_t - 1)r + (N_{t+1} - s) \big)}{\Gamma(N_t r + N_{t+1})} \frac{\Gamma(N_t r)}{\Gamma(r) \Gamma\big((N_t - 1)r \big)} \\
+			& = \frac{\alpha_t(s) \cdot \mathbb{P} \bigg[\sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s \bigg]}{\mathbb{P}\bigg[\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]} \nonumber\\
+			& = \frac{\displaystyle\frac{\Gamma(r+s)}{s! \Gamma(r)} (1-p)^s p^r \cdot \frac{\Gamma\big((N_t - 1)r+(N_{t+1} - s)\big)}{(N_{t+1} - s)! \Gamma((N_t - 1) r)} (1-p)^{N_{t+1} - s} p^{(N_t-1)r}}{\displaystyle\frac{\Gamma(N_tr+N_{t+1})}{N_{t+1}! \Gamma(N_t r)} (1-p)^{N_{t+1}} p^{N_t r}} \nonumber\\
+			& = \frac{N_{t+1}!}{s! (N_{t+1} - s)!} \frac{\Gamma(r+s) \Gamma\big( (N_t - 1)r + (N_{t+1} - s) \big)}{\Gamma(N_t r + N_{t+1})} \frac{\Gamma(N_t r)}{\Gamma(r) \Gamma\big((N_t - 1)r \big)} \nonumber\\
 			& = \binom{N_{t+1}}{s} \frac{\mathrm{B}(s + r, N_{t+1} - s + (N_t-1)r)}{\mathrm{B}(r, (N_t-1)r)},
 	\end{align}
 }
