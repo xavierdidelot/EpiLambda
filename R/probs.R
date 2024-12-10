@@ -16,15 +16,15 @@ pois_inclusive=function(k,nt,log=F) {
 
 #' Exclusive probability of coalescence of k lineages when the offspring distribution is Poisson
 #'
-#' @param k Number of lineages to coalesce
 #' @param n Number of observed lineages
+#' @param k Number of lineages to coalesce
 #' @param nt Population size at time t
 #' @param log Whether to return the log of the probability
 #'
 #' @return Probability of coalescence
 #' @export
 #'
-pois_exclusive=function(k,n,nt,log=F) {
+pois_exclusive=function(n,k,nt,log=F) {
   if (log==F)
     return((nt-1)^{n-k}/nt^(n-1))
   else
@@ -51,8 +51,8 @@ negbin_inclusive=function(k,nt,r,log=F) {
 
 #' Exclusive probability of coalescence of k lineages when the offspring distribution is Negative-Binomial
 #'
-#' @param k Number of lineages to coalesce
 #' @param n Number of observed lineages
+#' @param k Number of lineages to coalesce
 #' @param nt Population size at time t
 #' @param r Dispersion parameter of Negative-Binomial
 #' @param log Whether to return the log of the probability
@@ -60,7 +60,7 @@ negbin_inclusive=function(k,nt,r,log=F) {
 #' @return Probability of coalescence
 #' @export
 #'
-negbin_exclusive=function(k,n,nt,r,log=F) {
+negbin_exclusive=function(n,k,nt,r,log=F) {
   # p=nt * prod(r + 0:(k-1)) * prod((nt-1) * r + 0:(n-k-1)) / prod(nt * r + 0:(n-1))
   if (log==F)
     return(nt * beta(k+r, n-k+(nt-1)*r) / beta(r, (nt-1)*r))
@@ -105,15 +105,15 @@ mixed_pois_2_inclusive=function(k,nt,nt1,lambda,q,log=F) {
 
 #' Exclusive probability of coalescence of k lineages when the offspring distribution is Poisson
 #'
-#' @param k Number of lineages to coalesce
 #' @param n Number of observed lineages
+#' @param k Number of lineages to coalesce
 #' @param nt Population size at time t
 #' @param log Whether to return the log of the probability
 #'
 #' @return Probability of coalescence
 #' @export
 #'
-mixed_pois_2_exclusive=function(k,n,nt,log=F) {
+mixed_pois_2_exclusive=function(n,k,nt,log=F) {
   stop('Mixed Poisson exclusive probability not added yet')
 }
 

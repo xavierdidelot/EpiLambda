@@ -61,16 +61,16 @@ compare_simu=function(rt=1.5,vt=10,nt=10,nt1=20,n=15,type='inclusive',nrep=1e3,m
 {
   s=simul_pcoal(rt=rt,vt=vt,nt=nt,nt1=nt1,n=n,type=type,nrep=nrep,method=method)
   if (type=='inclusive') {
-    if (rt==vt) p=pois_inclusive(1:nt1,nt)
+    if (rt==vt) p=pois_inclusive(k=1:nt1,nt=nt)
     else {
       r=rt^2/(vt-rt)
-      p=sapply(1:nt1,function(k) negbin_inclusive(k,nt,r))
+      p=sapply(1:nt1,function(k) negbin_inclusive(k=k,nt=nt,r=r))
     }
   } else {
-    if (rt==vt) p=pois_exclusive(1:n,n,nt)
+    if (rt==vt) p=pois_exclusive(k=1:n,n=n,nt=nt)
     else {
       r=rt^2/(vt-rt)
-      p=sapply(1:n,function(k) negbin_exclusive(k,n,nt,r))
+      p=sapply(1:n,function(k) negbin_exclusive(k=k,n=n,nt=nt,r=r))
     }
   }
 

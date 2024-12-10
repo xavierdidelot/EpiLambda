@@ -18,10 +18,10 @@ plot1<-ggplot(data, aes(x=x)) + scale_x_continuous(breaks=seq(0,10,1)) +theme(pa
 nt=20
 n=10
 data=data.frame()
-v=sapply(1:10, function(k) pois_inclusive(k,nt=nt))
+v=sapply(1:10, function(k) pois_inclusive(k=k,nt=nt))
 data=rbind(data,data.frame(x=1:10,y=v,Distribution='Poisson'))
 for (i in 1:length(rs)) {
-  v=sapply(1:10, function(k) negbin_inclusive(k,nt=nt,r=rs[i]))
+  v=sapply(1:10, function(k) negbin_inclusive(k=k,nt=nt,r=rs[i]))
   data=rbind(data,data.frame(x=1:10,y=v,Distribution=paste0('NegBin(r=',rs[i],')')))}
 data$Distribution=factor(data$Distribution,levels=unique(data$Distribution))#forces order to remain as input
 plot2<-ggplot(data, aes(x=x)) + scale_x_continuous(breaks=seq(0,10,1)) +theme(panel.grid.minor.x = element_blank() )+
