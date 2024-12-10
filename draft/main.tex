@@ -116,9 +116,9 @@ N_{t+1}=\sum_{i=1}^{N_t} s_{t,i}
 
 \subsection{Inclusive coalescence probability}
 
-Inclusive coalescence probability $p_{k,t}(N_t, N_{t+1})$ is the probability that a specific set of $k$ individuals from generation $t+1$ find a common ancestor in generation $t$, conditional on population sizes $N_t$ and $N_{t+1}$.
+We define the inclusive coalescence probability $p_{k,t}(N_t, N_{t+1})$ as the probability that a specific set of $k$ individuals from generation $t+1$ find a common ancestor in generation $t$, conditional on population sizes $N_t$ and $N_{t+1}$.
 
-Given full information about offspring counts from individuals in generation $t$ ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$, we have
+Given full information about offspring counts from individuals in generation $t$, ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$, we have
 
 {\allowdisplaybreaks
 	\begin{align}
@@ -464,14 +464,18 @@ $\alpha=1$ which is known as the Bolthausen-Sznitman coalescent
 and $\alpha=0$ for which the phylogeny is always star-shaped.
 
 The exclusive coalescent probability in the Negative-Binomial case 
-(Equation \ref{eq:NegBinExclusiveProb}) could be used as the $\lambda_{n,k}$.
-Figure \ref{fig:tree} shows an example with $n=20$, $N_t=40$ and $r=0.5$.
+given by Equation \eqref{eq:NegBinExclusiveProb} could be used as the $\lambda_{n,k}$.
+Figure \ref{fig:tree} shows examples of trees simulated for a sample of size $n=20$ and
+with constant population size $N_t=40$. As the dispersion parameter increases from $r=0.1$
+to $r=10$ multimerger events become less and less likely and large, and the
+time to the most recent common ancestor increases.
 
 \begin{figure}[!t]
 \begin{center}
 \includegraphics[width=15cm]{../run/figureTree.pdf}
 \end{center}
-\caption{Tree example
+\caption{Example of trees simulated under our lambda-coalescent with $r=0.1$ (A),
+$r=1$ (B), $r=5$ (C) and $r=10$ (D).
 \label{fig:tree}}
 \end{figure}
 
