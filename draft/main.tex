@@ -36,7 +36,7 @@
 %\renewcommand\footnote[2][]{\relax}
 
 \begin{document}
-{\Large Coalescent process for infectious disease outbreaks with superspreading}
+{\Large Ancestry process for infectious disease outbreaks with superspreading}
 
 %Journal target:  Journal of Theoretical Biology? Theoretical Population Biology?
 
@@ -49,7 +49,7 @@ $^2$ Department of Statistics, University of Warwick, United Kingdom\\\\
 $^*$ Corresponding author. Tel: 0044 (0)2476 572827. Email: \verb+xavier.didelot@gmail.com+
 
 \vspace*{2cm}
-Running title: Coalescent for outbreaks with superspreading
+Running title: Ancestry for outbreaks with superspreading
 
 \vspace*{2cm}
 Keywords: infectious disease epidemiology modelling; offspring distribution; superspreading; outbreaks; lambda-coalescent model; multiple mergers
@@ -98,7 +98,10 @@ steinSuperspreadersInfectiousDiseases2011,wangSuperspreadingHeterogeneityTransmi
 and most recently for 
 SARS-CoV-2 \citep{Wang2020,lemieuxPhylogeneticAnalysisSARSCoV22021,gomez-carballaSuperspreadingEmergenceCOVID192021}.
 
-In this study we consider the transmission tree 
+As an outbreak unfolds forward-in-time, a transmission tree is generated representing who-infected-whom,
+in which each node is an infected individual and points towards a number of nodes distributed according
+to the offspring distribution. Here we consider the reverse problem of the transmission ancestry, going backward-in-time,
+of a sample of infected individuals. 
 
 \section{General case}
 
@@ -278,6 +281,18 @@ can be derived likewise by considering
 that in addition to the above, each of the $n-k$ other lines need to choose a different
 ancestor, which happens with probability $(N_t-1)/N_t$.
 
+Figure \ref{fig:pois} illustrates the inclusive and exclusive coalescence probabilities for
+the Poisson case for a set of size $k=1$ to $k=10$ amongst a total of $n=10$ observed
+lines, in a population of size $N_t=10$, $N_t=20$ or $N_t=30$. 
+
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[width=15cm]{../run/figurePois.pdf}
+\end{center}
+\caption{Inclusive and exclusive coalescence probabilities for the Poisson case.
+\label{fig:pois}}
+\end{figure}
+
 \section{Negative-Binomial case}
 
 Here the offspring distribution is $\alpha_t=\text{Negative-Binomial}(r,p)$ with parameters $(r,p)$ set my moment-matching mean $R_t$ and variance $V_t$.
@@ -325,19 +340,25 @@ It is interesting to note that as for the Poisson case, the inclusive and exclus
 They both depend on the 
 Negative-Binomial offspring distribution only through the dispersion parameter $r$.
 
-\section{Example}
+Figure \ref{fig:negbin} illustrates the inclusive and exclusive coalescence probabilities for
+the Negative-Binomial case for a set of size $k=1$ to $k=10$ amongst a total of $n=10$
+ observed lines, in a population of size $N_t=12$. 
+Several Negative-Binomial offspring distributions are compared, 
+all of which have the same mean $R_t=2$,
+and with the dispersion parameter equal to $r=1$, $r=2$, $r=10$ and $r=100$.
+When $r=1$ the Negative-Binomial reduces to a Geometric distribution.
+When $r$ is high (for example $r=100$ as shown in Figure \ref{fig:negbin}) 
+the dispersion is low and the Negative-Binomial case 
+behaves almost like the Poisson case. When $r$ is lower the dispersion of the
+offspring distribution increases, so that 
+both the inclusive and exclusive probabilities of larger multimerger events increase.
 
-Let the offspring distribution have a mean of $R_t=2$. In the Poisson case the offspring distribution is Poisson(2). We consider NegBin cases with the same mean and varying dispersion parameters $r$. 
-When $r=1$ the NegBin reduces to a Geometric distribution.
-When $r$ is high the dispersion is low and the NegBin behaves almost like a Poisson.
-See Figure \ref{fig:probs}.
-
-\begin{figure}[t!]
+\begin{figure}[!t]
 \begin{center}
-\includegraphics[width=15cm]{../run/figure.pdf}
+\includegraphics[width=15cm]{../run/figureNegBin.pdf}
 \end{center}
 \caption{(A) Offspring distribution. (B) Inclusive probability of coalescence. (C) Exclusive probability of coalescence.
-\label{fig:probs}}
+\label{fig:negbin}}
 \end{figure}
 
 \section{Limit when the population size is large}
@@ -368,6 +389,7 @@ as a function of the actual population size $N(t)$ and the mean and variance of 
 N_e(t)=\frac{N(t)}{\sigma^2/R+R-1}
 \end{equation}
 
+This formula was used to estimate the dispersion parameter from genetic data \citep{Li2017}.
 In our notation, this is equivalent to:
 
 \begin{equation}
@@ -399,6 +421,16 @@ the equivalent $p_{2,t}=V_t/N_t$.
 
 \section{Lambda-coalescent}
 
+The coalescent model \citep{Kingman1982,Kingman1982a} describes the ancestry of a sample from a large population 
+evolving according to many forward-in-time models such as the Wright-Fisher model \citep{Wright1931,Fisher1930}, 
+the Moran model \citep{Moran1958} and the Cannings exchangeable model \citep{Cannings1974}.
+Since the coalescent considers a large population in which each individual only has a number of offspring that is small
+compared to the population size, coalescent trees are always binary and do not feature multimergers,
+making them unsuitable to represent the ancestry of outbreaks considered in this study.
+However, the lambda-coalescent models are an extension of the coalescent model that do
+allow multimergers
+\citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,donnellyParticleRepresentationsMeasureValued1999}. 
+
 A lambda-coalescent model is defined by a probability measure 
 $\Lambda(\mathrm{d} x)$ on the interval $[0,1]$, from which we can deduce
 the rate $\lambda_{n,k}$ at which any subset of $k$ lineages within a set of $n$ observed lineages 
@@ -407,6 +439,10 @@ coalesce:
 \begin{equation}
     \lambda_{n,k} = \int_{0}^{1}{x^{k-2}(1-x)^{n-k}\,\Lambda(\mathrm{d} x)}
 \end{equation}
+
+The beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} is a specific type of Lambda-coalescent. 
+Was used in \citep{Hoscheit2019} and \citep{Menardo2021}. 
+David's paper on inference of multiple mergers while dating a pathogen phylogeny \citep{Helekal2024}.
 
 The Beta$(2-\alpha,\alpha)$-coalescent model \citep{schweinsbergCoalescentProcessesObtained2003}
 has a single parameter $\alpha \in [0,2]$ and is defined as:
@@ -434,12 +470,7 @@ All code and data needed to replicate the results are included in the ``run'' di
 
 \section{Discussion}
 
-Coalescent model \citep{Kingman1982,Kingman1982a}.
-Work by Li and Fraser \citep{Li2017,Fraser2017}.
-Lambda-coalescent models \citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,donnellyParticleRepresentationsMeasureValued1999}. 
-Beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} is a specific type of Lambda-coalescent. 
-Was used in \citep{Hoscheit2019} and \citep{Menardo2021}. 
-David's paper on inference of multiple mergers while dating a pathogen phylogeny \citep{Helekal2024}.
+Something about Xi coalescent here of before.
 
 \section*{Acknowledgements}
 
