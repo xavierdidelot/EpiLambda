@@ -465,10 +465,8 @@ and $\alpha=0$ for which the phylogeny is always star-shaped.
 
 The exclusive coalescent probability in the Negative-Binomial case 
 given by Equation \eqref{eq:NegBinExclusiveProb} could be used as the $\lambda_{n,k}$.
-Figure \ref{fig:tree} shows examples of trees simulated for a sample of size $n=20$ and
-with constant population size $N_t=40$. As the dispersion parameter increases from $r=0.1$
-to $r=10$ multimerger events become less and less likely and large, and the
-time to the most recent common ancestor increases.
+Figure \ref{fig:trees} shows examples of trees simulated for a sample of size $n=20$ and
+with constant population size $N_t=40$. 
 
 \begin{figure}[!t]
 \begin{center}
@@ -476,8 +474,25 @@ time to the most recent common ancestor increases.
 \end{center}
 \caption{Example of trees simulated under our lambda-coalescent with $r=0.1$ (A),
 $r=1$ (B), $r=5$ (C) and $r=10$ (D).
-\label{fig:tree}}
+\label{fig:trees}}
 \end{figure}
+
+Figure \ref{fig:stats} shows summary statistics for 10,000 trees simulated in the same conditions
+as the individual trees shown in Figure \ref{fig:trees}. 
+As the dispersion parameter increases from $r=0.1$
+to $r=10$ multimerger events become less and less likely and large. Simultaneously, the
+time to the most recent common ancestor increases, as well as the stemminess of the tree 
+(ie the proportion of branch lengths in non-terminal branches).
+
+
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[width=15cm]{../run/figureStats.pdf}
+\end{center}
+\caption{Summary statistics for trees simulated under our lambda-coalescent with $r=0.1$, $r=1$, $r=5$ and $r=10$, namely the time to the most recent common ancestor (A), stemminess (B), number of multimergers (C) and the size of the largest multimerger (D).
+\label{fig:stats}}
+\end{figure}
+
 
 
 \section{Implementation}
