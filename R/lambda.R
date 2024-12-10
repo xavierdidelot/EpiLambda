@@ -76,3 +76,17 @@ beta_psize=function(n,alpha) {
 beta_simtree=function(n,alpha) {
   lambda_simtree(n,function(n,k) beta_lambda(n,k,alpha=alpha))
 }
+
+#' Simulation from new lambda-coalescent model
+#'
+#' @param n Number of lineages
+#' @param nt Population size parameter
+#' @param r Dispersion parameter
+#'
+#' @return Simulated phylogeny
+#' @export
+#'
+new_simtree=function(n,nt,r) {
+  lambda=function(n,k) negbin_exclusive(k=k,n=n,nt=nt,r=r)
+  lambda_simtree(n,lambda)
+}

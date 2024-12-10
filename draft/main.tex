@@ -326,6 +326,7 @@ The falling factorial moments of $X \sim \text{Beta-Binomial}(\alpha,\beta)$ are
 p_{k,t}=
 %\prod_{i=1}^{k-1}\frac{r+i}{N_t r+i}=
 \frac{\mathrm{B}(N_t r+1,r+k)}{\mathrm{B}(r+1,N_t r+k)}
+\label{eq:NegBinInclusiveProb}
 \end{equation}
 
 By injecting the probability mass function of a beta-binomial distribution in Equation 
@@ -334,6 +335,7 @@ the exclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
 p_{n,k,t}=\frac{N_t \mathrm{B}(k+r, n-k+N_t r-r)}{\mathrm{B}(r, N_t r-r)}
+\label{eq:NegBinExclusiveProb}
 \end{equation}
 
 It is interesting to note that as for the Poisson case, the inclusive and exclusive coalescence probabilities do not depend on the size $N_{t+1}$ of the population at time $t+1$.
@@ -460,6 +462,19 @@ from which we can deduce that:
 Special cases include $\alpha=2$ corresponding to the Kingman coalescent,
 $\alpha=1$ which is known as the Bolthausen-Sznitman coalescent
 and $\alpha=0$ for which the phylogeny is always star-shaped.
+
+The exclusive coalescent probability in the Negative-Binomial case 
+(Equation \ref{eq:NegBinExclusiveProb}) could be used as the $\lambda_{n,k}$.
+Figure \ref{fig:tree} shows an example with $n=20$, $N_t=40$ and $r=0.5$.
+
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[width=15cm]{../run/tree.pdf}
+\end{center}
+\caption{Tree example
+\label{fig:tree}}
+\end{figure}
+
 
 \section{Implementation}
 

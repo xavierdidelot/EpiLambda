@@ -1,0 +1,6 @@
+set.seed(0)
+pdf('tree.pdf')
+plot(new_simtree(n=20,nt=40,r=0.5))
+axisPhylo(1)
+dev.off()
+system('open tree.pdf')
