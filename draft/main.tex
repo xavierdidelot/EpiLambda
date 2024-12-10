@@ -36,7 +36,7 @@
 %\renewcommand\footnote[2][]{\relax}
 
 \begin{document}
-{\Large Coalescent process for epidemic models with superspreading}
+{\Large Coalescent process for infectious disease outbreaks with superspreading}
 
 %Journal target:  Journal of Theoretical Biology? Theoretical Population Biology?
 
@@ -49,10 +49,10 @@ $^2$ Department of Statistics, University of Warwick, United Kingdom\\\\
 $^*$ Corresponding author. Tel: 0044 (0)2476 572827. Email: \verb+xavier.didelot@gmail.com+
 
 \vspace*{2cm}
-Running title: Coalescent for epidemic with superspreading
+Running title: Coalescent for outbreaks with superspreading
 
 \vspace*{2cm}
-Keywords: infectious disease epidemiology modelling; offspring distribution; superspreading; lambda-coalescent model; multiple mergers
+Keywords: infectious disease epidemiology modelling; offspring distribution; superspreading; outbreaks; lambda-coalescent model; multiple mergers
 
 %\newpage
 %\section*{Abstract}
@@ -61,18 +61,50 @@ Keywords: infectious disease epidemiology modelling; offspring distribution; sup
 \newpage
 \section{Introduction}
 
-Superspreading in infectious disease epidemiology \citep{Lloyd-Smith2005}.
-For example SARS-CoV-2 superspreading \citep{Wang2020,lemieuxPhylogeneticAnalysisSARSCoV22021,gomez-carballaSuperspreadingEmergenceCOVID192021}.
-Coalescent model \citep{Kingman1982,Kingman1982a}.
-Work by Li and Fraser \citep{Li2017,Fraser2017}.
-Lambda-coalescent models \citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,donnellyParticleRepresentationsMeasureValued1999}. 
-Beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} is a specific type of Lambda-coalescent. 
-Was used in \citep{Hoscheit2019} and \citep{Menardo2021}. 
-David's paper on inference of multiple mergers while dating a pathogen phylogeny \citep{Helekal2024}.
+An outbreak of an infectious disease typically starts when a single or a small number
+of infected individuals appear within a susceptible population. Each infected individual
+may come in contact and infected each of the susceptible individuals, who will then
+become infected in their turn and spread the disease further. Most infectious disease
+modelling theory describes situations where the disease is at an equilibrium, when the number
+of infected individuals is high and/or with a significant part of the population already infected
+\citep{Anderson1991,keeling2008modeling}. 
+Here however we focus on the early stages of an epidemic, where the number of 
+infected individuals is small and the number of susceptibles relatively high and unchanging.
+In this situation it is useful to think about the number of infections that each newly infected
+individual is likely to cause, and the probabilistic distribution for this number is often called
+the offspring distribution \citep{Grassly2008}. 
+The mean of the offspring distribution is called the basic
+reproduction number $R_0$ and has been given much attention especially since
+it determines how likely the outbreak is to spread, and how much effort would be needed
+to bring it under control \citep{fraserFactorsThatMake2004}. 
+
+If we consider that all
+individuals are infectious for the same duration and with the same infectiousness,
+the offspring distribution is Poisson distributed with mean $R_0$, which means that the variance
+of the offspring distribution is also $R_0$. We would then say that there is no transmission
+heterogeneity. However, in practice there are many reasons why this may not be the case,
+with some individuals being infectious for longer, or being more infectious than others, or 
+having more contacts with susceptibles, or being less symptomatic and therefore less likely
+to reduce contact numbers, etc. All these factors cause the offspring distribution to be more 
+dispersed than it would otherwise be, that is to have a variance greater than its mean $R_0$. 
+A frequent choice to capture this overdispersion is to model the offspring distribution
+using a Negative-Binomial distribution with mean $R_0$ and dispersion parameter $r$
+\citep{Lloyd-Smith2005,Grassly2008}. When $r$ is close to zero the variance is high compared to the mean,
+whereas when $r$ is high the variance becomes close to the mean. This transmission heterogeneity
+is often called superspreading, although this is perhaps misleading
+as it is the rule rather than the exception of how infectious disease spread. Superspreading has
+indeed been described in many diseases \citep{woolhouseHeterogeneitiesTransmissionInfectious1997,
+steinSuperspreadersInfectiousDiseases2011,wangSuperspreadingHeterogeneityTransmission2021}, 
+and most recently for 
+SARS-CoV-2 \citep{Wang2020,lemieuxPhylogeneticAnalysisSARSCoV22021,gomez-carballaSuperspreadingEmergenceCOVID192021}.
+
+In this study we consider the transmission tree 
 
 \section{General case}
 
-Discrete time $t$. Non-overlapping generations of infected individuals. At time $t$ there are $N_t$ infected individuals. Each of them creates a number $s_{t,i}$ of secondary infections at time $t+1$, following the offspring distribution $\alpha_t(s)$. The mean of this distribution is the basic reproduction number $R_t$ and the variance is $V_t$. We have:
+Let time be measured in discrete units and denoted $t$. Each discrete value of $t$ correspond to a unique non-overlapping 
+generations of infected individuals, so that individuals infected at $t$ will have offspring at $t+1$, etc. 
+Let $N_t$ denote the number of infectious individuals at time $t$. Each of them creates a number $s_{t,i}$ of secondary infections at time $t+1$, following the offspring distribution $\alpha_t(s)$. The mean of this distribution is the basic reproduction number $R_t$ and the variance is $V_t$. We have:
 
 \begin{equation}
 N_{t+1}=\sum_{i=1}^{N_t} s_{t,i}
@@ -401,6 +433,13 @@ at \url{https://github.com/xavierdidelot/EpiLambda} for R version 3.5 or later.
 All code and data needed to replicate the results are included in the ``run'' directory of the \emph{EpiLambda} repository.
 
 \section{Discussion}
+
+Coalescent model \citep{Kingman1982,Kingman1982a}.
+Work by Li and Fraser \citep{Li2017,Fraser2017}.
+Lambda-coalescent models \citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,donnellyParticleRepresentationsMeasureValued1999}. 
+Beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} is a specific type of Lambda-coalescent. 
+Was used in \citep{Hoscheit2019} and \citep{Menardo2021}. 
+David's paper on inference of multiple mergers while dating a pathogen phylogeny \citep{Helekal2024}.
 
 \section*{Acknowledgements}
 
