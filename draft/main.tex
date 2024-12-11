@@ -446,11 +446,11 @@ coalesce:
     \lambda_{n,k} = \int_{0}^{1}{x^{k-2}(1-x)^{n-k}\,\Lambda(\mathrm{d} x)}
 \end{equation}
 
-The beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} is a specific type of Lambda-coalescent. 
+The beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} is a 
+specific type of lambda-coalescent. 
 Was used in \citep{Hoscheit2019} and \citep{Menardo2021}. 
 David's paper on inference of multiple mergers while dating a pathogen phylogeny \citep{Helekal2024}.
-
-The Beta$(2-\alpha,\alpha)$-coalescent model \citep{schweinsbergCoalescentProcessesObtained2003}
+The Beta$(2-\alpha,\alpha)$-coalescent model 
 has a single parameter $\alpha \in [0,2]$ and is defined as:
 
 \begin{equation}
@@ -463,15 +463,43 @@ from which we can deduce that:
 \lambda_{n,k}=\frac{\mathrm{B}(k-\alpha,n-k+\alpha)}{\mathrm{B}(2-\alpha,\alpha)}
 \end{equation}
 
-Special cases include $\alpha=2$ corresponding to the Kingman coalescent,
+Special cases of the beta-coalescent 
+include $\alpha=2$ corresponding to the Kingman coalescent,
 $\alpha=1$ which is known as the Bolthausen-Sznitman coalescent
 and $\alpha=0$ for which the phylogeny is always star-shaped.
 
+We now define our own lambda-coalescent based on the Negative-Binomial case describe previously.
+The ease of comparison with other coalescent models, we consider that time is continuous,
+and that the population size remains fixed at $N_t$. 
 The exclusive coalescent probability $p_{n,k,t}$ in the Negative-Binomial case 
-given by Equation \eqref{eq:NegBinExclusiveProb} can be used to determine the rate: 
+given by Equation \eqref{eq:NegBinExclusiveProb} can be used to determine the corresponding 
+rate of our lambda-coalescent: 
 \begin{equation}
 \lambda_{n,k}=-\mathrm{log}(1-p_{n,k,t})
 \end{equation}
+
+In order to compare our lambda-coalescent with other models, we consider 
+the distribution of the size $k$ of the next event among
+a set of $n$ lineages. For any lambda-coalescent this can be computed as:
+
+\begin{equation}
+p(k|n)=\frac{\binom{n}{k}\lambda_{n,k}}{\sum_{i=2}^n \binom{n}{i}\lambda_{n,i}}
+\end{equation}
+
+Figure \ref{fig:compare} compares this distribution for $n=10$ in the Beta-coalescent with 
+parameter $\alpha \in \{0.5,1,1.5\}$ and for our lambda-coalescent with parameters
+$N_t \in \{15,25,50\}$ and $r \in \{0.1,0.5,1\}$.
+
+\begin{figure}[!t]
+\begin{center}
+\includegraphics[width=15cm]{../run/figureCompare.pdf}
+\end{center}
+\caption{Distribution of the size of the next event among a set of $n=10$ lineages, 
+compared between the Beta-coalescent and our lambda-coalescent model 
+with various parameters.
+\label{fig:compare}}
+\end{figure}
+
 Figure \ref{fig:trees} shows examples of trees simulated for a sample of size $n=20$ and
 with constant population size $N_t=40$. 
 
@@ -511,6 +539,10 @@ All code and data needed to replicate the results are included in the ``run'' di
 
 \section{Discussion}
 
+Our lambda-coalescent could be defined in a varying population size and/or with
+temporally offset leaves following the same approach as previously described for
+the beta-coalescent \citep{Hoscheit2019}.
+
 Either here of before discuss the Xi-coalescent models which admit multiple 
 simultaneous mergers \citep{schweinsbergCoalescentsSimultaneousMultiple2000}.
 
@@ -518,7 +550,7 @@ simultaneous mergers \citep{schweinsbergCoalescentsSimultaneousMultiple2000}.
 
 We acknowledge funding from the National Institute for Health Research (NIHR) Health Protection Research Unit in Genomics and Enabling Data.
 
-\newpage
+\clearpage
 \bibliographystyle{elsarticle-harv}
 %\bibliography{biblio,/Users/u1775021/all.bib}
 \bibliography{biblio}
