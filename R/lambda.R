@@ -87,6 +87,6 @@ beta_simtree=function(n,alpha) {
 #' @export
 #'
 new_simtree=function(n,nt,r) {
-  lambda=function(n,k) negbin_exclusive(k=k,n=n,nt=nt,r=r)
+  lambda=function(n,k) return(-log1p(-negbin_exclusive(k=k,n=n,nt=nt,r=r)))
   lambda_simtree(n,lambda)
 }

@@ -192,7 +192,7 @@ $(X_{t,1}, \dots, X_{t, N_t})$ consists of $n$ individuals sampled from generati
 \subsection{Complementarity of exclusive coalescence probabilities}
 
 If we consider one of the lines observed amongst a set of $n$, it can either remain uncoalesced
-(with probability $p_{n1t}$) or coalesce in an event of size $k$ (with probability $p_{n,k,t}$) with any set of $k-1$ lines among the $n-1$ other lines, leading to the following complementarity equation: 
+(with probability $p_{n,1,t}$) or coalesce in an event of size $k$ (with probability $p_{n,k,t}$) with any set of $k-1$ lines among the $n-1$ other lines, leading to the following complementarity equation: 
 
 \begin{equation}
 \sum_{k=1}^n \binom{n-1}{k-1} p_{n,k,t} =1
@@ -292,6 +292,7 @@ lines, in a population of size $N_t=10$, $N_t=20$ or $N_t=30$.
 \caption{Inclusive and exclusive coalescence probabilities for the Poisson case.
 \label{fig:pois}}
 \end{figure}
+\clearpage
 
 \section{Negative-Binomial case}
 
@@ -312,7 +313,10 @@ and similarly to the Poisson$(\lambda)$ offspring distribution identify the cond
 			& = \binom{N_{t+1}}{s} \frac{\mathrm{B}(s + r, N_{t+1} - s + (N_t-1)r)}{\mathrm{B}(r, (N_t-1)r)},
 	\end{align}
 }
-that is $S_{t,1} \bigg| \bigg(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg) \sim \text{Beta-Binomial}(r, (N_t - 1)r)$.
+that is 
+\begin{equation}
+S_{t,1} \bigg| \bigg(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg) \sim \text{Beta-Binomial}(r, (N_t - 1)r).
+\end{equation}
 
 The falling factorial moments of $X \sim \text{Beta-Binomial}(\alpha,\beta)$ are \citep{Tripathi1994}:
 
@@ -409,7 +413,7 @@ for several epidemiological models, assuming a large population at equilibrium.
 For each model they use the equation $N_e=N/\sigma^2$ to relate the effective population
 size $N_e$ to the actual population size $N$ and the variance $\sigma^2$ in the number
 of offspring. This relationship was first established by \citet{Kingman1982} to
-apply the coalescent model to Cannings exchangeable models. 
+apply the coalescent model to Cannings exchangeable models \citep{Cannings1974}. 
 From Equation \eqref{eq:negbinapprox} we can take $R_t=1$ to achieve 
 equilibrium of the population size and $r=R_t^2/(V_t-R_t)=1/(V_t-1)$ to deduce 
 the equivalent $p_{2,t}=V_t/N_t$. 
@@ -463,8 +467,11 @@ Special cases include $\alpha=2$ corresponding to the Kingman coalescent,
 $\alpha=1$ which is known as the Bolthausen-Sznitman coalescent
 and $\alpha=0$ for which the phylogeny is always star-shaped.
 
-The exclusive coalescent probability in the Negative-Binomial case 
-given by Equation \eqref{eq:NegBinExclusiveProb} could be used as the $\lambda_{n,k}$.
+The exclusive coalescent probability $p_{n,k,t}$ in the Negative-Binomial case 
+given by Equation \eqref{eq:NegBinExclusiveProb} can be used to determine the rate: 
+\begin{equation}
+\lambda_{n,k}=-\mathrm{log}(1-p_{n,k,t})
+\end{equation}
 Figure \ref{fig:trees} shows examples of trees simulated for a sample of size $n=20$ and
 with constant population size $N_t=40$. 
 
