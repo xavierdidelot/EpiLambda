@@ -90,3 +90,19 @@ new_simtree=function(n,nt,r) {
   lambda=function(n,k) return(-log1p(-negbin_exclusive(k=k,n=n,nt=nt,r=r)))
   lambda_simtree(n,lambda)
 }
+
+#' Size distribution for new lambda-coalescent model
+#'
+#' @param n Number of lineages
+#' @param nt Population size parameter
+#' @param r Dispersion parameter
+#'
+#' @return Distribution of size of the coalescence event
+#' @export
+#
+new_psize=function(n,nt,r) {
+  lambda=function(n,k) return(-log1p(-negbin_exclusive(k=k,n=n,nt=nt,r=r)))
+  v=lambda(n,k=2:n)*choose(n,2:n)
+  v=v/sum(v)
+  return(v)
+}
