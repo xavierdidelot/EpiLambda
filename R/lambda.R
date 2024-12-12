@@ -17,7 +17,7 @@ lambda_simtree=function(n,lambda) {
     l=length(tocoal)
     v=lambda(l,k=2:l)*choose(l,2:l)
     dt=rexp(1,rate=sum(v))
-    ll=ll+pexp(dt,sum(v),log.p=T)
+    ll=ll+dexp(dt,sum(v),log=T)
     if (l==2) siz=2 else {siz=sample(2:l,1,prob=v);ll=ll+log(v[siz-1]/sum(v))}
     if (siz<l) new=nn+1 else new=n+1#this is the root
     w=sample(tocoal,siz)
@@ -62,7 +62,7 @@ lambda_loglik=function(t,lambda) {
     l=lins[i]
     v=lambda(l,k=2:l)*choose(l,2:l)
     dt=dts[i]
-    ll=ll+pexp(dt,sum(v),log.p=T)
+    ll=ll+dexp(dt,sum(v),log=T)
     if (i==length(lins)) siz=l else siz=l-lins[i+1]+1
     if (l>2) {
       ll=ll+log(v[siz-1]/sum(v))
@@ -137,6 +137,19 @@ beta_loglik=function(t,alpha) {
 new_simtree=function(n,nt,r) {
   lambda=function(n,k) return(-log1p(-negbin_exclusive(k=k,n=n,nt=nt,r=r)))
   lambda_simtree(n,lambda)
+}
+
+#' MLE for beta-coalescent model
+#'
+#' @param t Tree
+#'
+#' @return Log-likelihood
+#' @export
+#'
+beta_mle=function(t) {
+  f=function(alpha) -beta_loglik(t,alpha)
+  o=optim(1,f,method='Brent',lower=0,upper=2)
+  return(o$par)
 }
 
 #' Size distribution for new lambda-coalescent model

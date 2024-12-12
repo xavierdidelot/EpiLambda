@@ -2,6 +2,7 @@
 
 export(beta_lambda)
 export(beta_loglik)
+export(beta_mle)
 export(beta_psize)
 export(beta_simtree)
 export(compare_simu)
