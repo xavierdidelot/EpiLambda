@@ -36,16 +36,17 @@
 %\renewcommand\footnote[2][]{\relax}
 
 \begin{document}
-{\Large Ancestry process for infectious disease outbreaks with superspreading}
+{\Large Ancestral process for infectious disease outbreaks with superspreading}
 
 %Journal target:  Journal of Theoretical Biology? Theoretical Population Biology?
 
 \vspace*{2cm}
-Xavier Didelot$^{1,2,*}$, Ian Roberts$^{2}$, ...
+Xavier Didelot$^{1,2,*}$, David Helekal$^{3}$, Ian Roberts$^{2}$, ...
 
 \vspace*{2cm}
-$^1$ School of Life Sciences, University of Warwick, United Kingdom\\\\
-$^2$ Department of Statistics, University of Warwick, United Kingdom\\\\
+$^1$ School of Life Sciences, University of Warwick, Coventry, United Kingdom\\\\
+$^2$ Department of Statistics, University of Warwick, Coventry, United Kingdom\\\\
+$^3$ Department of Immunology and Infectious Diseases, Harvard T. H. Chan School of Public Health, Boston, Massachusetts, USA\\\\
 $^*$ Corresponding author. Tel: 0044 (0)2476 572827. Email: \verb+xavier.didelot@gmail.com+
 
 \vspace*{2cm}
@@ -76,7 +77,7 @@ the offspring distribution \citep{Grassly2008}.
 The mean of the offspring distribution is called the basic
 reproduction number $R_0$ and has been given much attention especially since
 it determines how likely the outbreak is to spread, and how much effort would be needed
-to bring it under control \citep{fraserFactorsThatMake2004}. 
+to bring it under control \citep{fraserFactorsThatMake2004,fergusonStrategiesMitigatingInfluenza2006}. 
 
 If we consider that all
 individuals are infectious for the same duration and with the same infectiousness,
@@ -94,14 +95,14 @@ whereas when $r$ is high the variance becomes close to the mean. This transmissi
 is often called superspreading, although this is perhaps misleading
 as it is the rule rather than the exception of how infectious diseases spread. Superspreading has
 indeed been described in many diseases \citep{woolhouseHeterogeneitiesTransmissionInfectious1997,
-steinSuperspreadersInfectiousDiseases2011,wangSuperspreadingHeterogeneityTransmission2021}, 
+steinSuperspreadersInfectiousDiseases2011,kucharskiRoleSuperspreadingMiddle2015,
+wangSuperspreadingHeterogeneityTransmission2021}, 
 and most recently for 
-SARS-CoV-2 \citep{Wang2020,lemieuxPhylogeneticAnalysisSARSCoV22021,gomez-carballaSuperspreadingEmergenceCOVID192021}.
+SARS-CoV-2 \citep{Wang2020,lemieuxPhylogeneticAnalysisSARSCoV22021,gomez-carballaSuperspreadingEmergenceCOVID192021,duSystematicReviewMetaanalyses2022}.
 
 As an outbreak unfolds forward-in-time, a transmission tree is generated representing who-infected-whom,
 in which each node is an infected individual and points towards a number of nodes distributed according
-to the offspring distribution. Here we consider the reverse problem of the transmission ancestry, going backward-in-time,
-of a sample of infected individuals. 
+to the offspring distribution. Here we consider the reverse problem of the transmission ancestry, going backward-in-time, from a sample of infected individuals. 
 
 \section{General case}
 
@@ -125,7 +126,7 @@ Given full information about offspring counts from individuals in generation $t$
 		p_{k,t}({\bf s}_t, N_t)
 			& = \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \nonumber\\
 %			& = \sum_{i=1}^{N_t} \frac{s_{t,i}!}{(s_{t,i}-k)!} \frac{(N_{t+1}-k)!}{N_{t+1}!} \\
-			& = \sum_{i=1}^{N_t} \frac{\Gamma(s_{t,i}+1) \Gamma(N_{t+1}-k+1)}{\Gamma(s_{t,i}-k+1) \Gamma(N_{t+1})}.% \\
+			& = \sum_{i=1}^{N_t} \frac{\Gamma(s_{t,i}+1) \Gamma(N_{t+1}-k+1)}{\Gamma(s_{t,i}-k+1) \Gamma(N_{t+1})}% \\
 %			& = \sum_{i=1}^{N_t} \frac{s_{t,i} (s_{t,i} - 1) \dots (s_{t,i} - k + 1)}{N_{t+1} (N_{t+1} - 1) \dots (N_{t+1} - k+1)}.
 	\end{align}
 }
@@ -156,7 +157,7 @@ Let $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$.
 	\end{align}
 }
 
-The falling factorial moments $\mathbb{E} \big[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \big | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \big]$ in Equation \eqref{eq:GeneralInclusiveProb} can be readily obtained by differentiating the probability generating function of $S_{t,1} | (\sum_{i=1}^{N_t} S_{t,i} = N_{t+1})$.
+The $k$-th falling factorial moments $\mathbb{E} \big[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \big | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \big]$ in Equation \eqref{eq:GeneralInclusiveProb} can be readily obtained by differentiating the probability generating function of $S_{t,1} | (\sum_{i=1}^{N_t} S_{t,i} = N_{t+1})$.
 
 \subsection{Exclusive coalescence probability}
 
@@ -167,7 +168,7 @@ Given full information about offspring counts of the parents of sampled individu
 	\begin{align}
 		p_{n,k,t}({\bf x}_t, N_t)
 			& = \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \}\nonumber\\
-			& = \sum_{i=1}^{N_t} \frac{x_{t,i}!}{(x_{t,i} - k)!} \frac{(n-k)!}{n!} \mathbb{I} \{ x_{t,i} = k \}.
+			& = \sum_{i=1}^{N_t} \frac{x_{t,i}!}{(x_{t,i} - k)!} \frac{(n-k)!}{n!} \mathbb{I} \{ x_{t,i} = k \}
 	\end{align}
 
 Similarly to the exclusive coalescence probability, we can use this to evaluate the exclusive probability given $N_t$ and $N_{t+1}$ by summing over possible parent offspring configurations (for $k \leq n$),
@@ -183,7 +184,7 @@ Similarly to the exclusive coalescence probability, we can use this to evaluate 
 			& = \frac{N_t}{\binom{n}{k}} \mathbb{P}[X_{t,1} = k \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg]
 %				\sum_{{\bf x}_t^{-(1)} : \sum_{i=2}^n x_{t,i} = n-k} 
 				\underbrace{\sum_{{\bf x}_t^{-(1)} \in \mathbb{N}_0^{N_t - 1}} \mathbb{P}\bigg[{\bf X}_t^{-(1)} = {\bf x}_t^{-(1)} \bigg| \sum_{i=1}^{N_t} X_{t,i} = n, X_{t,1} = k \bigg]}_{=1} \nonumber\\
-			& = \frac{N_t}{\binom{n}{k}} \mathbb{P} \bigg[ X_{t,1} = k \bigg| \sum_{i=1}^{N_t} X_{i,t} = n \bigg]. \label{eq:GeneralExclusiveProb}
+			& = \frac{N_t}{\binom{n}{k}} \mathbb{P} \bigg[ X_{t,1} = k \bigg| \sum_{i=1}^{N_t} X_{i,t} = n \bigg] \label{eq:GeneralExclusiveProb}
 	\end{align}
 
 Note that $X_{t,i}$ does not follow the same offspring distribution as $S_{t,i}$.
@@ -224,7 +225,7 @@ We can show that it is indeed satisfied by the formula in Equation \eqref{eq:Gen
 Here the offspring distribution is $\alpha_t = \text{Poisson}(R_t)$.
 In this case, we have 
 	\begin{equation}
-		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Poisson}(N_t R_t),
+		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Poisson}(N_t R_t)
 	\end{equation}
 and conditional distribution
 {\allowdisplaybreaks
@@ -233,19 +234,20 @@ and conditional distribution
 			& = \frac{\displaystyle\mathbb{P}\bigg[S_{t,1} = s, \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]}{\displaystyle\mathbb{P}\bigg[\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]} \nonumber\\
 			& = \frac{\displaystyle\alpha_t (s) \, \mathbb{P}\bigg[ \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s \bigg]}{\displaystyle\mathbb{P}\bigg[\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]} \nonumber\\
 			& = \frac{\displaystyle\frac{R_t^s e^{-R_t}}{s!} \cdot \frac{((N_t - 1)R_t)^{N_{t+1} - s}}{(N_{t+1} - s)!}}{\displaystyle\frac{(N_t R_t)^{N_{t+1}} e^{-N_t R_t}}{N_{t+1}!}} \nonumber\\
-			& = \binom{N_{t+1}}{s} \left( \frac{1}{N_t} \right)^s \left( 1 - \frac{1}{N_t} \right)^{N_{t+1} - s}, 
+			& = \binom{N_{t+1}}{s} \left( \frac{1}{N_t} \right)^s \left( 1 - \frac{1}{N_t} \right)^{N_{t+1} - s}
 	\end{align}
 }
-that is
+
+This is the probability mass function of a Binomial distribution and therefore we deduce that:
 	\begin{equation}
-		S_{t,1} \bigg| \left(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}\right) \sim \text{Binomial}\left(N_{t+1}, \frac{1}{N_t}\right).
+		S_{t,1} \bigg| \left(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}\right) \sim \text{Binomial}\left(N_{t+1}, \frac{1}{N_t}\right)
 	\end{equation}
 
-The falling factorial moments of $X \sim \mathrm{Binomial}(n,p)$ are
+The $k$-th falling factorial moments of $X \sim \mathrm{Binomial}(n,p)$ are
 \citep{Potts1953}:
 
 \begin{equation}
-	\mathbb{E}\left[\frac{X!}{(X-r)!}\right]=\binom{n}{r} p^r r!
+	\mathbb{E}\left[\frac{X!}{(X-k)!}\right]=\binom{n}{k} p^k k!
 \end{equation}
 
 By injecting this formula into Equation \eqref{eq:GeneralInclusiveProb} 
@@ -253,19 +255,19 @@ we obtain the inclusive probability of coalescence for $k$ lines:
 \begin{equation}
 	\mathbb{E} \left[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
 		= \frac{1}{k!} \mathbb{E} \left[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
-		= \frac{1}{k!} \, \frac{N_{t+1}!}{(N_{t+1} - k)!} \left( \frac{1}{N_t} \right)^k.
+		= \frac{1}{k!} \, \frac{N_{t+1}!}{(N_{t+1} - k)!} \left( \frac{1}{N_t} \right)^k
 \end{equation}
 
 Consequently, the inclusive probability of coalescence for $k$ lines is
 \begin{equation}
-	p_{k,t}=\frac{1}{N_t^{k-1}}.\label{eq:PoisInclusiveProb}
+	p_{k,t}=\frac{1}{N_t^{k-1}}\label{eq:PoisInclusiveProb}
 \end{equation}
 
-By injecting the probability mass function of a binomial distribution in Equation 
+By injecting the probability mass function of a Binomial distribution in Equation 
 \eqref{eq:GeneralExclusiveProb} we deduce that 
 the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n \geq k)$ is
 	\begin{equation}
-		p_{n,k,t} = \frac{(N_t-1)^{n-k}}{N_t^{n-1}}.\label{eq:PoisExclusiveProb}
+		p_{n,k,t} = \frac{(N_t-1)^{n-k}}{N_t^{n-1}}\label{eq:PoisExclusiveProb}
 	\end{equation}
 	
 It is interesting to note that neither the inclusive nor the exclusive coalescence probability
@@ -285,14 +287,13 @@ Figure \ref{fig:pois} illustrates the inclusive and exclusive coalescence probab
 the Poisson case for a set of size $k=1$ to $k=10$ amongst a total of $n=10$ observed
 lines, in a population of size $N_t=10$, $N_t=20$ or $N_t=30$. 
 
-\begin{figure}[!t]
+\begin{figure}[!p]
 \begin{center}
 \includegraphics[width=15cm]{../run/figurePois.pdf}
 \end{center}
 \caption{Inclusive and exclusive coalescence probabilities for the Poisson case.
 \label{fig:pois}}
 \end{figure}
-\clearpage
 
 \section{Negative-Binomial case}
 
@@ -300,7 +301,7 @@ Here the offspring distribution is $\alpha_t=\text{Negative-Binomial}(r,p)$ with
 The resulting parameters for this distribution are $r=R_t^2/(V_t-R_t)$ and $p=R_t/V_t$.
 In this case, we have
 	\begin{equation}
-		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Negative-Binomial}(N_t r,p),
+		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Negative-Binomial}(N_t r,p)
 	\end{equation}
 and similarly to the Poisson$(\lambda)$ offspring distribution identify the conditional distribution of $S_{t,1} | \sum_{i=1}^{N_t} S_{t,i}$ as follows,
 
@@ -310,21 +311,23 @@ and similarly to the Poisson$(\lambda)$ offspring distribution identify the cond
 			& = \frac{\alpha_t(s) \cdot \mathbb{P} \bigg[\sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s \bigg]}{\mathbb{P}\bigg[\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]} \nonumber\\
 			& = \frac{\displaystyle\frac{\Gamma(r+s)}{s! \Gamma(r)} (1-p)^s p^r \cdot \frac{\Gamma\big((N_t - 1)r+(N_{t+1} - s)\big)}{(N_{t+1} - s)! \Gamma((N_t - 1) r)} (1-p)^{N_{t+1} - s} p^{(N_t-1)r}}{\displaystyle\frac{\Gamma(N_tr+N_{t+1})}{N_{t+1}! \Gamma(N_t r)} (1-p)^{N_{t+1}} p^{N_t r}} \nonumber\\
 			& = \frac{N_{t+1}!}{s! (N_{t+1} - s)!} \frac{\Gamma(r+s) \Gamma\big( (N_t - 1)r + (N_{t+1} - s) \big)}{\Gamma(N_t r + N_{t+1})} \frac{\Gamma(N_t r)}{\Gamma(r) \Gamma\big((N_t - 1)r \big)} \nonumber\\
-			& = \binom{N_{t+1}}{s} \frac{\mathrm{B}(s + r, N_{t+1} - s + (N_t-1)r)}{\mathrm{B}(r, (N_t-1)r)},
+			& = \binom{N_{t+1}}{s} \frac{\mathrm{B}(s + r, N_{t+1} - s + (N_t-1)r)}{\mathrm{B}(r, (N_t-1)r)}
 	\end{align}
 }
-that is 
-\begin{equation}
-S_{t,1} \bigg| \bigg(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg) \sim \text{Beta-Binomial}(r, (N_t - 1)r).
-\end{equation}
 
-The falling factorial moments of $X \sim \text{Beta-Binomial}(\alpha,\beta)$ are \citep{Tripathi1994}:
+\noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$. This is the probability mass function of Beta-Binomial and therefore we deduce that:
 
 \begin{equation}
-	\mathbb{E}\left[\frac{X!}{(X-r)!}\right]=\binom{n}{r} \frac{\mathrm{B}(\alpha+r,\beta)r!}{\mathrm{B}(\alpha,\beta)}
+S_{t,1} \bigg| \bigg(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg) \sim \text{Beta-Binomial}(r, (N_t - 1)r)
 \end{equation}
 
-\noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$, and injecting this formula into Equation \eqref{eq:GeneralInclusiveProb}, we deduce that the inclusive probability of coalescence for $k$ lines is:
+The $k$-th falling factorial moments of $X \sim \text{Beta-Binomial}(\alpha,\beta)$ are \citep{Tripathi1994}:
+
+\begin{equation}
+	\mathbb{E}\left[\frac{X!}{(X-k)!}\right]=\binom{n}{k} \frac{\mathrm{B}(\alpha+k,\beta)k!}{\mathrm{B}(\alpha,\beta)}
+\end{equation}
+
+Injecting this formula into Equation \eqref{eq:GeneralInclusiveProb}, we deduce that the inclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
 p_{k,t}=
@@ -359,7 +362,7 @@ behaves almost like the Poisson case. When $r$ is lower the dispersion of the
 offspring distribution increases, so that 
 both the inclusive and exclusive probabilities of larger multimerger events increase.
 
-\begin{figure}[!t]
+\begin{figure}[!p]
 \begin{center}
 \includegraphics[width=15cm]{../run/figureNegBin.pdf}
 \end{center}
@@ -369,11 +372,13 @@ both the inclusive and exclusive probabilities of larger multimerger events incr
 
 \section{Limit when the population size is large}
 
-Consider that $N_t$ is large. 
+If we consider that the population size $N_t$ is fixed and large, we can show the connections
+between our model and several previous studies.
 
 Show that inclusive probabilities $p_{k,t}$ for $k>2$ are small compared to $p_{2,t}$.
 
-Show that exclusive probabilities $p_{n,k,t}$ for $k>2$ is small compared to $p_{n,2,t}$, when $n<<N_t$.
+Show that exclusive probabilities $p_{n,k,t}$ for $k>2$ are small compared to $p_{n,2,t}$, 
+when $n<<N_t$.
 
 Show that inclusive and exclusive probabilities become equal, when $n<<N_t$ in exclusive probabilities.
 
@@ -443,7 +448,7 @@ the rate $\lambda_{n,k}$ at which any subset of $k$ lineages within a set of $n$
 coalesce:
 
 \begin{equation}
-    \lambda_{n,k} = \int_{0}^{1}{x^{k-2}(1-x)^{n-k}\,\Lambda(\mathrm{d} x)}
+    \lambda_{n,k} = \int_{0}^{1}{x^{k-2}(1-x)^{n-k}\,\Lambda(\mathrm{d} x)}\label{eq:lambda}
 \end{equation}
 
 The beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} is a 
@@ -455,9 +460,10 @@ has a single parameter $\alpha \in [0,2]$ and is defined as:
 
 \begin{equation}
 \Lambda(\mathrm{d}x)=\frac{x^{1-\alpha}(1-x)^{\alpha-1}}{\mathrm{B}(2-\alpha,\alpha)}\mathrm{d}x
+\label{eq:beta}
 \end{equation}
 
-from which we can deduce that:
+By combining Equations \eqref{eq:lambda} and \eqref{eq:beta} we can deduce that:
 
 \begin{equation}
 \lambda_{n,k}=\frac{\mathrm{B}(k-\alpha,n-k+\alpha)}{\mathrm{B}(2-\alpha,\alpha)}
@@ -468,9 +474,9 @@ include $\alpha=2$ corresponding to the Kingman coalescent,
 $\alpha=1$ which is known as the Bolthausen-Sznitman coalescent
 and $\alpha=0$ for which the phylogeny is always star-shaped.
 
-We now define our own lambda-coalescent based on the Negative-Binomial case describe previously.
+We now define our own lambda-coalescent based on the Negative-Binomial case described previously.
 For ease of comparison with other coalescent models, we consider that time is continuous
-and that the population size remains fixed at $N_t$. 
+and that the population size remains constant equal to $N_t$. 
 The exclusive coalescent probability $p_{n,k,t}$ in the Negative-Binomial case 
 given by Equation \eqref{eq:NegBinExclusiveProb} can be used to determine the corresponding 
 rate of our lambda-coalescent, if we consider that the probability of each event in discrete time
@@ -491,7 +497,7 @@ Figure \ref{fig:compare} compares this distribution for $n=10$ in the Beta-coale
 parameter $\alpha \in \{0.5,1,1.5\}$ and for our lambda-coalescent with parameters
 $N_t \in \{15,25,50\}$ and $r \in \{0.1,0.5,1\}$.
 
-\begin{figure}[!t]
+\begin{figure}[!p]
 \begin{center}
 \includegraphics[width=15cm]{../run/figureCompare.pdf}
 \end{center}
@@ -504,7 +510,7 @@ with various parameters.
 Figure \ref{fig:trees} shows examples of trees simulated for a sample of size $n=20$ and
 with constant population size $N_t=40$. 
 
-\begin{figure}[!t]
+\begin{figure}[!p]
 \begin{center}
 \includegraphics[width=15cm]{../run/figureTree.pdf}
 \end{center}
@@ -521,7 +527,7 @@ time to the most recent common ancestor increases, as well as the stemminess of 
 (ie the proportion of branch lengths in non-terminal branches).
 
 
-\begin{figure}[!t]
+\begin{figure}[!p]
 \begin{center}
 \includegraphics[width=15cm]{../run/figureStats.pdf}
 \end{center}
@@ -544,8 +550,12 @@ Our lambda-coalescent could be defined in a varying population size and/or with
 temporally offset leaves following the same approach as previously described for
 the coalescent \citep{Griffiths1994} and the beta-coalescent \citep{Hoscheit2019}.
 
-Either here of before discuss the Xi-coalescent models which admit multiple 
+The Xi-coalescent models admit multiple 
 simultaneous mergers \citep{schweinsbergCoalescentsSimultaneousMultiple2000}.
+
+Difference between transmission tree and phylogenetic tree \citep{Jombart2011}. 
+Modelling within-host evolution to bridge the gap \citep{Didelot2014,Didelot2017}.
+Superspreading individuals vs superspreading events \citep{Riley2003,Wallinga2004,hoAccountingPotentialOverdispersion2023}.
 
 \section*{Acknowledgements}
 
