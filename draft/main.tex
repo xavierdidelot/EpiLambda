@@ -102,7 +102,21 @@ SARS-CoV-2 \citep{Wang2020,lemieuxPhylogeneticAnalysisSARSCoV22021,gomez-carball
 
 As an outbreak unfolds forward-in-time, a transmission tree is generated representing who-infected-whom,
 in which each node is an infected individual and points towards a number of nodes distributed according
-to the offspring distribution. Here we consider the reverse problem of the transmission ancestry, going backward-in-time, from a sample of infected individuals. 
+to the offspring distribution. Here we consider the reverse problem of the transmission ancestry, going backward-in-time, from a sample of infected individuals, until reaching the last common 
+transmission ancestor of the whole sample. Given a sample of $n$ sampled individuals,
+we show how to calculate the probability that a given subset of size $k$ have the same infector,
+either inclusively (so that the remaining $n-k$ may also have the same infector or not)
+or exclusively (so that none of the remaining $n-k$ have the same infector). We start
+by considering the general case of an offspring distribution with arbitrary form, 
+and then the specific cases of 
+offspring distributions that follow a Poisson or a Negative-Binomial distribution.
+The main novelty of our approach is that we consider that the overall population size is small,
+but we show that if the population size is large, our results agree with several previous
+studies \citep{Volz2012a,koelleRatesCoalescenceCommon2012,Fraser2017}.
+Finally, we show how our results can be incorporated into a new lambda-coalescent model 
+\citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,
+donnellyParticleRepresentationsMeasureValued1999} and compare it with previously
+described models.
 
 \section{General case}
 
@@ -546,15 +560,18 @@ All code and data needed to replicate the results are included in the ``run'' di
 
 \section{Discussion}
 
-Our lambda-coalescent could be defined in a varying population size and/or with
-temporally offset leaves following the same approach as previously described for
+Our lambda-coalescent could be defined in a varying population size 
+following the same approach as previously described for
 the coalescent \citep{Griffiths1994} and the beta-coalescent \citep{Hoscheit2019}.
+Could also extend to temporally offset leaves 
+following work on the coalescent \citep{Drummond2003} and the beta-coalescent
+\citep{Hoscheit2019}.
 
 The Xi-coalescent models admit multiple 
 simultaneous mergers \citep{schweinsbergCoalescentsSimultaneousMultiple2000}.
 
 Difference between transmission tree and phylogenetic tree \citep{Jombart2011}. 
-Modelling within-host evolution to bridge the gap \citep{Didelot2014,Didelot2017}.
+Modelling within-host evolution to bridge the gap \citep{Didelot2014,Hall2015,Didelot2017}.
 Superspreading individuals vs superspreading events \citep{Riley2003,Wallinga2004,hoAccountingPotentialOverdispersion2023}.
 
 \section*{Acknowledgements}
