@@ -12,13 +12,16 @@ lambda_simtree=function(n,lambda) {
   nn=n+1
   tocoal=1:n
   curtime=0
+  ll=0
   while (length(tocoal)>1) {
     l=length(tocoal)
     v=lambda(l,k=2:l)*choose(l,2:l)
     dt=rexp(1,rate=sum(v))
-    if (l==2) siz=2 else siz=sample(2:l,1,prob=v)
+    ll=ll+pexp(dt,sum(v),log.p=T)
+    if (l==2) siz=2 else {siz=sample(2:l,1,prob=v);ll=ll+log(v[siz-1]/sum(v))}
     if (siz<l) new=nn+1 else new=n+1#this is the root
     w=sample(tocoal,siz)
+    ll=ll-lchoose(l,siz)
     curtime=curtime+dt
     dates[new]=curtime
     parents[w]=new
@@ -32,8 +35,41 @@ lambda_simtree=function(n,lambda) {
   t$edge=edge
   t$tip.label=1:n
   t$edge.length=dates[t$edge[,1]]-dates[t$edge[,2]]
+  t$ll=ll
   class(t)<-'phylo'
   return(t)
+}
+
+#' Log-likelihood function for lambda-coalescent model
+#'
+#' @param t Tree
+#' @param lambda Lambda function of (n,k)
+#'
+#' @return Log-likelihood
+#' @export
+#'
+lambda_loglik=function(t,lambda) {
+  ci=coalescent.intervals(multi2di(t))
+  lins=ci$lineages
+  dts=ci$interval.length
+  rem=which(dts==0)
+  if (length(rem)>0) {
+    lins=lins[-rem]
+    dts=dts[-rem]
+  }
+  ll=0
+  for (i in 1:length(lins)) {
+    l=lins[i]
+    v=lambda(l,k=2:l)*choose(l,2:l)
+    dt=dts[i]
+    ll=ll+pexp(dt,sum(v),log.p=T)
+    if (i==length(lins)) siz=l else siz=l-lins[i+1]+1
+    if (l>2) {
+      ll=ll+log(v[siz-1]/sum(v))
+      ll=ll-lchoose(l,siz)
+    }
+  }
+  return(ll)
 }
 
 #' Lambda function for Beta-coalescent
@@ -77,6 +113,18 @@ beta_simtree=function(n,alpha) {
   lambda_simtree(n,function(n,k) beta_lambda(n,k,alpha=alpha))
 }
 
+#' Log-likelihood function for beta-coalescent model
+#'
+#' @param t Tree
+#' @param alpha Alpha parameter
+#'
+#' @return Log-likelihood
+#' @export
+#'
+beta_loglik=function(t,alpha) {
+  lambda_loglik(t,function(n,k) beta_lambda(n,k,alpha=alpha))
+}
+
 #' Simulation from new lambda-coalescent model
 #'
 #' @param n Number of lineages
@@ -105,4 +153,18 @@ new_psize=function(n,nt,r) {
   v=lambda(n,k=2:n)*choose(n,2:n)
   v=v/sum(v)
   return(v)
+}
+
+#' Log-likelihood function for new lambda-coalescent model
+#'
+#' @param t Tree
+#' @param nt Population size parameter
+#' @param r Dispersion parameter
+#'
+#' @return Log-likelihood
+#' @export
+#'
+new_loglik=function(t,nt,r) {
+  lambda=function(n,k) return(-log1p(-negbin_exclusive(k=k,n=n,nt=nt,r=r)))
+  lambda_loglik(t,lambda)
 }

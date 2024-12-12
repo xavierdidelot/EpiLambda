@@ -4,7 +4,7 @@
 \alias{mixed_pois_2_exclusive}
 \title{Exclusive probability of coalescence of k lineages when the offspring distribution is Poisson}
 \usage{
-mixed_pois_2_exclusive(n, k, nt, log = F)
+mixed_pois_2_exclusive(n, k, nt, nt1, lambda, q, log = F)
 }
 \arguments{
 \item{n}{Number of observed lineages}
@@ -12,6 +12,12 @@ mixed_pois_2_exclusive(n, k, nt, log = F)
 \item{k}{Number of lineages to coalesce}
 
 \item{nt}{Population size at time t}
+
+\item{nt1}{Population size at time t+1}
+
+\item{lambda}{2-dimensional vector of Poisson rates}
+
+\item{q}{Probability of each emmission rate}
 
 \item{log}{Whether to return the log of the probability}
 }

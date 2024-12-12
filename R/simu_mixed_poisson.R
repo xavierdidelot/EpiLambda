@@ -1,7 +1,7 @@
 #' Simulation of coalescent probabilities using either rejection sampling or multinomial sampling
 #'
-#' @param rt Reproduction number
-#' @param vt Variance of offspring distribution (if equal to R_t then Poisson is used otherwise NegBin)
+#' @param lambda 2-dimensional vector of Poisson rates
+#' @param q Probability of each emmission rate
 #' @param nt Population size at time t
 #' @param nt1 Population size at time t+1
 #' @param type Either inclusive or exclusive
@@ -49,8 +49,8 @@ simul_pcoal_mixed_pois=function(lambda,q,nt,nt1=round(rt*nt),n=nt1,type='inclusi
 
 #' Comparison of simulated and calculated coalescent probabilities
 #'
-#' @param rt Reproduction number
-#' @param vt Variance of offspring distribution (if equal to R_t then Poisson is used otherwise NegBin)
+#' @param lambda 2-dimensional vector of Poisson rates
+#' @param q Probability of each emmission rate
 #' @param nt Population size at time t
 #' @param nt1 Population size at time t+1
 #' @param n Number of observed lineages
@@ -68,7 +68,7 @@ compare_simu_mix_pois_2=function(lambda,q,nt=10,nt1=20,n=15,type='inclusive',nre
   if (type=='inclusive') {
     p=sapply(1:nt1, function(x) mixed_pois_2_inclusive(x, nt, nt1, lambda, q))
   } else {
-    p=sapply(1:nt1, function(x) mixed_pois_2_exclusive(x, nt, nt1, lambda, q))
+    p=sapply(1:nt1, function(x) mixed_pois_2_exclusive(nt1, x, nt, nt1, lambda, q))
   }
 
   ret=cbind(s,p,s-p)

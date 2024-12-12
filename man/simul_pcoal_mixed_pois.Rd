@@ -16,6 +16,10 @@ simul_pcoal_mixed_pois(
 )
 }
 \arguments{
+\item{lambda}{2-dimensional vector of Poisson rates}
+
+\item{q}{Probability of each emmission rate}
+
 \item{nt}{Population size at time t}
 
 \item{nt1}{Population size at time t+1}
@@ -27,10 +31,6 @@ simul_pcoal_mixed_pois(
 \item{nrep}{Number of repeats to simulate}
 
 \item{method}{Which method to use for simulation, options are: rejection or multinomial}
-
-\item{rt}{Reproduction number}
-
-\item{vt}{Variance of offspring distribution (if equal to R_t then Poisson is used otherwise NegBin)}
 }
 \value{
 Vector of inclusive coalescent probabilities for number of lines from 1 to n

@@ -108,12 +108,15 @@ mixed_pois_2_inclusive=function(k,nt,nt1,lambda,q,log=F) {
 #' @param n Number of observed lineages
 #' @param k Number of lineages to coalesce
 #' @param nt Population size at time t
+#' @param nt1 Population size at time t+1
+#' @param lambda 2-dimensional vector of Poisson rates
+#' @param q Probability of each emmission rate
 #' @param log Whether to return the log of the probability
 #'
 #' @return Probability of coalescence
 #' @export
 #'
-mixed_pois_2_exclusive=function(n,k,nt,log=F) {
+mixed_pois_2_exclusive=function(n,k,nt,nt1,lambda,q,log=F) {
   stop('Mixed Poisson exclusive probability not added yet')
 }
 
