@@ -147,8 +147,8 @@ new_simtree=function(n,nt,r) {
 #' @export
 #'
 beta_mle=function(t) {
-  f=function(alpha) -beta_loglik(t,alpha)
-  o=optim(1,f,method='Brent',lower=0,upper=2)
+  f=function(alpha) beta_loglik(t,alpha)
+  o=optim(1,f,method='Brent',lower=0,upper=2,control=list(fnscale=-1))
   return(o$par)
 }
 
@@ -180,4 +180,32 @@ new_psize=function(n,nt,r) {
 new_loglik=function(t,nt,r) {
   lambda=function(n,k) return(-log1p(-negbin_exclusive(k=k,n=n,nt=nt,r=r)))
   lambda_loglik(t,lambda)
+}
+
+#' MLE for new lambda-coalescent model
+#'
+#' @param t Tree
+#' @param nt Optional, if provided only the mle of r will be computed
+#'
+#' @return Log-likelihood
+#' @export
+#'
+new_mle=function(t,nt) {
+  if (missing(nt)) {
+    f=function(p) {
+      if (p[1]<0 || p[2]<0) return(-1e10)
+      r=new_loglik(t,p[1],p[2])
+      if (is.na(r)||is.infinite(r)) return(-1e10)
+      return(r)
+      }
+    o=optim(c(Ntip(t)*2,1),f,method='Nelder-Mead',control=list(fnscale=-1))
+    return(o$par)
+  }
+  else
+  {
+    f=function(r) {r=new_loglik(t,nt,r);if (is.na(r)||is.infinite(r)) return(-1e10) else return(r)}
+    o=optim(1,f,method='Brent',lower=0,upper=100,control=list(fnscale=-1))
+    return(o$par)
+  }
+
 }
