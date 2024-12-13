@@ -4,15 +4,21 @@
 \alias{new_mle}
 \title{MLE for new lambda-coalescent model}
 \usage{
-new_mle(t, nt)
+new_mle(t, nt, r, ntbounds, rbounds)
 }
 \arguments{
 \item{t}{Tree}
 
 \item{nt}{Optional, if provided only the mle of r will be computed}
+
+\item{r}{Optional, if provided only the mle of nt will be computed}
+
+\item{ntbounds}{Optional, bounds for estimate of nt}
+
+\item{rbounds}{Optional, bounds for estimate of r}
 }
 \value{
-Log-likelihood
+Maximum likelihood estimator of parameters of the new lambda-coalescent model
 }
 \description{
 MLE for new lambda-coalescent model

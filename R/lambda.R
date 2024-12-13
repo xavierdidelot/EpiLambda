@@ -186,26 +186,48 @@ new_loglik=function(t,nt,r) {
 #'
 #' @param t Tree
 #' @param nt Optional, if provided only the mle of r will be computed
+#' @param r Optional, if provided only the mle of nt will be computed
+#' @param ntbounds Optional, bounds for estimate of nt
+#' @param rbounds Optional, bounds for estimate of r
 #'
-#' @return Log-likelihood
+#' @return Maximum likelihood estimator of parameters of the new lambda-coalescent model
 #' @export
 #'
-new_mle=function(t,nt) {
-  if (missing(nt)) {
-    f=function(p) {
-      if (p[1]<0 || p[2]<0) return(-1e10)
+new_mle=function(t,nt,r,ntbounds,rbounds) {
+  if (missing(ntbounds)) ntbounds=c(1,1000)
+  if (missing(rbounds)) rbounds=c(0,10)
+  if (missing(nt) && missing(r)) {
+    #Select good starting values for both parameters
+    nt=NA
+    r=NA
+    best=-Inf
+    ss=seq(0.05,0.95,0.1)
+    for (nts in ss*(ntbounds[2]-ntbounds[1])+ntbounds[1]) for (rs in ss*(rbounds[2]-rbounds[1])+rbounds[1]) {
+      v=new_loglik(t,nts,rs)
+      if (v>best) {best=v;nt=nts;r=rs}
+    }
+  }
+  if (!missing(r) && !missing(nt)) {
+    #Optimise both parameters
+    f1=function(p) {
+      if (p[1]<=ntbounds[1] || p[1]>=ntbounds[2] || p[2]<=rbounds[1] || p[2]>=rbounds[2]) return(-1e10)
       r=new_loglik(t,p[1],p[2])
       if (is.na(r)||is.infinite(r)) return(-1e10)
       return(r)
-      }
-    o=optim(c(Ntip(t)*2,1),f,method='Nelder-Mead',control=list(fnscale=-1))
+    }
+    o=optim(c(nt,r),f1,method='L-BFGS-B',lower=c(ntbounds[1],rbounds[1]),upper=c(ntbounds[2],rbounds[2]),control=list(fnscale=-1))
     return(o$par)
   }
-  else
-  {
-    f=function(r) {r=new_loglik(t,nt,r);if (is.na(r)||is.infinite(r)) return(-1e10) else return(r)}
-    o=optim(1,f,method='Brent',lower=0,upper=100,control=list(fnscale=-1))
+  if (missing(r)) {
+    #Optimise only nt
+    f2=function(r) {re=new_loglik(t,nt,r);if (is.na(re)||is.infinite(re)) return(-1e10) else return(re)}
+    o=optim(1,f2,method='Brent',lower=rbounds[1],upper=rbounds[2],control=list(fnscale=-1))
     return(o$par)
   }
-
+  if (missing(nt)) {
+    #Optimise only r
+    f3=function(nt) {re=new_loglik(t,nt,r);if (is.na(re)||is.infinite(re)) return(-1e10) else return(re)}
+    o=optim(Ntip(t),f3,method='Brent',lower=ntbounds[1],upper=ntbounds[2],control=list(fnscale=-1))
+    return(o$par)
+  }
 }
