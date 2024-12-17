@@ -29,6 +29,6 @@ data$alpha=factor(data$alpha,levels=unique(data$alpha))#forces order to remain a
 pdf('figureCompare.pdf')
 #ggplot(data, aes(k,p,fill=alpha))+geom_bar(stat="identity",position='dodge')+ scale_x_continuous(breaks=seq(2,n,1))+xlab('Size of next event')+ylab('Probability of event')
 ggplot(data, aes(k, alpha, fill=Probability)) + geom_tile()+scale_fill_viridis(limits=limits,breaks=limits[1]:limits[2],labels=c(1e-4,1e-3,1e-2,1e-1,1e0))+
-  scale_x_continuous(breaks=seq(2,n,1))+xlab('Size of next event')+ylab('')
+  scale_x_continuous(breaks=seq(2,n,1),expand = c(0, 0))+scale_y_discrete(expand = c(0, 0))+xlab('Size of next event')+ylab('')
 dev.off()
 system('open figureCompare.pdf')

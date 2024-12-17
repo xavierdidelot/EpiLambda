@@ -17,14 +17,10 @@ for (i in 1:100) {
   data=rbind(data,data.frame(nt=nt,r=r,ont=p1,or=p2,ent=p[1],er=p[2]))
 }
 
-p1<-ggplot(data,aes(x=nt,y=ont))+geom_point()
-p2<-ggplot(data,aes(x=r,y=or))+geom_point()
-p3<-ggplot(data,aes(x=nt,y=ent))+geom_point()
-p4<-ggplot(data,aes(x=r,y=er))+geom_point()
-pdf('figureEstim.pdf')
-p1+p2+p3+p4+plot_layout(ncol = 2, nrow = 2, guides = "collect")+plot_annotation(tag_levels = 'A')
-dev.off()
-system('open figureEstim.pdf')
+p1<-ggplot(data,aes(x=nt,y=ont))+geom_point()+xlab('True population size')+ylab('Estimated population size')+geom_smooth( )+scale_x_continuous(limits=c(100,500))+ scale_y_continuous(limits=c(100,500))
+p2<-ggplot(data,aes(x=r,y=or))+geom_point()+xlab('True dispersion')+ylab('Estimated dispersion')+geom_smooth( )+scale_x_continuous(limits=c(0,2))+ scale_y_continuous(limits=c(0,2))
+p3<-ggplot(data,aes(x=nt,y=ent))+geom_point()+xlab('True population size')+ylab('Estimated population size')+geom_smooth( )+scale_x_continuous(limits=c(100,500))+ scale_y_continuous(limits=c(100,500))
+p4<-ggplot(data,aes(x=r,y=er))+geom_point()+xlab('True dispersion')+ylab('Estimated dispersion')+geom_smooth( )+scale_x_continuous(limits=c(0,2))+ scale_y_continuous(limits=c(0,2))
 
 set.seed(3)
 nt=200
@@ -38,5 +34,16 @@ for (nts in ss*(ntbounds[2]-ntbounds[1])+ntbounds[1]) for (rs in ss*(rbounds[2]-
   v=new_loglik(t,nts,rs)
   dat=rbind(dat,data.frame(x=rs,y=nts,z=v))
 }
-ggplot(dat,aes(x = x, y = y, z = z)) +xlab('Dispersion parameter')+ylab('Population size')+
-   scale_x_continuous(limits=c(0,2), expand = c(0, 0))+ scale_y_continuous(limits=c(100,500), expand = c(0, 0))+geom_contour_filled()
+p5<-ggplot(dat,aes(x = x, y = y, z = z)) +labs(x='Dispersion parameter',y='Population size',fill='Likelihood')+
+  scale_x_continuous(limits=c(0,2), expand = c(0, 0))+ scale_y_continuous(limits=c(100,500), expand = c(0, 0))+geom_contour_filled()
+
+
+pdf('figureEstim.pdf',8,12)
+layout <- "
+AB
+CD
+EF"
+p1+p2+p3+p4+p5+ guide_area()+plot_layout(design=layout, guides = "collect")+plot_annotation(tag_levels = 'A')
+dev.off()
+system('open figureEstim.pdf')
+

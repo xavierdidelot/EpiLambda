@@ -497,6 +497,7 @@ rate of our lambda-coalescent, if we consider that the probability of each event
 is the result of the event happening at a constant rate in continuous time: 
 \begin{equation}
 \lambda_{n,k}=-\mathrm{log}(1-p_{n,k,t})
+\label{eq:ours}
 \end{equation}
 
 In order to compare our lambda-coalescent with other models, we consider 
@@ -521,6 +522,9 @@ with various parameters.
 \label{fig:compare}}
 \end{figure}
 
+Genealogies can be simulation from our lambda-coalescent model 
+defined in Equation \ref{eq:ours} using the same algorithm
+as for other lambda-coalescent models \citep{pitmanCoalescentsMultipleCollisions1999}.
 Figure \ref{fig:trees} shows examples of trees simulated for a sample of size $n=20$ and
 with constant population size $N_t=40$. 
 
@@ -540,7 +544,6 @@ to $r=10$ multimerger events become less and less likely and large. Simultaneous
 time to the most recent common ancestor increases, as well as the stemminess of the tree 
 (ie the proportion of branch lengths in non-terminal branches).
 
-
 \begin{figure}[!p]
 \begin{center}
 \includegraphics[width=15cm]{../run/figureStats.pdf}
@@ -549,7 +552,52 @@ time to the most recent common ancestor increases, as well as the stemminess of 
 \label{fig:stats}}
 \end{figure}
 
+\section{Parameter inference}
 
+Consider a genealogy $T$ with $n$ leaves and $c$ coalescent nodes, with $t_0=0$ the
+sampling time,
+$t_1,...,t_c$ the times of the coalescent nodes in increasing order and $k_i$ the number
+of lineages coalescing at time $t_i$. The number of lineages existing between
+time $t_{i-1}$ and $t_i$ is then $n_i=n-\sum_{j=1}^{i-1} k_j$.
+Under a lambda-coalescent model, the genealogy $T$ has likelihood:
+
+\begin{equation}
+p(T|\Lambda)=\prod_{i=1}^{c}\binom{n_i}{k_i}\lambda_{n_i,k_i}\exp\left(-\sum_{j=2}^{n_i}\binom{n_i}{j}\lambda_{n_i,j}(t_i-t_{i-1})\right)
+\label{eq:likelihood}
+\end{equation}
+
+Estimating the lambda measure in general is a difficult problem
+\citep{Koskela2018a,miropinaEstimatingLambdaMeasure2023}.
+Here however we focus on estimation under our lambda-coalescent model,
+where the $\lambda_{n,k}$ terms are given by Equation \eqref{eq:ours}.
+There are therefore two parameters to estimate which have direct and important 
+biological meaning:
+the effective population size $N_t$ (which remains constant) and the dispersion
+parameter $r$ of the Negative-Binomial offspring distribution. 
+We perform estimation simply by maximising the likelihood in Equation \eqref{eq:likelihood},
+using the Brent algorithm \citep{brent1971algorithm} when estimating a single parameter
+and the L-BFGS-B algorithm when \citep{byrd1995limited} estimating both parameters.
+
+\begin{figure}[!p]
+\begin{center}
+\includegraphics[width=15cm]{../run/figureEstim.pdf}
+\end{center}
+\caption{Maximum likelihood estimation of parameters
+\label{fig:estim}}
+\end{figure}
+
+We simulated 100 genealogies from our lambda-coalescent model each of which had
+$n=100$ leaves, with parameter $N_e$ drawn uniformly at random between 100 and 500
+and parameter $r$ drawn uniformly at random between 0.01 and 2.
+If we assume knowledge of the dispersion parameter, then estimating the population size 
+works really well (Figure \ref{fig:estim}A). Conversely we obtain good result when 
+estimating the dispersion parameter given a known population size 
+(Figure \ref{fig:estim}B). However, attempting to estimate both parameters at the same
+time performed significantly less well (Figures \ref{fig:estim}C and D). 
+To illustrate the cause of this, we consider a simulation for which the true $N_t$ was 200
+and the true $r$ was 0.5, and we construct the likelihood surface (Figure \ref{fig:estim}E).
+This shows a strong inverse tradeoff between the two parameters, which explains why
+one can be estimated given the other, but not jointly.
 
 \section{Implementation}
 
@@ -557,6 +605,8 @@ We implemented the analytical methods described in this paper in a
 new R package entitled \emph{EpiLambda} which is available
 at \url{https://github.com/xavierdidelot/EpiLambda} for R version 3.5 or later. 
 All code and data needed to replicate the results are included in the ``run'' directory of the \emph{EpiLambda} repository.
+The R package \verb+ape+ was used to store, manipulate and visualise phylogenetic trees
+\citep{Paradis2019}.
 
 \section{Discussion}
 
