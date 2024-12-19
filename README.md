@@ -24,14 +24,17 @@ library(EpiLambda)
 ## Example
 
 Consider that the offspring distribution is Negative-Binomial with
-dispersion parameter $r=0.5$. The population size at time $t$ is
-$N_t=10$. The probability that $k=5$ lines existing at time $t+1$
-coalesce together at time $t$ is given by:
+dispersion parameter $r=0.5$. To simulate the ancestry of a sample of
+size 20 in a population of size 40:
 
 ``` r
-negbin_inclusive(k=5,nt=10,r=0.5)
-#> [1] 0.01953125
+t=new_simtree(n=20,nt=40,r=0.5)
+plot(t)
+axisPhylo(1)
+title(xlab='Generations since present')
 ```
+
+![](man/figures/unnamed-chunk-3-1.png)<!-- -->
 
 ## More information and getting help
 
