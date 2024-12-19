@@ -20,6 +20,7 @@
 \hyphenpenalty=10000
 \pretolerance=10000
 \usepackage{lineno}
+\linespread{1.5}
 
 % Line numbering works around align environment without requiring paragraph break
 \let\oldalign\align
@@ -41,12 +42,12 @@
 %Journal target:  Journal of Theoretical Biology? Theoretical Population Biology?
 
 \vspace*{2cm}
-Xavier Didelot$^{1,2,*}$, David Helekal$^{3}$, Ian Roberts$^{2}$, ...
+Xavier Didelot$^{1,2,*}$, David Helekal$^{3}$, Ian Roberts$^{2}$
 
 \vspace*{2cm}
-$^1$ School of Life Sciences, University of Warwick, Coventry, United Kingdom\\\\
-$^2$ Department of Statistics, University of Warwick, Coventry, United Kingdom\\\\
-$^3$ Department of Immunology and Infectious Diseases, Harvard T. H. Chan School of Public Health, Boston, Massachusetts, USA\\\\
+$^1$ School of Life Sciences, University of Warwick, Coventry, United Kingdom\\
+$^2$ Department of Statistics, University of Warwick, Coventry, United Kingdom\\
+$^3$ Department of Immunology and Infectious Diseases, Harvard T. H. Chan School of Public Health, Boston, Massachusetts, USA\\
 $^*$ Corresponding author. Tel: 0044 (0)2476 572827. Email: \verb+xavier.didelot@gmail.com+
 
 \vspace*{2cm}
@@ -55,9 +56,24 @@ Running title: Ancestry for outbreaks with superspreading
 \vspace*{2cm}
 Keywords: infectious disease epidemiology modelling; offspring distribution; superspreading; outbreaks; lambda-coalescent model; multiple mergers
 
-%\newpage
-%\section*{Abstract}
-%TODO
+\newpage
+\section*{Abstract}
+
+When an infectious disease outbreak is of relatively small size, describing the ancestry
+of a sample of infected individuals is difficult because most ancestral models assume
+large population sizes. Given a set of sampled individuals, 
+we show that it is possible to express exactly
+the probability that a subset of them have the same infector, either inclusively
+(so that other sampled individuals may have the same infector too) or exclusively 
+(so that they may not).
+To compute these probabilities requires knowledge of the offspring distribution, 
+which determines how many infections each infected individual causes. 
+We consider transmission both without and with superspreading, in the form of a 
+Poisson and Negative-Binomial offspring distribution, respectively. 
+We show how our results can be incorporated into a new lambda-coalescent model
+which allows multiple lineages to coalesce together. We compare this model
+with previously proposed alternatives, and advocate the use of this new model
+for future studies of small outbreaks.
 
 \newpage
 \section{Introduction}
@@ -236,12 +252,12 @@ We can show that it is indeed satisfied by the formula in Equation \eqref{eq:Gen
 	
 \section{Poisson case}
 
-Here the offspring distribution is $\alpha_t = \text{Poisson}(R_t)$.
-In this case, we have 
+In this section we consider that the offspring distribution is $\alpha_t = \text{Poisson}(R_t)$.
+In this case, we have: 
 	\begin{equation}
 		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Poisson}(N_t R_t)
 	\end{equation}
-and conditional distribution
+and the conditional distribution:
 {\allowdisplaybreaks
 	\begin{align}
 		\mathbb{P}\bigg[S_{t,1} = s \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]
@@ -254,7 +270,7 @@ and conditional distribution
 
 This is the probability mass function of a Binomial distribution and therefore we deduce that:
 	\begin{equation}
-		S_{t,1} \bigg| \left(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}\right) \sim \text{Binomial}\left(N_{t+1}, \frac{1}{N_t}\right)
+		S_{t,1} \bigg| \left(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1}\right) \sim \text{Binomial}\left(N_{t+1}, \frac{1}{N_t}\right)\label{eq:binomial}
 	\end{equation}
 
 The $k$-th falling factorial moments of $X \sim \mathrm{Binomial}(n,p)$ are
@@ -264,7 +280,8 @@ The $k$-th falling factorial moments of $X \sim \mathrm{Binomial}(n,p)$ are
 	\mathbb{E}\left[\frac{X!}{(X-k)!}\right]=\binom{n}{k} p^k k!
 \end{equation}
 
-By injecting this formula into Equation \eqref{eq:GeneralInclusiveProb} 
+By applying this formula to the Binomial distribution in Equation \eqref{eq:binomial}
+and injecting into Equation \eqref{eq:GeneralInclusiveProb} 
 we obtain the inclusive probability of coalescence for $k$ lines:
 \begin{equation}
 	\mathbb{E} \left[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
@@ -277,7 +294,8 @@ Consequently, the inclusive probability of coalescence for $k$ lines is
 	p_{k,t}=\frac{1}{N_t^{k-1}}\label{eq:PoisInclusiveProb}
 \end{equation}
 
-By injecting the probability mass function of a Binomial distribution in Equation 
+By injecting the probability mass function of the Binomial distribution in
+Equation \eqref{eq:binomial} into Equation 
 \eqref{eq:GeneralExclusiveProb} we deduce that 
 the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n \geq k)$ is
 	\begin{equation}
@@ -311,13 +329,14 @@ lines, in a population of size $N_t=10$, $N_t=20$ or $N_t=30$.
 
 \section{Negative-Binomial case}
 
-Here the offspring distribution is $\alpha_t=\text{Negative-Binomial}(r,p)$ with parameters $(r,p)$ set my moment-matching mean $R_t$ and variance $V_t$.
+In this section we consider that the offspring distribution is $\alpha_t=\text{Negative-Binomial}(r,p)$ with parameters $(r,p)$ set by moment-matching mean $R_t$ and variance $V_t$
+which are assumed constant over time.
 The resulting parameters for this distribution are $r=R_t^2/(V_t-R_t)$ and $p=R_t/V_t$.
-In this case, we have
+In this case, we have:
 	\begin{equation}
 		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Negative-Binomial}(N_t r,p)
 	\end{equation}
-and similarly to the Poisson$(\lambda)$ offspring distribution identify the conditional distribution of $S_{t,1} | \sum_{i=1}^{N_t} S_{t,i}$ as follows,
+and similarly to the Poisson$(\lambda)$ offspring distribution identify the conditional distribution of $S_{t,1} | \sum_{i=1}^{N_t} S_{t,i}$ is as follows:
 
 {\allowdisplaybreaks
 	\begin{align}
@@ -329,10 +348,11 @@ and similarly to the Poisson$(\lambda)$ offspring distribution identify the cond
 	\end{align}
 }
 
-\noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$. This is the probability mass function of Beta-Binomial and therefore we deduce that:
+\noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$. This is the probability mass function of a Beta-Binomial distribution and therefore we deduce that:
 
 \begin{equation}
 S_{t,1} \bigg| \bigg(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg) \sim \text{Beta-Binomial}(r, (N_t - 1)r)
+\label{eq:beta-binomial}
 \end{equation}
 
 The $k$-th falling factorial moments of $X \sim \text{Beta-Binomial}(\alpha,\beta)$ are \citep{Tripathi1994}:
@@ -341,7 +361,8 @@ The $k$-th falling factorial moments of $X \sim \text{Beta-Binomial}(\alpha,\bet
 	\mathbb{E}\left[\frac{X!}{(X-k)!}\right]=\binom{n}{k} \frac{\mathrm{B}(\alpha+k,\beta)k!}{\mathrm{B}(\alpha,\beta)}
 \end{equation}
 
-Injecting this formula into Equation \eqref{eq:GeneralInclusiveProb}, we deduce that the inclusive probability of coalescence for $k$ lines is:
+By applying this formula to the Beta-Binomial distribution in Equation \eqref{eq:beta-binomial}
+and injecting into Equation \eqref{eq:GeneralInclusiveProb}, we deduce that the inclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
 p_{k,t}=
@@ -350,7 +371,8 @@ p_{k,t}=
 \label{eq:NegBinInclusiveProb}
 \end{equation}
 
-By injecting the probability mass function of a beta-binomial distribution in Equation 
+By injecting the probability mass function of the Beta-Binomial distribution in Equation
+\eqref{eq:beta-binomial} into Equation 
 \eqref{eq:GeneralExclusiveProb} we deduce that 
 the exclusive probability of coalescence for $k$ lines is:
 
@@ -362,6 +384,16 @@ p_{n,k,t}=\frac{N_t \mathrm{B}(k+r, n-k+N_t r-r)}{\mathrm{B}(r, N_t r-r)}
 It is interesting to note that as for the Poisson case, the inclusive and exclusive coalescence probabilities do not depend on the size $N_{t+1}$ of the population at time $t+1$.
 They both depend on the 
 Negative-Binomial offspring distribution only through the dispersion parameter $r$.
+If we consider that $r$ is large in Equations \eqref{eq:NegBinInclusiveProb} and
+\eqref{eq:NegBinExclusiveProb}, we can 
+derive that the asymptotic behaviour is the same as in the Poisson case  
+shown in Equations  \eqref{eq:PoisInclusiveProb} and
+\eqref{eq:PoisExclusiveProb}. For example this can be derived by rewriting the
+Beta functions using Gamma functions, and using the following form of Stirling's approximation:
+\begin{equation}
+\mathrm{lim}_{a \rightarrow \infty} \frac{\Gamma(a+b)}{\Gamma(a)}=a^b \mathrm{e}^{-b}
+\label{eq:stirling}
+\end{equation}
 
 Figure \ref{fig:negbin} illustrates the inclusive and exclusive coalescence probabilities for
 the Negative-Binomial case for a set of size $k=1$ to $k=10$ amongst a total of $n=10$
@@ -387,22 +419,19 @@ both the inclusive and exclusive probabilities of larger multimerger events incr
 \section{Limit when the population size is large}
 
 If we consider that the population size $N_t$ is fixed and large, we can show the connections
-between our model and several previous studies.
-
-Show that inclusive probabilities $p_{k,t}$ for $k>2$ are small compared to $p_{2,t}$.
-
-Show that exclusive probabilities $p_{n,k,t}$ for $k>2$ are small compared to $p_{n,2,t}$, 
-when $n<<N_t$.
-
-Show that inclusive and exclusive probabilities become equal, when $n<<N_t$ in exclusive probabilities.
-
-For Poisson offspring distribution we have:
-
+between our results and several previous studies.
+In the Poisson case, from Equations \eqref{eq:PoisInclusiveProb} and \eqref{eq:PoisExclusiveProb} we can see that both inclusive and exclusive probabilities
+are of order $\mathcal{O}(N_t^{1-k})$. We can therefore ignore events with $k>2$
+and retain only the events with $k=2$ which occur with probability:
 \begin{equation}
 p_{2,t}=p_{n,2,t}=\frac{1}{N_t}\label{eq:poissonapprox}
 \end{equation}
 
-For Negative-Binomial offspring distribution we have:
+For the Negative-Binomial case, from Equations \eqref{eq:NegBinInclusiveProb} and \eqref{eq:NegBinExclusiveProb} we can rewrite using Gamma functions and apply the 
+form of Stirling's equation given in Equation \refeq{eq:stirling} to show that 
+once again both inclusive and exclusive probabilities are also of order $\mathcal{O}(N_t^{1-k})$. 
+We can therefore ignore events with $k>2$
+and retain only the events with $k=2$ which occur with probability:
 
 \begin{equation}
 p_{2,t}=p_{n,2,t}=\frac{r+1}{N_t r +1} \approx \frac{r+1}{N_t r}\label{eq:negbinapprox}
@@ -580,9 +609,13 @@ and the L-BFGS-B algorithm when \citep{byrd1995limited} estimating both paramete
 
 \begin{figure}[!p]
 \begin{center}
-\includegraphics[width=15cm]{../run/figureEstim.pdf}
+\includegraphics[width=14cm]{../run/figureEstim.pdf}
 \end{center}
-\caption{Maximum likelihood estimation of parameters
+\caption{Maximum likelihood estimation of parameters. (A) Estimation of the population
+size given the dispersion parameter. (B) Estimation of the dispersion parameter
+given the population size. (C and D) Joint estimation of both the population
+size and dispersion parameters. (E) Example of likelihood surface as a function
+of both parameters.
 \label{fig:estim}}
 \end{figure}
 
