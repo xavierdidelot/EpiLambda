@@ -35,6 +35,7 @@
 \makeatother
 
 %\renewcommand\footnote[2][]{\relax}
+\renewcommand{\eqref}[1]{\ref{#1}}
 
 \begin{document}
 {\Large Ancestral process for infectious disease outbreaks with superspreading}
@@ -495,10 +496,9 @@ coalesce:
 \end{equation}
 
 The beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} is a 
-specific type of lambda-coalescent. 
-Was used in \citep{Hoscheit2019} and \citep{Menardo2021}. 
-David's paper on inference of multiple mergers while dating a pathogen phylogeny \citep{Helekal2024}.
-The Beta$(2-\alpha,\alpha)$-coalescent model 
+specific type of lambda-coalescent that has been used recently in several studies
+analysing genetic data from infectious disease agents \citep{Hoscheit2019,Menardo2021,Helekal2024,zhangMultipleMergerCoalescent2024}.
+The Beta-coalescent model 
 has a single parameter $\alpha \in [0,2]$ and is defined as:
 
 \begin{equation}
@@ -539,7 +539,12 @@ p(k|n)=\frac{\binom{n}{k}\lambda_{n,k}}{\sum_{i=2}^n \binom{n}{i}\lambda_{n,i}}
 
 Figure \ref{fig:compare} compares this distribution for $n=10$ in the Beta-coalescent with 
 parameter $\alpha \in \{0.5,1,1.5\}$ and for our lambda-coalescent with parameters
-$N_t \in \{15,25,50\}$ and $r \in \{0.1,0.5,1\}$.
+$N_t \in \{15,25,50\}$ and $r \in \{0.1,0.5,1\}$. In the Beta-coalescent, the distribution
+shifts towards more larger multimerger events as the parameter $\alpha$ decreases.
+In our new model a wider range of behaviours is obtained when varying the two parameters
+$N_t$ and $r$. For a given value of $N_t$, decreasing the value of $r$ results in more
+larger events. Conversely, for a given value of $r$ we can see that increasing the
+value of $N_t$ reduces the probability of larger events.
 
 \begin{figure}[!p]
 \begin{center}
@@ -554,8 +559,11 @@ with various parameters.
 Genealogies can be simulation from our lambda-coalescent model 
 defined in Equation \ref{eq:ours} using the same algorithm
 as for other lambda-coalescent models \citep{pitmanCoalescentsMultipleCollisions1999}.
-Figure \ref{fig:trees} shows examples of trees simulated for a sample of size $n=20$ and
-with constant population size $N_t=40$. 
+Figure \ref{fig:trees} shows examples of trees simulated for a sample of size $n=20$,
+constant population size $N_t=40$ and dispersion parameter $r \in \{0.1,1,5,10\}$. 
+It is already clear from these single realisations that the lower values of $r$ result
+in trees with more larger multimerger events and lower time to the most recent common ancestor,
+but to quantify these properties we need to consider many trees.
 
 \begin{figure}[!p]
 \begin{center}
@@ -645,7 +653,7 @@ The R package \verb+ape+ was used to store, manipulate and visualise phylogeneti
 
 Our lambda-coalescent could be defined in a varying population size 
 following the same approach as previously described for
-the coalescent \citep{Griffiths1994} and the beta-coalescent \citep{Hoscheit2019}.
+the coalescent \citep{Griffiths1994} and the beta-coalescent \citep{Hoscheit2019,zhangMultipleMergerCoalescent2024}.
 Could also extend to temporally offset leaves 
 following work on the coalescent \citep{Drummond2003} and the beta-coalescent
 \citep{Hoscheit2019}.
