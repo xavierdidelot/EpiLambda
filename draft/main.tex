@@ -651,12 +651,15 @@ The R package \verb+ape+ was used to store, manipulate and visualise phylogeneti
 
 \section{Discussion}
 
-Our lambda-coalescent could be defined in a varying population size 
-following the same approach as previously described for
-the coalescent \citep{Griffiths1994} and the beta-coalescent \citep{Hoscheit2019,zhangMultipleMergerCoalescent2024}.
-Could also extend to temporally offset leaves 
+Our lambda-coalescent could be extended to allow temporally offset leaves 
 following work on the coalescent \citep{Drummond2003} and the beta-coalescent
 \citep{Hoscheit2019}.
+It could also be defined in a varying population size 
+following the same approach as previously described for
+the coalescent \citep{Griffiths1994,Pybus2000,Ho2011skylinereview} and the beta-coalescent \citep{Hoscheit2019,zhangMultipleMergerCoalescent2024}.
+This could be even more useful for our model than for the Beta-coalescent
+since in our model the probability of multimerger events of various size
+depends explicitly on the population size (see for example Figure \ref{fig:compare}).
 
 The Xi-coalescent models admit multiple 
 simultaneous mergers \citep{schweinsbergCoalescentsSimultaneousMultiple2000}.
