@@ -9,7 +9,7 @@ n=20
 nt=100
 for (i in 1:10000) {
   r=rs[i%%4+1]
-  t=new_simtree(n=n,nt=nt,r=r)
+  t=omega_simtree(n=n,nt=nt,r=r)
   tmrca=max(dist.nodes(t)[n+1,])
   bralen=sum(t$edge.length)
   stem=sum(t$edge.length[-(1:n)])/sum(t$edge.length)

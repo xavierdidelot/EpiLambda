@@ -10,10 +10,10 @@ for (i in 1:100) {
   print(i)
   nt=runif(1,100,500)
   r=runif(1,0.01,2)
-  t=new_simtree(100,nt=nt,r=r)
-  p1=new_mle(t,r=r,ntbounds=c(100,500),rbounds=c(0,2))
-  p2=new_mle(t,nt=nt,ntbounds=c(100,500),rbounds=c(0,2))
-  p=new_mle(t,ntbounds=c(100,500),rbounds=c(0,2))
+  t=omega_simtree(100,nt=nt,r=r)
+  p1=omega_mle(t,r=r,ntbounds=c(100,500),rbounds=c(0,2))
+  p2=omega_mle(t,nt=nt,ntbounds=c(100,500),rbounds=c(0,2))
+  p=omega_mle(t,ntbounds=c(100,500),rbounds=c(0,2))
   data=rbind(data,data.frame(nt=nt,r=r,ont=p1,or=p2,ent=p[1],er=p[2]))
 }
 
@@ -25,13 +25,13 @@ p4<-ggplot(data,aes(x=r,y=er))+geom_point()+xlab('True dispersion')+ylab('Estima
 set.seed(3)
 nt=200
 r=0.5
-t=new_simtree(100,nt=nt,r=r)
+t=omega_simtree(100,nt=nt,r=r)
 ntbounds=c(100,500)
 rbounds=c(0.05,2)
 ss=seq(0,1,0.05)
 dat=data.frame()
 for (nts in ss*(ntbounds[2]-ntbounds[1])+ntbounds[1]) for (rs in ss*(rbounds[2]-rbounds[1])+rbounds[1]) {
-  v=new_loglik(t,nts,rs)
+  v=omega_loglik(t,nts,rs)
   dat=rbind(dat,data.frame(x=rs,y=nts,z=v))
 }
 p5<-ggplot(dat,aes(x = x, y = y, z = z)) +labs(x='Dispersion parameter',y='Population size',fill='Likelihood')+

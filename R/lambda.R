@@ -125,7 +125,7 @@ beta_loglik=function(t,alpha) {
   lambda_loglik(t,function(n,k) beta_lambda(n,k,alpha=alpha))
 }
 
-#' Simulation from new lambda-coalescent model
+#' Simulation from omega-coalescent model
 #'
 #' @param n Number of lineages
 #' @param nt Population size parameter
@@ -134,7 +134,7 @@ beta_loglik=function(t,alpha) {
 #' @return Simulated phylogeny
 #' @export
 #'
-new_simtree=function(n,nt,r) {
+omega_simtree=function(n,nt,r) {
   lambda=function(n,k) return(-log1p(-negbin_exclusive(k=k,n=n,nt=nt,r=r)))
   lambda_simtree(n,lambda)
 }
@@ -152,7 +152,7 @@ beta_mle=function(t) {
   return(o$par)
 }
 
-#' Size distribution for new lambda-coalescent model
+#' Size distribution for omega-coalescent model
 #'
 #' @param n Number of lineages
 #' @param nt Population size parameter
@@ -161,14 +161,14 @@ beta_mle=function(t) {
 #' @return Distribution of size of the coalescence event
 #' @export
 #
-new_psize=function(n,nt,r) {
+omega_psize=function(n,nt,r) {
   lambda=function(n,k) return(-log1p(-negbin_exclusive(k=k,n=n,nt=nt,r=r)))
   v=lambda(n,k=2:n)*choose(n,2:n)
   v=v/sum(v)
   return(v)
 }
 
-#' Log-likelihood function for new lambda-coalescent model
+#' Log-likelihood function for omega-coalescent model
 #'
 #' @param t Tree
 #' @param nt Population size parameter
@@ -177,12 +177,12 @@ new_psize=function(n,nt,r) {
 #' @return Log-likelihood
 #' @export
 #'
-new_loglik=function(t,nt,r) {
+omega_loglik=function(t,nt,r) {
   lambda=function(n,k) return(-log1p(-negbin_exclusive(k=k,n=n,nt=nt,r=r)))
   lambda_loglik(t,lambda)
 }
 
-#' MLE for new lambda-coalescent model
+#' MLE for omega-coalescent model
 #'
 #' @param t Tree
 #' @param nt Optional, if provided only the mle of r will be computed
@@ -190,10 +190,10 @@ new_loglik=function(t,nt,r) {
 #' @param ntbounds Optional, bounds for estimate of nt
 #' @param rbounds Optional, bounds for estimate of r
 #'
-#' @return Maximum likelihood estimator of parameters of the new lambda-coalescent model
+#' @return Maximum likelihood estimator of parameters of the omega-coalescent model
 #' @export
 #'
-new_mle=function(t,nt,r,ntbounds,rbounds) {
+omega_mle=function(t,nt,r,ntbounds,rbounds) {
   if (missing(ntbounds)) ntbounds=c(1,1000)
   if (missing(rbounds)) rbounds=c(0,10)
   if (missing(nt) && missing(r)) {
@@ -203,7 +203,7 @@ new_mle=function(t,nt,r,ntbounds,rbounds) {
     best=-Inf
     ss=seq(0.05,0.95,0.1)
     for (nts in ss*(ntbounds[2]-ntbounds[1])+ntbounds[1]) for (rs in ss*(rbounds[2]-rbounds[1])+rbounds[1]) {
-      v=new_loglik(t,nts,rs)
+      v=omega_loglik(t,nts,rs)
       if (v>best) {best=v;nt=nts;r=rs}
     }
   }
@@ -211,7 +211,7 @@ new_mle=function(t,nt,r,ntbounds,rbounds) {
     #Optimise both parameters
     f1=function(p) {
       if (p[1]<=ntbounds[1] || p[1]>=ntbounds[2] || p[2]<=rbounds[1] || p[2]>=rbounds[2]) return(-1e10)
-      r=new_loglik(t,p[1],p[2])
+      r=omega_loglik(t,p[1],p[2])
       if (is.na(r)||is.infinite(r)) return(-1e10)
       return(r)
     }
@@ -220,13 +220,13 @@ new_mle=function(t,nt,r,ntbounds,rbounds) {
   }
   if (missing(r)) {
     #Optimise only nt
-    f2=function(r) {re=new_loglik(t,nt,r);if (is.na(re)||is.infinite(re)) return(-1e10) else return(re)}
+    f2=function(r) {re=omega_loglik(t,nt,r);if (is.na(re)||is.infinite(re)) return(-1e10) else return(re)}
     o=optim(1,f2,method='Brent',lower=rbounds[1],upper=rbounds[2],control=list(fnscale=-1))
     return(o$par)
   }
   if (missing(nt)) {
     #Optimise only r
-    f3=function(nt) {re=new_loglik(t,nt,r);if (is.na(re)||is.infinite(re)) return(-1e10) else return(re)}
+    f3=function(nt) {re=omega_loglik(t,nt,r);if (is.na(re)||is.infinite(re)) return(-1e10) else return(re)}
     o=optim(Ntip(t),f3,method='Brent',lower=ntbounds[1],upper=ntbounds[2],control=list(fnscale=-1))
     return(o$par)
   }

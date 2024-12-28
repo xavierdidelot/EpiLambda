@@ -10,7 +10,7 @@ for (i in 1:12) {
   if (i<=3) {
     alpha=alphas[i]
     d=beta_psize(n=n,alpha=alpha)
-    nam=paste0('Beta with alpha=',as.character(alpha))
+    nam=paste0('Beta(alpha=',as.character(alpha),')')
   }
   else
   {
@@ -18,8 +18,8 @@ for (i in 1:12) {
     if (i>6 && i<=9) nt=25
     if (i>9) nt=50
     r=c(0.1,0.5,1)[i%%3+1]
-    d=new_psize(n=n,nt=nt,r=r)
-    nam=paste0('Ours with Nt=',as.character(nt),',r=',as.character(r))
+    d=omega_psize(n=n,nt=nt,r=r)
+    nam=paste0('Omega(Nt=',as.character(nt),',r=',as.character(r),')')
   }
   data=rbind(data.frame(k=2:n,alpha=nam,i=i,p=d[1:(n-1)]),data)
 }

@@ -10,7 +10,7 @@
 #' @param method Which method to use for simulation, options are: rejection or multinomial
 #'
 #' @return Vector of inclusive coalescent probabilities for number of lines from 1 to n
-#' @export
+#' @noRd
 #'
 simul_pcoal_mixed_pois=function(lambda,q,nt,nt1=round(rt*nt),n=nt1,type='inclusive',nrep=1e3,method='rejection')
 {
@@ -59,7 +59,7 @@ simul_pcoal_mixed_pois=function(lambda,q,nt,nt1=round(rt*nt),n=nt1,type='inclusi
 #' @param method Which method to use for simulation, options are: rejection or multinomial
 #'
 #' @return Vector of inclusive coalescent probabilities for number of lines from 1 to nt1
-#' @export
+#' @noRd
 #'
 compare_simu_mix_pois_2=function(lambda,q,nt=10,nt1=20,n=15,type='inclusive',nrep=1e3,method='multinomial')
 {

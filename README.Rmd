@@ -15,7 +15,7 @@ set.seed(0)
 
 # Introduction
 
-The aim of this package is to implement the epidemic lambda-coalescent model.
+This package implements an ancestral process for infectious disease outbreaks with superspreading.
 
 ## Installation
 

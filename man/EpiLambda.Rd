@@ -2,14 +2,19 @@
 % Please edit documentation in R/package.R
 \name{EpiLambda}
 \alias{EpiLambda}
-\title{EpiLambda: Epidemic lambda-coalescent model}
+\title{EpiLambda: ancestral process for infectious disease outbreaks with superspreading}
 \description{
-EpiLambda is a R package that implements the epidemic lambda-coalescent model.
+EpiLambda is a R package that implements an ancestral process for infectious disease outbreaks with superspreading.
 
 The main functions of the package are:
 \itemize{
 
-\item TODO
+\item beta_simtree Simulation of tree under the beta-coalescent
+\item beta_loglik Computing likelihood under the beta-coalescent
+\item beta_mle Maximum-likelihood estimation of parameter of the beta-coalescent
+\item omega_simtree Simulation of tree under the omega-coalescent
+\item omega_loglik Computing likelihood under the omega-coalescent
+\item omega_mle Maximum-likelihood estimation of parameter of the omega-coalescent
 }
 }
 \author{
