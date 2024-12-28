@@ -3,8 +3,8 @@
 
 # Introduction
 
-The aim of this package is to implement the epidemic lambda-coalescent
-model.
+This package implements an ancestral process for infectious disease
+outbreaks with superspreading.
 
 ## Installation
 
@@ -28,7 +28,7 @@ dispersion parameter $r=0.5$. To simulate the ancestry of a sample of
 size 20 in a population of size 40:
 
 ``` r
-t=new_simtree(n=20,nt=40,r=0.5)
+t=omega_simtree(n=20,nt=40,r=0.5)
 plot(t)
 axisPhylo(1)
 title(xlab='Generations since present')
