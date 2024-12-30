@@ -72,9 +72,9 @@ which determines how many infections each infected individual causes.
 We consider transmission both without and with superspreading, in the form of a 
 Poisson and Negative-Binomial offspring distribution, respectively. 
 We show how our results can be incorporated into a new lambda-coalescent model
-called the omega-coalescent
-which allows multiple lineages to coalesce together. We compare this model
-with previously proposed alternatives, and advocate the use of the omega-coalescent model
+which allows multiple lineages to coalesce together. 
+We call this new model the omega-coalescent. We compare it
+with previously proposed alternatives, and advocate the use of the omega-coalescent
 for future studies of small outbreaks.
 
 \newpage
@@ -432,21 +432,43 @@ p_{2,t}=p_{n,2,t}=\frac{1}{N_t}\label{eq:poissonapprox}
 For the Negative-Binomial case, from Equations \eqref{eq:NegBinInclusiveProb} and \eqref{eq:NegBinExclusiveProb} we can rewrite using Gamma functions and apply the 
 form of Stirling's equation given in Equation \refeq{eq:stirling} to show that 
 once again both inclusive and exclusive probabilities are also of order $\mathcal{O}(N_t^{1-k})$. 
-We can therefore ignore events with $k>2$
+We can therefore once again ignore events with $k>2$
 and retain only the events with $k=2$ which occur with probability:
 
 \begin{equation}
 p_{2,t}=p_{n,2,t}=\frac{r+1}{N_t r +1} \approx \frac{r+1}{N_t r}\label{eq:negbinapprox}
 \end{equation}
 
-\citet{Fraser2017} calculated the effective population size $N_e(t)$ 
-as a function of the actual population size $N(t)$ and the mean and variance of the offspring distribution $R$ and $\sigma^2$:
-\begin{equation}
-N_e(t)=\frac{N(t)}{\sigma^2/R+R-1}
-\end{equation}
+\citet{koelleRatesCoalescenceCommon2012} derived the rates of coalescence of two lineages 
+for several epidemiological models, assuming a large population at equilibrium.
+For each model they use the equation $N_\mathrm{e}=N/\sigma^2$ to relate the effective population
+size $N_\mathrm{e}$ to the actual population size $N$ and the variance $\sigma^2$ in the number
+of offspring. This relationship was first established by \citet{Kingman1982} to
+derive the backward-in-time coalescent model from the forward-in-time
+Cannings exchangeable models \citep{Cannings1974}. 
+From Equation \eqref{eq:negbinapprox} we can take $R_t=1$ to achieve 
+equilibrium of the population size and the method of moments estimator
+$r=R_t^2/(V_t-R_t)=1/(V_t-1)$ to deduce 
+the equivalent $p_{2,t}=V_t/N_t$. 
 
-This formula was used to estimate the dispersion parameter from genetic data \citep{Li2017}.
-In our notation, this is equivalent to:
+\citet{Volz2012a} showed that the rate of coalescence for two lineages under a continuous-time epidemic coalescent model is $2f(t)/I(t)^2$
+ where $f(t)$ is the incidence and $I(t)$ the prevalence. 
+ Setting in this formula the prevalence as $I(t)=N_{t+1}=N_t R_t$ and the incidence as
+ $f(t)=R_t N_{t+1}=R_t^2 N_t$ we get a coalescent rate of 
+ $2/N_t$. To apply our methodology we need to consider that
+the offspring distribution is Geometric, since the epidemiological
+ models considered have successes (offspring) happening until the first failure
+ (removal). We therefore set $r=1$ in Equation \eqref{eq:negbinapprox} 
+ to make the Negative-Binomial offspring distribution
+ reduce to a Geometric distribution and the same result follows.
+
+\citet{Fraser2017} calculated the effective population size $N_\mathrm{e}(t)$ 
+as a function of the actual population size $N(t)$ and the mean and variance of the offspring distribution $R$ and $\sigma^2$. %:
+%\begin{equation}
+%N_\mathrm{e}(t)=\frac{N(t)}{\sigma^2/R+R-1}
+%\end{equation}
+This formula was used to estimate the dispersion parameter of a Negative-Binomial offspring distribution from genetic data \citep{Li2017}.
+In our notation, their formula is equivalent to:
 
 \begin{equation}
  p_{2,t}=\frac{V_t/R_t+R_t-1}{N_t R_t}\label{eq:fraser}
@@ -454,28 +476,12 @@ In our notation, this is equivalent to:
 
 In the Poisson case we have $V_t=R_t$ so that Equation \eqref{eq:fraser} simplifies to $p_{2,t}=1/N_t$ which agrees with Equation \eqref{eq:poissonapprox}. 
 In the Negative-Binomial case we have $V_t/R_t=1/p=(r+R_t)/r$ so that Equation \eqref{eq:fraser}
-simplifies to $(r+1)/(rN_t)$ which agrees with our Equation \eqref{eq:negbinapprox}. 
-Conversely, if we substitute $r=R_t^2/(V_t-R_t)$
-in Equation \eqref{eq:negbinapprox} we obtain the formula Equation \eqref{eq:fraser}.
+simplifies to $(r+1)/(N_t r)$ which agrees with our Equation \eqref{eq:negbinapprox}. 
+Conversely, if we substitute the method of moments estimator 
+$r=R_t^2/(V_t-R_t)$
+in Equation \eqref{eq:negbinapprox} we obtain the Equation \eqref{eq:fraser}.
 
-\citet{koelleRatesCoalescenceCommon2012} derived the rates of coalescence of two lineages 
-for several epidemiological models, assuming a large population at equilibrium.
-For each model they use the equation $N_e=N/\sigma^2$ to relate the effective population
-size $N_e$ to the actual population size $N$ and the variance $\sigma^2$ in the number
-of offspring. This relationship was first established by \citet{Kingman1982} to
-apply the coalescent model to Cannings exchangeable models \citep{Cannings1974}. 
-From Equation \eqref{eq:negbinapprox} we can take $R_t=1$ to achieve 
-equilibrium of the population size and $r=R_t^2/(V_t-R_t)=1/(V_t-1)$ to deduce 
-the equivalent $p_{2,t}=V_t/N_t$. 
-
-\citet{Volz2012a} showed that the rate of coalescence for two lineages under a continuous-time epidemic coalescent model is $2f(t)/I(t)^2$
- where $f(t)$ is the incidence and $I(t)$ the prevalence. 
- Setting in this formula the prevalence as $I(t)=N_{t+1}=N_t R_t$ and the incidence as
- $f(t)=R_t N_{t+1}=R_t^2 N_t$ we get a coalescent rate of 
- $2/N_t$. To apply the Equation \eqref{eq:negbinapprox} we need to set $r=1$ 
- so that the offspring distribution is Geometric, which yields the same result.
-
-\section{Lambda-coalescent}
+\section{Definition of a new lambda-coalescent model}
 
 The coalescent model \citep{Kingman1982,Kingman1982a} describes the ancestry of a sample from a large population 
 evolving according to many forward-in-time models such as the Wright-Fisher model \citep{Wright1931,Fisher1930}, 
@@ -635,7 +641,7 @@ of both parameters.
 \end{figure}
 
 We simulated 100 genealogies from the omega-coalescent model each of which had
-$n=100$ leaves, with parameter $N_e$ drawn uniformly at random between 100 and 500
+$n=100$ leaves, with parameter $N_\mathrm{e}$ drawn uniformly at random between 100 and 500
 and parameter $r$ drawn uniformly at random between 0.01 and 2.
 If we assume knowledge of the dispersion parameter, then estimating the population size 
 works really well (Figure \ref{fig:estim}A). Conversely we obtain good result when 
@@ -668,7 +674,13 @@ This could be even more useful for the omega-coalescent than for the beta-coales
 since in the omega-coalescent the probability of multimerger events of various size
 depends explicitly on the population size (see for example Figure \ref{fig:compare}).
 
-The Xi-coalescent models admit multiple 
+We compared the omega-coalescent only to the beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} but 
+it could also be compared to
+the Dirac coalescent aka psi-coalescent \citep{eldonCoalescentProcessesWhen2006},
+the Durrett-Schweinsberg coalescent \citep{Durrett2005a} or the
+extended Beta-coalescent \citep{Helekal2024}.
+
+The xi-coalescent models admit multiple 
 simultaneous mergers \citep{schweinsbergCoalescentsSimultaneousMultiple2000}.
 
 Difference between transmission tree and phylogenetic tree \citep{Jombart2011}. 
