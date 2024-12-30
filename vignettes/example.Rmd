@@ -1,0 +1,63 @@
+---
+title: "EpiLambda usage example"
+author: "Xavier Didelot"
+date: '`r Sys.Date()`'
+output:
+  pdf_document: default
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{EpiLambda usage example}
+  %\usepackage[utf8]{inputenc}
+---
+
+## Simulation under beta-coalescent
+
+To simulate the genealogy of a sample of size 50 under the beta-coalescent with parameter $\alpha=1$:
+
+```{r}
+library(EpiLambda,quietly = T)
+set.seed(0)
+t=beta_simtree(n=50,alpha=1)
+plot(t)
+axisPhylo(1)
+title(xlab='Coalescent time unit')
+```
+
+## Inference under beta-coalescent
+
+```{r}
+beta_mle(t)
+```
+
+## Simulation under omega-coalescent
+
+Consider that the offspring distribution is Negative-Binomial with dispersion parameter $r=0.1$.
+To simulate the ancestry of a sample of size 50 in a population of size 100:
+
+```{r}
+set.seed(0)
+t=omega_simtree(n=50,nt=100,r=0.1)
+plot(t)
+axisPhylo(1)
+title(xlab='Generations since present')
+```
+
+## Inference under omega-coalescent
+
+Inference of dispersion parameter only:
+
+```{r}
+omega_mle(t,nt=100)
+```
+
+Inference of effective population size only:
+
+```{r}
+omega_mle(t,r=0.1)
+```
+
+Joint inference:
+
+```{r}
+omega_mle(t)
+```
