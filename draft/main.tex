@@ -134,13 +134,13 @@ studies \citep{Volz2012a,koelleRatesCoalescenceCommon2012,Fraser2017}.
 Finally, we show how our results can be incorporated into a new lambda-coalescent model 
 \citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,
 donnellyParticleRepresentationsMeasureValued1999} and compare it with previously
-described models.
+proposed models.
 
 \section{General case}
 
 Let time be measured in discrete units and denoted $t$. Each discrete value of $t$ correspond to a unique non-overlapping 
-generations of infected individuals, so that individuals infected at $t$ will have offspring at $t+1$, etc. 
-Let $N_t$ denote the number of infectious individuals at time $t$. Each of them creates a number $s_{t,i}$ of secondary infections at time $t+1$, following the offspring distribution $\alpha_t(s)$. The mean of this distribution is the basic reproduction number $R_t$ and the variance is $V_t$. We have:
+generation of infected individuals, so that individuals infected at $t$ have offspring at $t+1$, etc. 
+Let $N_t$ denote the number of infectious individuals at time $t$. Each of them creates a number $s_{t,i}$ of secondary infections at time $t+1$, following the offspring distribution $\alpha_t(s)$. The mean of this distribution is the basic reproduction number $R_t$ and the variance is $V_t$. The total number of infected individuals at time $t+1$ is given by:
 
 \begin{equation}
 N_{t+1}=\sum_{i=1}^{N_t} s_{t,i}
@@ -163,7 +163,8 @@ Given full information about offspring counts from individuals in generation $t$
 	\end{align}
 }
 
-Full information $\{s_{t,i}\}$ yields the population size $N_{t+1}$ but is not feasible to observe in practice.
+Full information $\{s_{t,i}\}$ yields the population size $N_{t+1}$ as shown in Equation \eqref{eq:summation}, 
+but this is not feasible to observe in practice.
 We can instead express the inclusive coalescence probability conditioning on the next population size $N_{t+1}$ by summing over possible offspring counts ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$ conditional on the total generation size.
 Let $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$.
 
@@ -338,7 +339,7 @@ In this case, we have:
 	\begin{equation}
 		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Negative-Binomial}(N_t r,p)
 	\end{equation}
-and similarly to the Poisson$(\lambda)$ offspring distribution identify the conditional distribution of $S_{t,1} | \sum_{i=1}^{N_t} S_{t,i}$ is as follows:
+and similarly to the Poisson$(\lambda)$ offspring distribution we identify that the conditional distribution of $S_{t,1} | \sum_{i=1}^{N_t} S_{t,i}$ is as follows:
 
 {\allowdisplaybreaks
 	\begin{align}
@@ -397,6 +398,14 @@ Beta functions using Gamma functions, and using the following form of Stirling's
 \label{eq:stirling}
 \end{equation}
 
+\begin{figure}[!p]
+\begin{center}
+\includegraphics[width=15cm]{../run/figureNegBin.pdf}
+\end{center}
+\caption{(A) Offspring distribution. (B) Inclusive probability of coalescence. (C) Exclusive probability of coalescence.
+\label{fig:negbin}}
+\end{figure}
+
 Figure \ref{fig:negbin} illustrates the inclusive and exclusive coalescence probabilities for
 the Negative-Binomial case for a set of size $k=1$ to $k=10$ amongst a total of $n=10$
  observed lines, in a population of size $N_t=12$. 
@@ -409,14 +418,6 @@ the dispersion is low and the Negative-Binomial case
 behaves almost like the Poisson case. When $r$ is lower the dispersion of the
 offspring distribution increases, so that 
 both the inclusive and exclusive probabilities of larger multimerger events increase.
-
-\begin{figure}[!p]
-\begin{center}
-\includegraphics[width=15cm]{../run/figureNegBin.pdf}
-\end{center}
-\caption{(A) Offspring distribution. (B) Inclusive probability of coalescence. (C) Exclusive probability of coalescence.
-\label{fig:negbin}}
-\end{figure}
 
 \section{Limit when the population size is large}
 
