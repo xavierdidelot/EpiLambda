@@ -73,9 +73,9 @@ We consider transmission both without and with superspreading, in the form of a
 Poisson and Negative-Binomial offspring distribution, respectively. 
 We show how our results can be incorporated into a new lambda-coalescent model
 which allows multiple lineages to coalesce together. 
-We call this new model the omega-coalescent. We compare it
-with previously proposed alternatives, and advocate the use of the omega-coalescent
-for future studies of small outbreaks.
+We call this new model the omega-coalescent, we compare it
+with previously proposed alternatives, and advocate its use
+for future studies of infectious disease outbreaks.
 
 \newpage
 \section{Introduction}
@@ -149,16 +149,16 @@ N_{t+1}=\sum_{i=1}^{N_t} s_{t,i}
 
 \subsection{Inclusive coalescence probability}
 
-We define the inclusive coalescence probability $p_{k,t}(N_t, N_{t+1})$ as the probability that a specific set of $k$ individuals from generation $t+1$ find a common ancestor in generation $t$, conditional on population sizes $N_t$ and $N_{t+1}$.
+We define the inclusive coalescence probability $p_{k}(N_t, N_{t+1})$ as the probability that a specific set of $k$ individuals from generation $t+1$ find a common ancestor in generation $t$, conditional on population sizes $N_t$ and $N_{t+1}$.
 
-Given full information about offspring counts from individuals in generation $t$, ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$, we have
+Given full information about offspring counts from individuals in generation $t$, ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$, we have:
 
 {\allowdisplaybreaks
 	\begin{align}
-		p_{k,t}({\bf s}_t, N_t)
+		p_{k}({\bf s}_t, N_t)
 			& = \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \nonumber\\
-%			& = \sum_{i=1}^{N_t} \frac{s_{t,i}!}{(s_{t,i}-k)!} \frac{(N_{t+1}-k)!}{N_{t+1}!} \\
-			& = \sum_{i=1}^{N_t} \frac{\Gamma(s_{t,i}+1) \Gamma(N_{t+1}-k+1)}{\Gamma(s_{t,i}-k+1) \Gamma(N_{t+1})}% \\
+			 &= \sum_{i=1}^{N_t} \frac{s_{t,i}!}{(s_{t,i}-k)!} \frac{(N_{t+1}-k)!}{N_{t+1}!} %\\
+%			& = \sum_{i=1}^{N_t} \frac{\Gamma(s_{t,i}+1) \Gamma(N_{t+1}-k+1)}{\Gamma(s_{t,i}-k+1) \Gamma(N_{t+1})}% \\
 %			& = \sum_{i=1}^{N_t} \frac{s_{t,i} (s_{t,i} - 1) \dots (s_{t,i} - k + 1)}{N_{t+1} (N_{t+1} - 1) \dots (N_{t+1} - k+1)}.
 	\end{align}
 }
@@ -166,13 +166,13 @@ Given full information about offspring counts from individuals in generation $t$
 Full information $\{s_{t,i}\}$ yields the population size $N_{t+1}$ as shown in Equation \eqref{eq:summation}, 
 but this is not feasible to observe in practice.
 We can instead express the inclusive coalescence probability conditioning on the next population size $N_{t+1}$ by summing over possible offspring counts ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$ conditional on the total generation size.
-Let $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$.
+Let $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$:
 
 {\allowdisplaybreaks
 	\begin{align}
-	p_{k,t}(N_t, N_{t+1})
+	p_{k}(N_t, N_{t+1})
 %		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} 
-		& = \sum_{{\bf s}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] p_{k,t}({\bf s}_t, N_t) \nonumber\\
+		& = \sum_{{\bf s}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] p_{k}({\bf s}_t, N_t) \nonumber\\
 %		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} 
 		& = \sum_{{\bf s}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \nonumber\\
 %		& = \sum_{i=1}^{N_t} \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} 
@@ -185,8 +185,8 @@ Let $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$.
 			& \phantom{=}\qquad \times \underbrace{
 				%\sum_{{\bf s}_t^{-(1)} : \sum_{i=2}^{N_t} s_{i,t} = N_{t+1} - s_{1,t}} 
 				\sum_{{\bf s}_t^{-(1)} \in \mathbb{N}_0^{N_t - 1}} \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s_{1,t} \bigg]}_{=1} \nonumber\\
-		& = \frac{N_t}{\binom{N_{t+1}}{k}} \mathbb{E}\bigg[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \label{eq:GeneralInclusiveProb} %\nonumber\\
-%		& = N_t \frac{(N_{t+1} - k)!}{N_{t+1}!} \mathbb{E} \bigg[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg]. \label{eq:GeneralInclusiveProb}
+		& = \frac{N_t}{\binom{N_{t+1}}{k}} \mathbb{E}\bigg[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \label{eq:GeneralInclusiveProb} \nonumber\\
+		& = N_t \frac{(N_{t+1} - k)!}{N_{t+1}!} \mathbb{E} \bigg[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] %\label{eq:GeneralInclusiveProb}
 	\end{align}
 }
 
@@ -195,20 +195,20 @@ The $k$-th falling factorial moments $\mathbb{E} \big[ \frac{S_{t,1}!}{(S_{t,1} 
 \subsection{Exclusive coalescence probability}
 
 Generally, we observe a sample of individuals from each generation rather than the entire population.
-In this case, we are interested in the exclusive coalescence probability $p_{n,k,t}(N_t, N_{t+1})$ that exactly $k$ individuals from a sample of $n$ arose from a common ancestor one generation in the past given knowlege of the total population sizes $N_t$ and $N_{t+1}$.
+In this case, we are interested in the exclusive coalescence probability $p_{n,k}(N_t, N_{t+1})$ that exactly $k$ individuals from a sample of $n$ arose from a common ancestor one generation in the past given knowlege of the total population sizes $N_t$ and $N_{t+1}$.
 
 Given full information about offspring counts of the parents of sampled individuals at the present, ${\bf x}_t = (x_{t,1}, \dots, x_{t,N_t})$, we have
 	\begin{align}
-		p_{n,k,t}({\bf x}_t, N_t)
+		p_{n,k}({\bf x}_t, N_t)
 			& = \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \}\nonumber\\
 			& = \sum_{i=1}^{N_t} \frac{x_{t,i}!}{(x_{t,i} - k)!} \frac{(n-k)!}{n!} \mathbb{I} \{ x_{t,i} = k \}
 	\end{align}
 
-Similarly to the exclusive coalescence probability, we can use this to evaluate the exclusive probability given $N_t$ and $N_{t+1}$ by summing over possible parent offspring configurations (for $k \leq n$),
+Similarly to the exclusive coalescence probability, we can use this to evaluate the exclusive probability given $N_t$ and $N_{t+1}$ by summing over possible parent offspring configurations (for $k \leq n$):
 
 	\begin{align}
-		p_{n,k,t}(N_t, N_{t+1})
-			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] p_{n,k,t} ({\bf x}_t, N_t) \nonumber\\
+		p_{n,k}(N_t, N_{t+1})
+			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] p_{n,k} ({\bf x}_t, N_t) \nonumber\\
 			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \} \nonumber\\
 			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \binom{x_{t,1}}{k} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \mathbb{I} \{x_{t,1} = k \} \nonumber\\
 			& = \frac{N_t}{\binom{n}{k}}
@@ -226,16 +226,16 @@ $(X_{t,1}, \dots, X_{t, N_t})$ consists of $n$ individuals sampled from generati
 \subsection{Complementarity of exclusive coalescence probabilities}
 
 If we consider one of the lines observed amongst a set of $n$, it can either remain uncoalesced
-(with probability $p_{n,1,t}$) or coalesce in an event of size $k$ (with probability $p_{n,k,t}$) with any set of $k-1$ lines among the $n-1$ other lines, leading to the following complementarity equation: 
+(with probability $p_{n,1}(N_t, N_{t+1})$) or coalesce in an event of size $k$ (with probability $p_{n,k}(N_t, N_{t+1})$) with any set of $k-1$ lines among the $n-1$ other lines, leading to the following complementarity equation: 
 
 \begin{equation}
-\sum_{k=1}^n \binom{n-1}{k-1} p_{n,k,t} =1
+\sum_{k=1}^n \binom{n-1}{k-1} p_{n,k}(N_t, N_{t+1}) =1
 \end{equation}
 
 We can show that it is indeed satisfied by the formula in Equation \eqref{eq:GeneralExclusiveProb}:
 
 	\begin{align}
-		\sum_{k=1}^n \binom{n-1}{k-1} p_{n,k,t}
+		\sum_{k=1}^n \binom{n-1}{k-1} p_{n,k}(N_t, N_{t+1})
 			& = \sum_{k=1}^n \binom{n-1}{k-1} \frac{N_t}{\binom{n}{k}} \mathbb{P}\left[X_1 = k \bigg| \sum_{i=1}^{N_t} X_i = n\right] \nonumber\\
 			& = \sum_{k=1}^n N_t \frac{k}{n} \mathbb{P}\left[X_1=k \bigg| \sum_{i=1}^{N_t} X_i = n\right] \nonumber\\
 			& = \frac{N_t}{n} \sum_{k=0}^n k \mathbb{P}\left[X_1 = k \bigg| \sum_{i=1}^{N_t} X_i = n\right] 
@@ -283,26 +283,24 @@ The $k$-th falling factorial moments of $X \sim \mathrm{Binomial}(n,p)$ are
 	\mathbb{E}\left[\frac{X!}{(X-k)!}\right]=\binom{n}{k} p^k k!
 \end{equation}
 
-By applying this formula to the Binomial distribution in Equation \eqref{eq:binomial}
-and injecting into Equation \eqref{eq:GeneralInclusiveProb} 
-we obtain the inclusive probability of coalescence for $k$ lines:
+Applying this formula to the Binomial distribution in Equation \eqref{eq:binomial} gives:
 \begin{equation}
-	\mathbb{E} \left[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
-		= \frac{1}{k!} \mathbb{E} \left[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
-		= \frac{1}{k!} \, \frac{N_{t+1}!}{(N_{t+1} - k)!} \left( \frac{1}{N_t} \right)^k
+\mathbb{E} \left[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \right]
+		= \frac{N_{t+1}!}{(N_{t+1} - k)!} \left( \frac{1}{N_t} \right)^k
 \end{equation}
 
-Consequently, the inclusive probability of coalescence for $k$ lines is
+By injecting into Equation \eqref{eq:GeneralInclusiveProb}, we obtain 
+that the inclusive probability of coalescence for $k$ lines is:
 \begin{equation}
-	p_{k,t}=\frac{1}{N_t^{k-1}}\label{eq:PoisInclusiveProb}
+	p_{k}(N_t, N_{t+1})=\frac{1}{N_t^{k-1}}\label{eq:PoisInclusiveProb}
 \end{equation}
 
-By injecting the probability mass function of the Binomial distribution in
+In addition, by injecting the probability mass function of the Binomial distribution in
 Equation \eqref{eq:binomial} into Equation 
 \eqref{eq:GeneralExclusiveProb} we deduce that 
-the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n \geq k)$ is
+the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n \geq k)$ is:
 	\begin{equation}
-		p_{n,k,t} = \frac{(N_t-1)^{n-k}}{N_t^{n-1}}\label{eq:PoisExclusiveProb}
+		p_{n,k}(N_t, N_{t+1}) = \frac{(N_t-1)^{n-k}}{N_t^{n-1}}\label{eq:PoisExclusiveProb}
 	\end{equation}
 	
 It is interesting to note that neither the inclusive nor the exclusive coalescence probability
@@ -339,7 +337,7 @@ In this case, we have:
 	\begin{equation}
 		\sum_{i=1}^{N_t} S_{t,i} \sim \text{Negative-Binomial}(N_t r,p)
 	\end{equation}
-and similarly to the Poisson$(\lambda)$ offspring distribution we identify that the conditional distribution of $S_{t,1} | \sum_{i=1}^{N_t} S_{t,i}$ is as follows:
+and similarly to the Poisson offspring distribution case we identify that the conditional distribution of $S_{t,1} | \sum_{i=1}^{N_t} S_{t,i}$ is as follows:
 
 {\allowdisplaybreaks
 	\begin{align}
@@ -368,19 +366,19 @@ By applying this formula to the Beta-Binomial distribution in Equation \eqref{eq
 and injecting into Equation \eqref{eq:GeneralInclusiveProb}, we deduce that the inclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
-p_{k,t}=
+p_{k}(N_t, N_{t+1})=
 %\prod_{i=1}^{k-1}\frac{r+i}{N_t r+i}=
 \frac{\mathrm{B}(N_t r+1,r+k)}{\mathrm{B}(r+1,N_t r+k)}
 \label{eq:NegBinInclusiveProb}
 \end{equation}
 
-By injecting the probability mass function of the Beta-Binomial distribution in Equation
+In addition, by injecting the probability mass function of the Beta-Binomial distribution in Equation
 \eqref{eq:beta-binomial} into Equation 
 \eqref{eq:GeneralExclusiveProb} we deduce that 
 the exclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
-p_{n,k,t}=\frac{N_t \mathrm{B}(k+r, n-k+N_t r-r)}{\mathrm{B}(r, N_t r-r)}
+p_{n,k}(N_t, N_{t+1})=\frac{N_t \mathrm{B}(k+r, n-k+N_t r-r)}{\mathrm{B}(r, N_t r-r)}
 \label{eq:NegBinExclusiveProb}
 \end{equation}
 
@@ -427,7 +425,7 @@ In the Poisson case, from Equations \eqref{eq:PoisInclusiveProb} and \eqref{eq:P
 are of order $\mathcal{O}(N_t^{1-k})$. We can therefore ignore events with $k>2$
 and retain only the events with $k=2$ which occur with probability:
 \begin{equation}
-p_{2,t}=p_{n,2,t}=\frac{1}{N_t}\label{eq:poissonapprox}
+p_{2}(N_t, N_{t+1})=p_{n,2}(N_t, N_{t+1})=\frac{1}{N_t}\label{eq:poissonapprox}
 \end{equation}
 
 For the Negative-Binomial case, from Equations \eqref{eq:NegBinInclusiveProb} and \eqref{eq:NegBinExclusiveProb} we can rewrite using Gamma functions and apply the 
@@ -437,7 +435,7 @@ We can therefore once again ignore events with $k>2$
 and retain only the events with $k=2$ which occur with probability:
 
 \begin{equation}
-p_{2,t}=p_{n,2,t}=\frac{r+1}{N_t r +1} \approx \frac{r+1}{N_t r}\label{eq:negbinapprox}
+p_{2}(N_t, N_{t+1})=p_{n,2}(N_t, N_{t+1})=\frac{r+1}{N_t r +1} \approx \frac{r+1}{N_t r}\label{eq:negbinapprox}
 \end{equation}
 
 \citet{koelleRatesCoalescenceCommon2012} derived the rates of coalescence of two lineages 
@@ -469,17 +467,17 @@ as a function of the actual population size $N(t)$ and the mean and variance of 
 %N_\mathrm{e}(t)=\frac{N(t)}{\sigma^2/R+R-1}
 %\end{equation}
 This formula was used to estimate the dispersion parameter of a Negative-Binomial offspring distribution from genetic data \citep{Li2017}.
-In our notation, their formula is equivalent to:
+In our notation, their formula is equivalent to the inclusive coalescence probability for two lineages:
 
 \begin{equation}
- p_{2,t}=\frac{V_t/R_t+R_t-1}{N_t R_t}\label{eq:fraser}
+ p_{2}(N_t, N_{t+1})=\frac{\sigma^2/R+R-1}{N_t R}\label{eq:fraser}
  \end{equation}
 
-In the Poisson case we have $V_t=R_t$ so that Equation \eqref{eq:fraser} simplifies to $p_{2,t}=1/N_t$ which agrees with Equation \eqref{eq:poissonapprox}. 
-In the Negative-Binomial case we have $V_t/R_t=1/p=(r+R_t)/r$ so that Equation \eqref{eq:fraser}
+In the Poisson case we have $\sigma^2=R$ so that Equation \eqref{eq:fraser} simplifies to $1/N_t$ which agrees with Equation \eqref{eq:poissonapprox}. 
+In the Negative-Binomial case we have $\sigma^2/R=1/p=(r+R)/r$ so that Equation \eqref{eq:fraser}
 simplifies to $(r+1)/(N_t r)$ which agrees with our Equation \eqref{eq:negbinapprox}. 
 Conversely, if we substitute the method of moments estimator 
-$r=R_t^2/(V_t-R_t)$
+$r=R^2/(\sigma^2-R)$
 in Equation \eqref{eq:negbinapprox} we obtain the Equation \eqref{eq:fraser}.
 
 \section{Definition of a new lambda-coalescent model}
@@ -530,12 +528,12 @@ We now define a new lambda-coalescent based on the Negative-Binomial case descri
 for outbreak).
 For ease of comparison with other coalescent models, we consider that time is continuous
 and that the population size remains constant equal to $N_t$. 
-The exclusive coalescent probability $p_{n,k,t}$ in the Negative-Binomial case 
+The exclusive coalescent probability $p_{n,k}(N_t, N_{t+1})$ in the Negative-Binomial case 
 given by Equation \eqref{eq:NegBinExclusiveProb} can be used to determine the corresponding 
 rate of the  omega-coalescent, if we consider that the probability of each event in discrete time
 is the result of the event happening at a constant rate in continuous time: 
 \begin{equation}
-\lambda_{n,k}=-\mathrm{log}(1-p_{n,k,t})
+\lambda_{n,k}=-\mathrm{log}(1-p_{n,k}(N_t, N_{t+1}))
 \label{eq:omega}
 \end{equation}
 
