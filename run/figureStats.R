@@ -4,9 +4,9 @@ library(patchwork)
 set.seed(0)
 data=data.frame()
 
-rs=c(0.1,1,5,10)
+rs=c(0.1,1,10,100)
 n=20
-nt=100
+nt=30
 for (i in 1:10000) {
   r=rs[i%%4+1]
   t=omega_simtree(n=n,nt=nt,r=r)

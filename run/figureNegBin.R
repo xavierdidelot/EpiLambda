@@ -6,7 +6,7 @@ library(patchwork)
 data=data.frame()
 rt=2
 data=rbind(data,data.frame(x=0:10,y=dpois(0:10,rt),Distribution='Poisson'))
-rs=c(1,2,10,100)
+rs=c(0.1,1,10,100)
 for (i in 1:length(rs))
   data=rbind(data,data.frame(x=0:10,y=dnbinom(0:10,size=rs[i],mu=rt),Distribution=paste0('NegBin(r=',rs[i],')')))
 data$Distribution=factor(data$Distribution,levels=unique(data$Distribution))#forces order to remain as input

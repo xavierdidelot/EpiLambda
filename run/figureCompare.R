@@ -14,10 +14,10 @@ for (i in 1:12) {
   }
   else
   {
-    if (i<=6) nt=15
-    if (i>6 && i<=9) nt=25
-    if (i>9) nt=50
-    r=c(0.1,0.5,1)[i%%3+1]
+    if (i<=6) nt=10
+    if (i>6 && i<=9) nt=20
+    if (i>9) nt=30
+    r=c(0.1,1,10)[i%%3+1]
     d=omega_psize(n=n,nt=nt,r=r)
     nam=paste0('Omega(Nt=',as.character(nt),',r=',as.character(r),')')
   }

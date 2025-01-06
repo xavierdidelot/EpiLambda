@@ -5,9 +5,9 @@ library(patchwork)
 set.seed(0)
 pdf('figureTree.pdf',10,10)
 ps=list()
-rs=c(0.1,1,5,10)
+rs=c(0.1,1,10,100)
 for (i in 1:4) {
-  t=omega_simtree(n=20,nt=100,r=rs[i])
+  t=omega_simtree(n=20,nt=30,r=rs[i])
   p <- ggtree(t) + theme_tree2() + scale_x_continuous(labels = abs)+ geom_tiplab()+xlab("Generations since present")
   p = revts(p)
   ps[[i]]=p
