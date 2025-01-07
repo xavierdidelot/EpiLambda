@@ -60,36 +60,36 @@ Keywords: infectious disease epidemiology modelling; offspring distribution; sup
 \newpage
 \section*{Abstract}
 
-When an infectious disease outbreak is of relatively small size, describing the ancestry
+When an infectious disease outbreak is of a relatively small size, describing the ancestry
 of a sample of infected individuals is difficult because most ancestral models assume
-large population sizes. Given a set of sampled individuals, 
+large population sizes. Given a set of infected individuals, 
 we show that it is possible to express exactly
-the probability that a subset of them have the same infector, either inclusively
-(so that other sampled individuals may have the same infector too) or exclusively 
+the probability that they have the same infector, either inclusively
+(so that other individuals may have the same infector too) or exclusively 
 (so that they may not).
 To compute these probabilities requires knowledge of the offspring distribution, 
 which determines how many infections each infected individual causes. 
 We consider transmission both without and with superspreading, in the form of a 
-Poisson and Negative-Binomial offspring distribution, respectively. 
+Poisson and a Negative-Binomial offspring distribution, respectively. 
 We show how our results can be incorporated into a new lambda-coalescent model
 which allows multiple lineages to coalesce together. 
 We call this new model the omega-coalescent, we compare it
 with previously proposed alternatives, and advocate its use
-for future studies of infectious disease outbreaks.
+in future studies of infectious disease outbreaks.
 
 \newpage
 \section{Introduction}
 
 An outbreak of an infectious disease typically starts when a single or a small number
 of infected individuals appear within a susceptible population. Each infected individual
-may come in contact and infected each of the susceptible individuals, who will then
-become infected in their turn and spread the disease further. Most infectious disease
-modelling theory describes situations where the disease is at an equilibrium, when the number
+may come in contact and transmit the disease to each of the susceptible individuals, who will then
+become infected in their turn and spread the disease further. Most mathematical models of infectious diseases
+describe situations where the disease is at an equilibrium, when the number
 of infected individuals is high and/or with a significant part of the population already infected
 \citep{Anderson1991,keeling2008modeling}. 
 Here however we focus on the early stages of an epidemic, where the number of 
-infected individuals is small and the number of susceptibles relatively high and unchanging.
-In this situation it is useful to think about the number of infections that each newly infected
+infected individuals is small and the number of susceptibles comparatively high and constant.
+In this situation it is useful to consider the number of new infections that each infected
 individual is likely to cause, and the probabilistic distribution for this number is often called
 the offspring distribution \citep{Grassly2008}. 
 The mean of the offspring distribution is called the basic
@@ -98,12 +98,12 @@ it determines how likely the outbreak is to spread, and how much effort would be
 to bring it under control \citep{fraserFactorsThatMake2004,fergusonStrategiesMitigatingInfluenza2006}. 
 
 If we consider that all
-individuals are infectious for the same duration and with the same infectiousness,
-the offspring distribution is Poisson distributed with mean $R_0$, which means that the variance
+individuals are infectious for the same duration and with the same transmission rate,
+the offspring distribution is Poisson distributed with mean $R_0$, in which case the variance
 of the offspring distribution is also $R_0$. We would then say that there is no transmission
 heterogeneity. However, in practice there are many reasons why this may not be the case,
-with some individuals being infectious for longer, or being more infectious than others, or 
-having more contacts with susceptibles, or being less symptomatic and therefore less likely
+with some individuals being infectious for longer than others, or being more infectious than others, or 
+having more frequent contacts with susceptibles, or being less symptomatic and therefore less likely
 to reduce contact numbers, etc. All these factors cause the offspring distribution to be more 
 dispersed than it would otherwise be, that is to have a variance greater than its mean $R_0$. 
 A frequent choice to capture this overdispersion is to model the offspring distribution
@@ -121,24 +121,24 @@ SARS-CoV-2 \citep{Wang2020,lemieuxPhylogeneticAnalysisSARSCoV22021,gomez-carball
 As an outbreak unfolds forward-in-time, a transmission tree is generated representing who-infected-whom,
 in which each node is an infected individual and points towards a number of nodes distributed according
 to the offspring distribution. Here we consider the reverse problem of the transmission ancestry, going backward-in-time, from a sample of infected individuals, until reaching the last common 
-transmission ancestor of the whole sample. Given a sample of $n$ sampled individuals,
+transmission ancestor of the whole sample. Given a set of $n$ sampled individuals,
 we show how to calculate the probability that a given subset of size $k$ have the same infector,
 either inclusively (so that the remaining $n-k$ may also have the same infector or not)
 or exclusively (so that none of the remaining $n-k$ have the same infector). We start
 by considering the general case of an offspring distribution with arbitrary form, 
 and then the specific cases of 
-offspring distributions that follow a Poisson or a Negative-Binomial distribution.
+offspring distributions that follow a Poisson and a Negative-Binomial distribution.
 The main novelty of our approach is that we consider that the overall population size is small,
-but we show that if the population size is large, our results agree with several previous
+but we show that in the limit where the population size is large, our results agree with several previous
 studies \citep{Volz2012a,koelleRatesCoalescenceCommon2012,Fraser2017}.
 Finally, we show how our results can be incorporated into a new lambda-coalescent model 
 \citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,
 donnellyParticleRepresentationsMeasureValued1999} and compare it with previously
 proposed models.
 
-\section{General case}
+\section{General offspring distribution case}
 
-Let time be measured in discrete units and denoted $t$. Each discrete value of $t$ correspond to a unique non-overlapping 
+Let time be measured in discrete units and denoted $t$. Each discrete value of $t$ corresponds to a unique non-overlapping 
 generation of infected individuals, so that individuals infected at $t$ have offspring at $t+1$, etc. 
 Let $N_t$ denote the number of infectious individuals at time $t$. Each of them creates a number $s_{t,i}$ of secondary infections at time $t+1$, following the offspring distribution $\alpha_t(s)$. The mean of this distribution is the basic reproduction number $R_t$ and the variance is $V_t$. The total number of infected individuals at time $t+1$ is given by:
 
@@ -149,13 +149,13 @@ N_{t+1}=\sum_{i=1}^{N_t} s_{t,i}
 
 \subsection{Inclusive coalescence probability}
 
-We define the inclusive coalescence probability $p_{k}(N_t, N_{t+1})$ as the probability that a specific set of $k$ individuals from generation $t+1$ find a common ancestor in generation $t$, conditional on population sizes $N_t$ and $N_{t+1}$.
-
+We define the inclusive coalescence probability $p_{k,t}(N_t, N_{t+1})$ as the probability that a specific set of $k$ individuals from generation $t+1$ have the same infector in generation $t$, conditional on population sizes $N_t$ and $N_{t+1}$.
+%
 Given full information about offspring counts from individuals in generation $t$, ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$, we have:
 
 {\allowdisplaybreaks
 	\begin{align}
-		p_{k}({\bf s}_t, N_t)
+		p_{k,t}({\bf s}_t, N_t)
 			& = \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \nonumber\\
 			 &= \sum_{i=1}^{N_t} \frac{s_{t,i}!}{(s_{t,i}-k)!} \frac{(N_{t+1}-k)!}{N_{t+1}!} %\\
 %			& = \sum_{i=1}^{N_t} \frac{\Gamma(s_{t,i}+1) \Gamma(N_{t+1}-k+1)}{\Gamma(s_{t,i}-k+1) \Gamma(N_{t+1})}% \\
@@ -164,15 +164,15 @@ Given full information about offspring counts from individuals in generation $t$
 }
 
 Full information $\{s_{t,i}\}$ yields the population size $N_{t+1}$ as shown in Equation \eqref{eq:summation}, 
-but this is not feasible to observe in practice.
+but this is not available in practice.
 We can instead express the inclusive coalescence probability conditioning on the next population size $N_{t+1}$ by summing over possible offspring counts ${\bf s}_t = (s_{t,1}, \dots s_{t, N_t})$ conditional on the total generation size.
 Let $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$:
 
 {\allowdisplaybreaks
 	\begin{align}
-	p_{k}(N_t, N_{t+1})
+	p_{k,t}(N_t, N_{t+1})
 %		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} 
-		& = \sum_{{\bf s}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] p_{k}({\bf s}_t, N_t) \nonumber\\
+		& = \sum_{{\bf s}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] p_{k,t}({\bf s}_t, N_t) \nonumber\\
 %		& = \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} 
 		& = \sum_{{\bf s}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[{\bf S}_t = {\bf s}_t \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \sum_{i=1}^{N_t} \frac{\binom{s_{t,i}}{k}}{\binom{N_{t+1}}{k}} \nonumber\\
 %		& = \sum_{i=1}^{N_t} \sum_{{\bf s}_t : \sum_{i=1}^{N_t} s_{i,t} = N_{t+1}} 
@@ -185,8 +185,8 @@ Let $S_t^{-(1)} = (S_{t,2}, \dots, S_{t, N_t})$:
 			& \phantom{=}\qquad \times \underbrace{
 				%\sum_{{\bf s}_t^{-(1)} : \sum_{i=2}^{N_t} s_{i,t} = N_{t+1} - s_{1,t}} 
 				\sum_{{\bf s}_t^{-(1)} \in \mathbb{N}_0^{N_t - 1}} \mathbb{P} \bigg[{\bf S}_t^{-(1)} = {\bf s}_t^{-(1)} \bigg| \sum_{i=2}^{N_t} S_{t,i} = N_{t+1} - s_{1,t} \bigg]}_{=1} \nonumber\\
-		& = \frac{N_t}{\binom{N_{t+1}}{k}} \mathbb{E}\bigg[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \label{eq:GeneralInclusiveProb} \nonumber\\
-		& = N_t \frac{(N_{t+1} - k)!}{N_{t+1}!} \mathbb{E} \bigg[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] %\label{eq:GeneralInclusiveProb}
+		& = \frac{N_t}{\binom{N_{t+1}}{k}} \mathbb{E}\bigg[ \binom{S_{t,1}}{k} \bigg| \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \nonumber\\
+		& = N_t \frac{(N_{t+1} - k)!}{N_{t+1}!} \mathbb{E} \bigg[ \frac{S_{t,1}!}{(S_{t,1} - k)!} \bigg | \sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg] \label{eq:GeneralInclusiveProb}
 	\end{align}
 }
 
@@ -195,20 +195,20 @@ The $k$-th falling factorial moments $\mathbb{E} \big[ \frac{S_{t,1}!}{(S_{t,1} 
 \subsection{Exclusive coalescence probability}
 
 Generally, we observe a sample of individuals from each generation rather than the entire population.
-In this case, we are interested in the exclusive coalescence probability $p_{n,k}(N_t, N_{t+1})$ that exactly $k$ individuals from a sample of $n$ arose from a common ancestor one generation in the past given knowlege of the total population sizes $N_t$ and $N_{t+1}$.
-
-Given full information about offspring counts of the parents of sampled individuals at the present, ${\bf x}_t = (x_{t,1}, \dots, x_{t,N_t})$, we have
+In this case, we are interested in the exclusive coalescence probability $p_{n,k,t}(N_t, N_{t+1})$ that a specific subset of $k$ individuals amongst $n$ sampled individuals arose from a common infector one generation in the past given knowledge of the total population sizes $N_t$ and $N_{t+1}$.
+%
+Given full information about offspring counts of the parents of sampled individuals at time $N_t$, namely ${\bf x}_t = (x_{t,1}, \dots, x_{t,N_t})$, we have:
 	\begin{align}
-		p_{n,k}({\bf x}_t, N_t)
+		p_{n,k,t}({\bf x}_t, N_t)
 			& = \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \}\nonumber\\
 			& = \sum_{i=1}^{N_t} \frac{x_{t,i}!}{(x_{t,i} - k)!} \frac{(n-k)!}{n!} \mathbb{I} \{ x_{t,i} = k \}
 	\end{align}
 
-Similarly to the exclusive coalescence probability, we can use this to evaluate the exclusive probability given $N_t$ and $N_{t+1}$ by summing over possible parent offspring configurations (for $k \leq n$):
+Similarly to the inclusive coalescence probability in Equation \eqref{eq:GeneralInclusiveProb}, we can use this to evaluate the exclusive probability given $N_t$ and $N_{t+1}$ by summing over possible parent offspring configurations (for $k \leq n$):
 
 	\begin{align}
-		p_{n,k}(N_t, N_{t+1})
-			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] p_{n,k} ({\bf x}_t, N_t) \nonumber\\
+		p_{n,k,t}(N_t, N_{t+1})
+			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] p_{n,k,t} ({\bf x}_t, N_t) \nonumber\\
 			& = \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg | \sum_{i=1}^{n} X_{t,i} = n \bigg] \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \} \nonumber\\
 			& = \frac{N_t}{\binom{n}{k}} \sum_{{\bf x}_t \in \mathbb{N}_0^{N_t}} \binom{x_{t,1}}{k} \mathbb{P} \bigg[ {\bf X}_t = {\bf x}_t \bigg| \sum_{i=1}^{N_t} X_{t,i} = n \bigg] \mathbb{I} \{x_{t,1} = k \} \nonumber\\
 			& = \frac{N_t}{\binom{n}{k}}
@@ -226,16 +226,16 @@ $(X_{t,1}, \dots, X_{t, N_t})$ consists of $n$ individuals sampled from generati
 \subsection{Complementarity of exclusive coalescence probabilities}
 
 If we consider one of the lines observed amongst a set of $n$, it can either remain uncoalesced
-(with probability $p_{n,1}(N_t, N_{t+1})$) or coalesce in an event of size $k$ (with probability $p_{n,k}(N_t, N_{t+1})$) with any set of $k-1$ lines among the $n-1$ other lines, leading to the following complementarity equation: 
+with probability $p_{n,1,t}(N_t, N_{t+1})$ or coalesce in an event of size $k$ with probability $p_{n,k,t}(N_t, N_{t+1})$ with any set of $k-1$ lines among the $n-1$ other lines, leading to the following complementarity equation: 
 
 \begin{equation}
-\sum_{k=1}^n \binom{n-1}{k-1} p_{n,k}(N_t, N_{t+1}) =1
+\sum_{k=1}^n \binom{n-1}{k-1} p_{n,k,t}(N_t, N_{t+1}) =1
 \end{equation}
 
 We can show that it is indeed satisfied by the formula in Equation \eqref{eq:GeneralExclusiveProb}:
 
 	\begin{align}
-		\sum_{k=1}^n \binom{n-1}{k-1} p_{n,k}(N_t, N_{t+1})
+		\sum_{k=1}^n \binom{n-1}{k-1} p_{n,k,t}(N_t, N_{t+1})
 			& = \sum_{k=1}^n \binom{n-1}{k-1} \frac{N_t}{\binom{n}{k}} \mathbb{P}\left[X_1 = k \bigg| \sum_{i=1}^{N_t} X_i = n\right] \nonumber\\
 			& = \sum_{k=1}^n N_t \frac{k}{n} \mathbb{P}\left[X_1=k \bigg| \sum_{i=1}^{N_t} X_i = n\right] \nonumber\\
 			& = \frac{N_t}{n} \sum_{k=0}^n k \mathbb{P}\left[X_1 = k \bigg| \sum_{i=1}^{N_t} X_i = n\right] 
@@ -253,7 +253,7 @@ We can show that it is indeed satisfied by the formula in Equation \eqref{eq:Gen
 			& = 1%\frac{n}{N_t}
 	\end{align}
 	
-\section{Poisson case}
+\section{Poisson offspring distribution case}
 
 In this section we consider that the offspring distribution is $\alpha_t = \text{Poisson}(R_t)$.
 In this case, we have: 
@@ -292,7 +292,7 @@ Applying this formula to the Binomial distribution in Equation \eqref{eq:binomia
 By injecting into Equation \eqref{eq:GeneralInclusiveProb}, we obtain 
 that the inclusive probability of coalescence for $k$ lines is:
 \begin{equation}
-	p_{k}(N_t, N_{t+1})=\frac{1}{N_t^{k-1}}\label{eq:PoisInclusiveProb}
+	p_{k,t}(N_t, N_{t+1})=\frac{1}{N_t^{k-1}}\label{eq:PoisInclusiveProb}
 \end{equation}
 
 In addition, by injecting the probability mass function of the Binomial distribution in
@@ -300,7 +300,7 @@ Equation \eqref{eq:binomial} into Equation
 \eqref{eq:GeneralExclusiveProb} we deduce that 
 the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n \geq k)$ is:
 	\begin{equation}
-		p_{n,k}(N_t, N_{t+1}) = \frac{(N_t-1)^{n-k}}{N_t^{n-1}}\label{eq:PoisExclusiveProb}
+		p_{n,k,t}(N_t, N_{t+1}) = \frac{(N_t-1)^{n-k}}{N_t^{n-1}}\label{eq:PoisExclusiveProb}
 	\end{equation}
 	
 It is interesting to note that neither the inclusive nor the exclusive coalescence probability
@@ -328,7 +328,7 @@ lines, in a population of size $N_t=10$, $N_t=20$ or $N_t=30$.
 \label{fig:pois}}
 \end{figure}
 
-\section{Negative-Binomial case}
+\section{Negative-Binomial offspring distribution case}
 
 In this section we consider that the offspring distribution is $\alpha_t=\text{Negative-Binomial}(r,p)$ with parameters $(r,p)$ set by moment-matching mean $R_t$ and variance $V_t$
 which are assumed constant over time.
@@ -366,7 +366,7 @@ By applying this formula to the Beta-Binomial distribution in Equation \eqref{eq
 and injecting into Equation \eqref{eq:GeneralInclusiveProb}, we deduce that the inclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
-p_{k}(N_t, N_{t+1})=
+p_{k,t}(N_t, N_{t+1})=
 %\prod_{i=1}^{k-1}\frac{r+i}{N_t r+i}=
 \frac{\mathrm{B}(N_t r+1,r+k)}{\mathrm{B}(r+1,N_t r+k)}
 \label{eq:NegBinInclusiveProb}
@@ -378,7 +378,7 @@ In addition, by injecting the probability mass function of the Beta-Binomial dis
 the exclusive probability of coalescence for $k$ lines is:
 
 \begin{equation}
-p_{n,k}(N_t, N_{t+1})=\frac{N_t \mathrm{B}(k+r, n-k+N_t r-r)}{\mathrm{B}(r, N_t r-r)}
+p_{n,k,t}(N_t, N_{t+1})=\frac{N_t \mathrm{B}(k+r, n-k+N_t r-r)}{\mathrm{B}(r, N_t r-r)}
 \label{eq:NegBinExclusiveProb}
 \end{equation}
 
@@ -425,7 +425,7 @@ In the Poisson case, from Equations \eqref{eq:PoisInclusiveProb} and \eqref{eq:P
 are of order $\mathcal{O}(N_t^{1-k})$. We can therefore ignore events with $k>2$
 and retain only the events with $k=2$ which occur with probability:
 \begin{equation}
-p_{2}(N_t, N_{t+1})=p_{n,2}(N_t, N_{t+1})=\frac{1}{N_t}\label{eq:poissonapprox}
+p_{2,t}(N_t, N_{t+1})=p_{n,2,t}(N_t, N_{t+1})=\frac{1}{N_t}\label{eq:poissonapprox}
 \end{equation}
 
 For the Negative-Binomial case, from Equations \eqref{eq:NegBinInclusiveProb} and \eqref{eq:NegBinExclusiveProb} we can rewrite using Gamma functions and apply the 
@@ -435,7 +435,7 @@ We can therefore once again ignore events with $k>2$
 and retain only the events with $k=2$ which occur with probability:
 
 \begin{equation}
-p_{2}(N_t, N_{t+1})=p_{n,2}(N_t, N_{t+1})=\frac{r+1}{N_t r +1} \approx \frac{r+1}{N_t r}\label{eq:negbinapprox}
+p_{2,t}(N_t, N_{t+1})=p_{n,2,t}(N_t, N_{t+1})=\frac{r+1}{N_t r +1} \approx \frac{r+1}{N_t r}\label{eq:negbinapprox}
 \end{equation}
 
 \citet{koelleRatesCoalescenceCommon2012} derived the rates of coalescence of two lineages 
@@ -470,7 +470,7 @@ This formula was used to estimate the dispersion parameter of a Negative-Binomia
 In our notation, their formula is equivalent to the inclusive coalescence probability for two lineages:
 
 \begin{equation}
- p_{2}(N_t, N_{t+1})=\frac{\sigma^2/R+R-1}{N_t R}\label{eq:fraser}
+ p_{2,t}(N_t, N_{t+1})=\frac{\sigma^2/R+R-1}{N_t R}\label{eq:fraser}
  \end{equation}
 
 In the Poisson case we have $\sigma^2=R$ so that Equation \eqref{eq:fraser} simplifies to $1/N_t$ which agrees with Equation \eqref{eq:poissonapprox}. 
@@ -528,12 +528,12 @@ We now define a new lambda-coalescent based on the Negative-Binomial case descri
 for outbreak).
 For ease of comparison with other coalescent models, we consider that time is continuous
 and that the population size remains constant equal to $N_t$. 
-The exclusive coalescent probability $p_{n,k}(N_t, N_{t+1})$ in the Negative-Binomial case 
+The exclusive coalescent probability $p_{n,k,t}(N_t, N_{t+1})$ in the Negative-Binomial case 
 given by Equation \eqref{eq:NegBinExclusiveProb} can be used to determine the corresponding 
 rate of the  omega-coalescent, if we consider that the probability of each event in discrete time
 is the result of the event happening at a constant rate in continuous time: 
 \begin{equation}
-\lambda_{n,k}=-\mathrm{log}(1-p_{n,k}(N_t, N_{t+1}))
+\lambda_{n,k}=-\mathrm{log}(1-p_{n,k,t}(N_t, N_{t+1}))
 \label{eq:omega}
 \end{equation}
 
