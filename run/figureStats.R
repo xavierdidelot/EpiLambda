@@ -22,6 +22,6 @@ p2 <- ggplot(data, aes(factor(r), stem)) + geom_violin()+geom_boxplot(width=.1,o
 p3 <- ggplot(data, aes(factor(r), nmulti)) + geom_violin()+geom_boxplot(width=.1,outliers = F)+xlab('Dispersion parameter')+ylab('Number of multimergers')
 p4 <- ggplot(data, aes(factor(r), largest)) + geom_violin()+geom_boxplot(width=.1,outliers = F)+xlab('Dispersion parameter')+ylab('Size of the largest multimerger')
 pdf('figureStats.pdf',10,10)
-p1+p2+p3+p4+plot_layout(ncol = 2, nrow = 2, guides = "collect")+plot_annotation(tag_levels = 'A')
+p3+p4+p1+p2+plot_layout(ncol = 2, nrow = 2, guides = "collect")+plot_annotation(tag_levels = 'A')
 dev.off()
 system('open figureStats.pdf')

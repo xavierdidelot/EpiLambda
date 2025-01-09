@@ -315,7 +315,7 @@ the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n 
 	
 It is interesting to note that neither the inclusive nor the exclusive coalescence probability
 depend on the mean $R_t$ of the Poisson offspring distribution or the size $N_{t+1}$
-of the population at time $t+1$.
+of the population at time $t+1$. Both only depend on the population size $N_t$ at time $t$.
 The inclusive coalescent probability in Equation \eqref{eq:PoisInclusiveProb}
 can also be obtained conceptually by considering
 that among the $k$ lines, the first one has an ancestor with probability one, 
@@ -325,10 +325,9 @@ is $1/N_t$. The exclusive coalescent probability in Equation \eqref{eq:PoisExclu
 can be derived likewise by considering
 that in addition to the above, each of the $n-k$ other lines need to choose a different
 ancestor, which happens with probability $(N_t-1)/N_t$.
-
-Figure \ref{fig:pois} illustrates the inclusive and exclusive coalescence probabilities for
-the Poisson case for a set of size $k=1$ to $k=10$ amongst a total of $n=10$ observed
-lines, in a population of size $N_t=10$, $N_t=20$ or $N_t=30$. 
+Figure \ref{fig:pois} illustrates the inclusive and exclusive coalescence probabilities 
+for a set of size $k=1$ to $k=10$ amongst a total of $n=10$ observed
+individuals, in a population of size $N_t=10$, $N_t=20$ or $N_t=30$. 
 
 \begin{figure}[!p]
 \begin{center}
@@ -425,21 +424,32 @@ the Negative-Binomial case for a set of size $k=1$ to $k=10$ amongst a total of 
  observed lines, in a population with size $N_t=20$. 
 Several Negative-Binomial offspring distributions are compared, 
 all of which have the same mean $R_t=2$,
-and with the dispersion parameter equal to $r=0.1$, $r=1$, $r=10$ and $r=100$.
+and with the dispersion parameter equal to $r=0.1$, $r=1$, $r=10$ and $r=100$
+(Figure \ref{fig:negbin}A).
 When $r=1$ the Negative-Binomial reduces to a Geometric distribution.
-When $r$ is high (for example $r=100$ as shown in Figure \ref{fig:negbin}) 
+When $r$ is high 
 the dispersion is low and the Negative-Binomial case 
-behaves almost like the Poisson case. When $r$ is lower the dispersion of the
+behaves almost like the Poisson case
+for both the inclusive (Figure \ref{fig:negbin}B) and the exclusive coalescence
+probabilities (Figure \ref{fig:negbin}C).
+When $r$ is lower the dispersion of the
 offspring distribution increases, so that 
-both the inclusive and exclusive probabilities of larger multimerger events increase.
+both the inclusive and exclusive probabilities of larger multimerger events are increased
+compared to the Poisson case.
+In particular, when $r=0.1$ we see that the exclusive probability can increase
+with the size of the event considered (Figure \ref{fig:negbin}C). This happens because
+the probability is not much lower for the common ancestor having say 10 rather than 9 offspring,
+while on the other hand if the event is of size 9 only then another individual in the generation
+of the ancestor needs to have had at least one sampled offspring. 
 
 \section{Limit when the population size is large}
 
 If we consider that the population size $N_t$ is fixed and large, we can show the connections
-between our results and several previous studies.
+between our results and several previous studies on the ancestral process of infectious diseases.
 In the Poisson case, from Equations \eqref{eq:PoisInclusiveProb} and \eqref{eq:PoisExclusiveProb} we can see that both inclusive and exclusive probabilities
 are of order $\mathcal{O}(N_t^{1-k})$. We can therefore ignore events with $k>2$
-and retain only the events with $k=2$ which occur with probability:
+and retain only the events with $k=2$ which occur with the same inclusive and exclusive
+probabilities:
 \begin{equation}
 p_{2,t}(N_t, N_{t+1})=p_{n,2,t}(N_t, N_{t+1})=\frac{1}{N_t}\label{eq:poissonapprox}
 \end{equation}
@@ -448,7 +458,8 @@ For the Negative-Binomial case, from Equations \eqref{eq:NegBinInclusiveProb} an
 form of Stirling's equation given in Equation \refeq{eq:stirling} to show that 
 once again both inclusive and exclusive probabilities are also of order $\mathcal{O}(N_t^{1-k})$. 
 We can therefore once again ignore events with $k>2$
-and retain only the events with $k=2$ which occur with probability:
+and retain only the events with $k=2$ which occur with the same inclusive and 
+exclusive probabilities:
 
 \begin{equation}
 p_{2,t}(N_t, N_{t+1})=p_{n,2,t}(N_t, N_{t+1})=\frac{r+1}{N_t r +1} \approx \frac{r+1}{N_t r}\label{eq:negbinapprox}
@@ -461,18 +472,20 @@ size $N_\mathrm{e}$ to the actual population size $N$ and the variance $\sigma^2
 of offspring. This relationship was first established by \citet{Kingman1982} to
 derive the backward-in-time coalescent model from the forward-in-time
 Cannings exchangeable models \citep{Cannings1974}. 
+This result implies that the rate of coalescence for two lineages is 
+$1/N_\mathrm{e}=\sigma^2/N$.
 From Equation \eqref{eq:negbinapprox} we can take $R_t=1$ to achieve 
 equilibrium of the population size and the method of moments estimator
 $r=R_t^2/(V_t-R_t)=1/(V_t-1)$ to deduce 
-the equivalent $p_{2,t}=V_t/N_t$. 
+the equivalent result $p_{2,t}(N_t,N_{t+1})=V_t/N_t$. 
 
 \citet{Volz2012a} showed that the rate of coalescence for two lineages under a continuous-time epidemic coalescent model is $2f(t)/I(t)^2$
- where $f(t)$ is the incidence and $I(t)$ the prevalence. 
+ where $f(t)$ is the incidence of the disease and $I(t)$ its prevalence. 
  Setting in this formula the prevalence as $I(t)=N_{t+1}=N_t R_t$ and the incidence as
- $f(t)=R_t N_{t+1}=R_t^2 N_t$ we get a coalescent rate of 
+ $f(t)=R_t I(t)=R_t^2 N_t$ we get a coalescent rate of 
  $2/N_t$. To apply our methodology we need to consider that
 the offspring distribution is Geometric, since the epidemiological
- models considered have successes (offspring) happening until the first failure
+ models considered have successes (transmission) happening until the first failure
  (removal). We therefore set $r=1$ in Equation \eqref{eq:negbinapprox} 
  to make the Negative-Binomial offspring distribution
  reduce to a Geometric distribution and the same result follows.
@@ -483,17 +496,18 @@ as a function of the actual population size $N(t)$ and the mean and variance of 
 %N_\mathrm{e}(t)=\frac{N(t)}{\sigma^2/R+R-1}
 %\end{equation}
 This formula was used to estimate the dispersion parameter of a Negative-Binomial offspring distribution from genetic data \citep{Li2017}.
-In our notation, their formula is equivalent to the inclusive coalescence probability for two lineages:
+Using our notations, their formula is equivalent to the inclusive coalescence 
+probability for two lineages:
 
 \begin{equation}
- p_{2,t}(N_t, N_{t+1})=\frac{\sigma^2/R+R-1}{N_t R}\label{eq:fraser}
+ p_{2,t}(N_t, N_{t+1})=\frac{V_t/R_t+R_t-1}{N_t R_t}\label{eq:fraser}
  \end{equation}
 
-In the Poisson case we have $\sigma^2=R$ so that Equation \eqref{eq:fraser} simplifies to $1/N_t$ which agrees with Equation \eqref{eq:poissonapprox}. 
-In the Negative-Binomial case we have $\sigma^2/R=1/p=(r+R)/r$ so that Equation \eqref{eq:fraser}
+In the Poisson case we have $V_t=R_t$ so that Equation \eqref{eq:fraser} simplifies to $1/N_t$ which agrees with Equation \eqref{eq:poissonapprox}. 
+In the Negative-Binomial case we have $V_t/R_t=1/p=1+R_t/r$ so that Equation \eqref{eq:fraser}
 simplifies to $(r+1)/(N_t r)$ which agrees with our Equation \eqref{eq:negbinapprox}. 
 Conversely, if we substitute the method of moments estimator 
-$r=R^2/(\sigma^2-R)$
+$r=R_t^2/(V_t-R_t)$
 in Equation \eqref{eq:negbinapprox} we obtain the Equation \eqref{eq:fraser}.
 
 \section{Definition of a new lambda-coalescent model}
@@ -504,12 +518,12 @@ the Moran model \citep{Moran1958} and the Cannings exchangeable model \citep{Can
 Since the coalescent considers a large population in which each individual only has a number of offspring that is small
 compared to the population size, coalescent trees are always binary and do not feature multimergers,
 making them unsuitable to represent the ancestry of outbreaks considered in this study.
-However, the lambda-coalescent models are an extension of the coalescent model that do
-allow multimergers
+However, the lambda-coalescent model is an extension of the coalescent model that 
+allows multimergers
 \citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,donnellyParticleRepresentationsMeasureValued1999}. 
 
 A lambda-coalescent model is defined by a probability measure 
-$\Lambda(\mathrm{d} x)$ on the interval $[0,1]$, from which we can deduce
+$\Lambda(\mathrm{d} x)$ on the interval $[0,1]$, from which we deduce
 the rate $\lambda_{n,k}$ at which any subset of $k$ lineages within a set of $n$ observed lineages 
 coalesce:
 
@@ -528,7 +542,7 @@ has a single parameter $\alpha \in [0,2]$ and is defined as:
 \label{eq:beta0}
 \end{equation}
 
-By combining Equations \eqref{eq:lambda} and \eqref{eq:beta0} we can deduce that:
+By combining Equations \eqref{eq:lambda} and \eqref{eq:beta0} we deduce that:
 
 \begin{equation}
 \lambda_{n,k}=\frac{\mathrm{B}(k-\alpha,n-k+\alpha)}{\mathrm{B}(2-\alpha,\alpha)}
@@ -553,6 +567,13 @@ is the result of the event happening at a constant rate in continuous time:
 \label{eq:omega}
 \end{equation}
 
+Note that this equation implies that time is measured
+continuously in number of transmission generations. 
+For example to measure time in decimal days instead, the time scale
+would need to be multiplied by the mean of the generation time 
+distribution measured in days \citep{Svensson2007}.
+The omega-coalescent has two parameters: the constant population size $N_t$ and
+the dispersion parameter $r$. 
 In order to compare the omega-coalescent defined in Equation \eqref{eq:omega}
 with other models such as the beta-coalescent defined in Equation \eqref{eq:beta}, we consider 
 the distribution of the size $k$ of the next event among
@@ -561,6 +582,16 @@ a set of $n$ lineages. For any lambda-coalescent this can be computed as:
 \begin{equation}
 p(k|n)=\frac{\binom{n}{k}\lambda_{n,k}}{\sum_{i=2}^n \binom{n}{i}\lambda_{n,i}}
 \end{equation}
+
+\begin{figure}[!p]
+\begin{center}
+\includegraphics[width=15cm]{../run/figureCompare.pdf}
+\end{center}
+\caption{Distribution of the size of the next event among a set of $n=10$ lineages, 
+compared between the beta-coalescent and the omega-coalescent model 
+with various parameters.
+\label{fig:compare}}
+\end{figure}
 
 Figure \ref{fig:compare} compares this distribution for $n=10$ in the beta-coalescent with 
 parameter $\alpha \in \{0.5,1,1.5\}$ and for the omega-coalescent with parameters
@@ -573,13 +604,21 @@ value of $N_t$ reduces the probability of larger events.
 
 \begin{figure}[!p]
 \begin{center}
-\includegraphics[width=15cm]{../run/figureCompare.pdf}
+\includegraphics[width=15cm]{../run/figureTree.pdf}
 \end{center}
-\caption{Distribution of the size of the next event among a set of $n=10$ lineages, 
-compared between the beta-coalescent and the omega-coalescent model 
-with various parameters.
-\label{fig:compare}}
+\caption{Example of trees simulated under the omega-coalescent with $r=0.1$ (A),
+$r=1$ (B), $r=10$ (C) and $r=100$ (D).
+\label{fig:trees}}
 \end{figure}
+
+\begin{figure}[!p]
+\begin{center}
+\includegraphics[width=15cm]{../run/figureStats.pdf}
+\end{center}
+\caption{Summary statistics for trees simulated under the omega-coalescent with $r=0.1$, $r=1$, $r=10$ and $r=100$, namely number of multimergers (A) the size of the largest multimerger (B), the time to the most recent common ancestor (C) and the stemminess (D). 
+\label{fig:stats}}
+\end{figure}
+
 
 Genealogies can be simulation from the omega-coalescent model 
 defined in Equation \ref{eq:omega} using the same algorithm
@@ -589,34 +628,24 @@ constant population size $N_t=30$ and dispersion parameter $r \in \{0.1,1,10,100
 It is already clear from these single realisations that the lower values of $r$ result
 in trees with more larger multimerger events and lower time to the most recent common ancestor,
 but to quantify these properties we need to consider many trees.
-
-\begin{figure}[!p]
-\begin{center}
-\includegraphics[width=15cm]{../run/figureTree.pdf}
-\end{center}
-\caption{Example of trees simulated under the omega-coalescent with $r=0.1$ (A),
-$r=1$ (B), $r=10$ (C) and $r=100$ (D).
-\label{fig:trees}}
-\end{figure}
-
 Figure \ref{fig:stats} shows summary statistics for 10,000 trees simulated in the same conditions
 as the individual trees shown in Figure \ref{fig:trees}. 
 As the dispersion parameter increases from $r=0.1$
-to $r=100$ multimerger events become less and less likely and large. Simultaneously, the
-time to the most recent common ancestor increases, as well as the stemminess of the tree 
-(ie the proportion of branch lengths in non-terminal branches).
+to $r=100$ multimerger events become less and less likely and less large
+(Figure \ref{fig:stats}A and B), and the 
+time to the most recent common ancestor increases
+(Figure \ref{fig:stats}C).
+Furthermore, the stemminess of the tree increases, 
+which is defined as the sum of lengths of internal branches divided by the total sum of branch lengths (Figure \ref{fig:stats}D). 
+Stemminess is usually taken as a sign of population size dynamics
+\citep{fialaFactorsDeterminingAccuracy1985,Didelot2009d},
+which would be misleading here since all simulations assumed
+a constant population size.
 
-\begin{figure}[!p]
-\begin{center}
-\includegraphics[width=15cm]{../run/figureStats.pdf}
-\end{center}
-\caption{Summary statistics for trees simulated under the omega-coalescent with $r=0.1$, $r=1$, $r=10$ and $r=100$, namely the time to the most recent common ancestor (A), stemminess (B), number of multimergers (C) and the size of the largest multimerger (D).
-\label{fig:stats}}
-\end{figure}
 
 \section{Parameter inference}
 
-Consider a genealogy $T$ with $n$ leaves and $c$ coalescent nodes, with $t_0=0$ the
+Let us now consider a genealogy $T$ with $n$ leaves and $c$ coalescent nodes, with $t_0=0$ the
 sampling time,
 $t_1,...,t_c$ the times of the coalescent nodes in increasing order and $k_i$ the number
 of lineages coalescing at time $t_i$. The number of lineages existing between
@@ -631,7 +660,8 @@ p(T|\Lambda)=\prod_{i=1}^{c}\lambda_{n_i,k_i}\exp\left(-\sum_{j=2}^{n_i}\binom{n
 Note that in Equation \eqref{eq:likelihood} the term $\binom{n_i}{k_i}$  term from the
 coalescent rate cancels out with its reciprocal from the probability of sampling $k_i$ specific
 lineages to coalesce within a set of $n_i$.
-Estimating the lambda measure in general is a difficult problem
+Estimating the lambda measure from Equation \eqref{eq:lambda} 
+in general is a difficult problem
 \citep{Koskela2018a,miropinaEstimatingLambdaMeasure2023}.
 Here however we focus on estimation under the omega-coalescent model,
 where the $\lambda_{n,k}$ terms are given by Equation \eqref{eq:omega}.
@@ -641,7 +671,7 @@ the effective population size $N_t$ (which remains constant) and the dispersion
 parameter $r$ of the Negative-Binomial offspring distribution. 
 We perform estimation simply by maximising the likelihood in Equation \eqref{eq:likelihood},
 using the Brent algorithm \citep{brent1971algorithm} when estimating a single parameter
-and the L-BFGS-B algorithm when \citep{byrd1995limited} estimating both parameters.
+and the L-BFGS-B algorithm \citep{byrd1995limited} when estimating both parameters.
 
 \begin{figure}[!p]
 \begin{center}
@@ -656,17 +686,18 @@ of both parameters.
 \end{figure}
 
 We simulated 100 genealogies from the omega-coalescent model each of which had
-$n=100$ leaves, with parameter $N_\mathrm{e}$ drawn uniformly at random between 100 and 500
+$n=100$ leaves, with parameter $N_t$ drawn uniformly at random between 100 and 500
 and parameter $r$ drawn uniformly at random between 0.01 and 2.
 If we assume knowledge of the dispersion parameter, then estimating the population size 
 works really well (Figure \ref{fig:estim}A). Conversely we obtain good result when 
 estimating the dispersion parameter given a known population size 
 (Figure \ref{fig:estim}B). However, attempting to estimate both parameters at the same
 time performed significantly less well (Figures \ref{fig:estim}C and D). 
-To illustrate the cause of this, we consider a simulation for which the true $N_t$ was 200
-and the true $r$ was 0.5, and we construct the likelihood surface (Figure \ref{fig:estim}E).
-This shows a strong inverse tradeoff between the two parameters, which explains why
-one can be estimated given the other, but not jointly.
+To illustrate the cause of this, we consider a simulation for which the true 
+parameters were $N_t=200$ and $r=0.5$, 
+and we construct the likelihood surface (Figure \ref{fig:estim}E).
+This shows a strong inverse tradeoff between the two parameters, which is
+why it is harder to infer both parameters jointly.
 
 \section{Implementation}
 
@@ -679,28 +710,67 @@ The R package \verb+ape+ was used to store, manipulate and visualise phylogeneti
 
 \section{Discussion}
 
-The omega-coalescent could be extended to allow temporally offset leaves 
-following work on the coalescent \citep{Drummond2003} and the beta-coalescent
-\citep{Hoscheit2019}.
-It could also be defined in a varying population size 
-following the same approach as previously described for
+We have described an ancestral process for infectious diseases
+which is relevant to analysis of outbreaks of a relatively small size,
+and to diseases with high transmission heterogeneity.
+This process can be incorporated into a new lambda-coalescent
+which we called the omega-coalescent. We only considered the
+situation where all samples are taken at the same time, but
+the omega-coalescent could be extended to allow temporally offset leaves 
+following similar work on the coalescent \citep{Drummond2003} and the beta-coalescent \citep{Hoscheit2019}.
+We also made the simplifying assumption of a constant population size,
+but this could be relaxed 
+following the same approach as previously described for integrating variable population size into
 the coalescent \citep{Griffiths1994,Pybus2000,Ho2011skylinereview} and the beta-coalescent \citep{Hoscheit2019,zhangMultipleMergerCoalescent2024}.
-This could be even more useful for the omega-coalescent than for the beta-coalescent
-since in the omega-coalescent the probability of multimerger events of various size
-depends explicitly on the population size (see for example Figure \ref{fig:compare}).
+Allowing the population size to vary could be especially useful for the omega-coalescent
+for several reasons. Firstly, since it is aimed at relatively small outbreaks, it is likely that
+their sizes varies significantly. Secondly, 
+the probability of multimerger events of various sizes
+depends explicitly on the population size in Equation \eqref{eq:NegBinExclusiveProb}.
+Changes in population size will therefore have an effect on the distribution of
+events observed, as can be seen for example in Figure \ref{fig:compare}.
+Thirdly, joint inference of a varying population size could help break the otherwise
+difficult joint inference of a fixed population size with the dispersion parameter 
+(Figure \ref{fig:estim}).
 
-We compared the omega-coalescent only to the beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} but 
-it could also be compared to
-the Dirac coalescent aka psi-coalescent \citep{eldonCoalescentProcessesWhen2006},
+We compared the omega-coalescent only to the beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} in Figure \ref{fig:compare}
+as it is the model that has been most frequently used for infectious diseases
+\citep{Hoscheit2019,Menardo2021,Helekal2024}.
+Several other lambda-coalescent models have been proposed previously, such as 
+the Dirac coalescent \citep{eldonCoalescentProcessesWhen2006},
 the Durrett-Schweinsberg coalescent \citep{Durrett2005a} or the
-extended Beta-coalescent \citep{Helekal2024}.
-
-The xi-coalescent models admit multiple 
+extended Beta-coalescent \citep{Helekal2024}. However, none of these models
+is equivalent to the omega-coalescent model. Indeed these previously
+described lambda-coalescent model are mostly
+concerned with situations where an individual can be the father of a significant
+portion of a population in spite of the population being large, rather than 
+small populations with superspreading as we modelled here.
+The xi-coalescent models are extensions to the lambda-coalescent models that admit multiple 
 simultaneous mergers \citep{schweinsbergCoalescentsSimultaneousMultiple2000}.
+This is clearly relevant to our basic discrete time model for small outbreaks,
+since in small populations it is quite likely that separate subsets of individuals
+have the same infector in the previous generation. 
+However the exact timing of ancestry events is never available so that we
+must rely on ancestral dating estimation with no notion of event
+co-occurrence \citep{Volz2017,Didelot2018,Bouckaert2019,Helekal2024}. 
+Instead we introduced a 
+continuous time approximation in Equation \ref{eq:omega} so that ancestry events 
+do not co-occur. 
 
-Difference between transmission tree and phylogenetic tree \citep{Jombart2011}. 
-Modelling within-host evolution to bridge the gap \citep{Didelot2014,Hall2015,Didelot2017}.
-Superspreading individuals vs superspreading events \citep{Riley2003,Wallinga2004,hoAccountingPotentialOverdispersion2023}.
+Finally, it should be noted that our model describes the transmission tree during
+an outbreak, which is different from a phylogeny \citep{Jombart2011}. 
+This difference is often ignored and in some settings it might be appropriate to do so,
+but not always. Consequently, some
+previous studies have used models of within-host evolution to bridge
+the gap between transmission and phylogenetic trees
+\citep{Didelot2014,Hall2015,Didelot2017}. However, these models assume
+that each transmission event happens independently from one infector
+to each of its infectees. This is not necessarily true especially when considering
+superspreading events in which many individuals can become infected
+simultaneously \citep{Riley2003,Wallinga2004,hoAccountingPotentialOverdispersion2023}.
+In conclusion, we have described a new ancestral model for infectious disease
+outbreak, which we hope will be useful especially in settings where 
+the outbreaks are small or in the presence of high transmission heterogeneity.
 
 \section*{Acknowledgements}
 
