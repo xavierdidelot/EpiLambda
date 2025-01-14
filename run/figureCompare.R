@@ -17,7 +17,7 @@ for (i in 1:12) {
     if (i<=6) nt=10
     if (i>6 && i<=9) nt=20
     if (i>9) nt=30
-    r=c(0.1,1,10)[i%%3+1]
+    r=c(10,0.1,1)[i%%3+1]
     d=omega_psize(n=n,nt=nt,r=r)
     nam=paste0('Omega(Nt=',as.character(nt),',r=',as.character(r),')')
   }
@@ -28,7 +28,7 @@ data$Probability=pmin(0,pmax(-4,log10(data$p)))
 data$alpha=factor(data$alpha,levels=unique(data$alpha))#forces order to remain as input
 pdf('figureCompare.pdf')
 #ggplot(data, aes(k,p,fill=alpha))+geom_bar(stat="identity",position='dodge')+ scale_x_continuous(breaks=seq(2,n,1))+xlab('Size of next event')+ylab('Probability of event')
-ggplot(data, aes(k, alpha, fill=Probability)) + geom_tile()+scale_fill_viridis(limits=limits,breaks=limits[1]:limits[2],labels=c(1e-4,1e-3,1e-2,1e-1,1e0))+
+ggplot(data, aes(k, alpha, fill=Probability)) + geom_tile()+scale_fill_viridis(limits=limits,breaks=limits[1]:limits[2],labels=c('<0.0001','0.001','0.01','0.1','1'))+
   scale_x_continuous(breaks=seq(2,n,1),expand = c(0, 0))+scale_y_discrete(expand = c(0, 0))+xlab('Size of next event')+ylab('')
 dev.off()
 system('open figureCompare.pdf')

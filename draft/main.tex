@@ -581,6 +581,7 @@ a set of $n$ lineages. For any lambda-coalescent this can be computed as:
 
 \begin{equation}
 p(k|n)=\frac{\binom{n}{k}\lambda_{n,k}}{\sum_{i=2}^n \binom{n}{i}\lambda_{n,i}}
+\label{eq:nextsize}
 \end{equation}
 
 \begin{figure}[!p]
@@ -623,6 +624,11 @@ $r=1$ (B), $r=10$ (C) and $r=100$ (D).
 Genealogies can be simulation from the omega-coalescent model 
 defined in Equation \ref{eq:omega} using the same algorithm
 as for other lambda-coalescent models \citep{pitmanCoalescentsMultipleCollisions1999}.
+Given $n$ lineages, the next coalescent event happens after a time that is 
+exponentially distributed with rate $\sum_{i=2}^n \binom{n}{i}\lambda_{n,i}$,
+the size $k$ of this event is drawn according to Equation \refeq{eq:nextsize},
+and the $k$ lineages that coalesce are chosen uniformly amongst the $n$ lineages.
+This process is repeated iteratively until all lineages have coalesced.
 Figure \ref{fig:trees} shows examples of trees simulated for a sample of size $n=20$,
 constant population size $N_t=30$ and dispersion parameter $r \in \{0.1,1,10,100\}$. 
 It is already clear from these single realisations that the lower values of $r$ result
@@ -711,9 +717,9 @@ The R package \verb+ape+ was used to store, manipulate and visualise phylogeneti
 \section{Discussion}
 
 We have described an ancestral process for infectious diseases
-which is relevant to analysis of outbreaks of a relatively small size,
-and to diseases with high transmission heterogeneity.
-This process can be incorporated into a new lambda-coalescent
+which is relevant to the analysis of outbreaks of a relatively small size,
+and to diseases with transmission heterogeneity.
+We have shown how this process can be incorporated into a new lambda-coalescent
 which we called the omega-coalescent. We only considered the
 situation where all samples are taken at the same time, but
 the omega-coalescent could be extended to allow temporally offset leaves 
@@ -741,10 +747,10 @@ the Dirac coalescent \citep{eldonCoalescentProcessesWhen2006},
 the Durrett-Schweinsberg coalescent \citep{Durrett2005a} or the
 extended Beta-coalescent \citep{Helekal2024}. However, none of these models
 is equivalent to the omega-coalescent model. Indeed these previously
-described lambda-coalescent model are mostly
+described lambda-coalescent models are mostly
 concerned with situations where an individual can be the father of a significant
-portion of a population in spite of the population being large, rather than 
-small populations with superspreading as we modelled here.
+portion of a population in spite of the population being large, as opposed to the 
+small populations with superspreading we considered here.
 The xi-coalescent models are extensions to the lambda-coalescent models that admit multiple 
 simultaneous mergers \citep{schweinsbergCoalescentsSimultaneousMultiple2000}.
 This is clearly relevant to our basic discrete time model for small outbreaks,
@@ -753,7 +759,7 @@ have the same infector in the previous generation.
 However the exact timing of ancestry events is never available so that we
 must rely on ancestral dating estimation with no notion of event
 co-occurrence \citep{Volz2017,Didelot2018,Bouckaert2019,Helekal2024}. 
-Instead we introduced a 
+We therefore introduced a 
 continuous time approximation in Equation \ref{eq:omega} so that ancestry events 
 do not co-occur. 
 
@@ -769,7 +775,7 @@ to each of its infectees. This is not necessarily true especially when consideri
 superspreading events in which many individuals can become infected
 simultaneously \citep{Riley2003,Wallinga2004,hoAccountingPotentialOverdispersion2023}.
 In conclusion, we have described a new ancestral model for infectious disease
-outbreak, which we hope will be useful especially in settings where 
+outbreaks, which we hope will be useful especially in settings where 
 the outbreaks are small or in the presence of high transmission heterogeneity.
 
 \section*{Acknowledgements}
