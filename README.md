@@ -31,7 +31,7 @@ size 20 in a population of size 40:
 t=omega_simtree(n=20,nt=40,r=0.5)
 plot(t)
 axisPhylo(1)
-title(xlab='Generations since present')
+title(xlab='Time before present')
 ```
 
 ![](man/figures/unnamed-chunk-3-1.png)<!-- -->

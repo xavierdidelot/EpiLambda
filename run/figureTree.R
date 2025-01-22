@@ -8,7 +8,7 @@ ps=list()
 rs=c(0.1,1,10,100)
 for (i in 1:4) {
   t=omega_simtree(n=20,nt=30,r=rs[i])
-  p <- ggtree(t) + theme_tree2() + scale_x_continuous(labels = abs)+ geom_tiplab()+xlab("Generations before present")
+  p <- ggtree(t) + theme_tree2() + scale_x_continuous(labels = abs)+ geom_tiplab()+xlab("Time before present")
   p = revts(p)
   ps[[i]]=p
 }

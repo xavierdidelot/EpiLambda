@@ -19,7 +19,7 @@ for (i in 1:12) {
     if (i>9) nt=30
     r=c(10,0.1,1)[i%%3+1]
     d=omega_psize(n=n,nt=nt,r=r)
-    nam=paste0('Omega(Nt=',as.character(nt),',r=',as.character(r),')')
+    nam=paste0('Omega(N=',as.character(nt),',r=',as.character(r),')')
   }
   data=rbind(data.frame(k=2:n,alpha=nam,i=i,p=d[1:(n-1)]),data)
 }

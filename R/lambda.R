@@ -135,7 +135,7 @@ beta_loglik=function(t,alpha) {
 #' @export
 #'
 omega_simtree=function(n,nt,r) {
-  lambda=function(n,k) return(-log1p(-negbin_exclusive(k=k,n=n,nt=nt,r=r)))
+  lambda=function(n,k) return(negbin_exclusive(k=k,n=n,nt=nt,r=r))
   lambda_simtree(n,lambda)
 }
 
@@ -162,7 +162,7 @@ beta_mle=function(t) {
 #' @export
 #
 omega_psize=function(n,nt,r) {
-  lambda=function(n,k) return(-log1p(-negbin_exclusive(k=k,n=n,nt=nt,r=r)))
+  lambda=function(n,k) return(negbin_exclusive(k=k,n=n,nt=nt,r=r))
   v=lambda(n,k=2:n)*choose(n,2:n)
   v=v/sum(v)
   return(v)
@@ -178,7 +178,7 @@ omega_psize=function(n,nt,r) {
 #' @export
 #'
 omega_loglik=function(t,nt,r) {
-  lambda=function(n,k) return(-log1p(-negbin_exclusive(k=k,n=n,nt=nt,r=r)))
+  lambda=function(n,k) return(negbin_exclusive(k=k,n=n,nt=nt,r=r))
   lambda_loglik(t,lambda)
 }
 

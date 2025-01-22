@@ -1,4 +1,4 @@
-\documentclass{article}
+ \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage[top=3cm, bottom=3cm, left=3cm,right=3cm]{geometry}
 %\usepackage[numbers,round]{natbib}
@@ -557,22 +557,36 @@ and $\alpha=0$ for which the phylogeny is always star-shaped.
 We now define a new lambda-coalescent based on the Negative-Binomial case described previously. We call this new lambda-coalescent model the omega-coalescent (where omega stands
 for outbreak).
 For ease of comparison with other coalescent models, we consider that time is continuous
-and that the population size remains constant equal to $N_t$. 
+and that the population size remains constant equal to $N_t=N$. 
 The exclusive coalescent probability $p_{n,k,t}(N_t, N_{t+1})$ in the Negative-Binomial case 
 given by Equation \eqref{eq:NegBinExclusiveProb} can be used to determine the corresponding 
 rate of the  omega-coalescent, if we consider that the probability of each event in discrete time
-is the result of the event happening at a constant rate in continuous time: 
+is equal to the constant rate of this event happening in continuous time: 
 \begin{equation}
-\lambda_{n,k}=-\mathrm{log}(1-p_{n,k,t}(N_t, N_{t+1}))
+\lambda_{n,k}=p_{n,k,t}(N_t=N, N_{t+1}=N)=\frac{N \mathrm{B}(k+r, n-k+N r-r)}{\mathrm{B}(r, N r-r)}
 \label{eq:omega}
 \end{equation}
 
-Note that this equation implies that time is measured
-continuously in number of transmission generations. 
+Note that this equation implies that continuous time is measured
+approximately in number of transmission generations. 
 For example to measure time in decimal days instead, the time scale
 would need to be multiplied by the mean of the generation time 
 distribution measured in days \citep{Svensson2007}.
-The omega-coalescent has two parameters: the constant population size $N_t$ and
+
+For a lambda-coalescent model to be consistent, 
+when a multiple merger of size $k$ amongst $n$ lineages occurs, if 
+an additional lineage is revealed it must either take part in the multiple merger or 
+remain unaffected \citep{berestyckiRecentProgressCoalescent2009}.
+This implies that the rates must satisfy: 
+\begin{equation}
+\lambda_{n,k}=\lambda_{n+1,k}+\lambda_{n+1,k+1}
+\label{eq:consistency}
+\end{equation}
+This consistency property is easily verified for the beta-coalescent in Equation \eqref{eq:beta}
+and likewise for the omega-coalescent in Equation \eqref{eq:omega}, in both
+cases using recursive properties of the Beta functions used in the respective definitions.
+
+The omega-coalescent has two parameters: the constant population size $N$ and
 the dispersion parameter $r$. 
 In order to compare the omega-coalescent defined in Equation \eqref{eq:omega}
 with other models such as the beta-coalescent defined in Equation \eqref{eq:beta}, we consider 
@@ -596,12 +610,12 @@ with various parameters.
 
 Figure \ref{fig:compare} compares this distribution for $n=10$ in the beta-coalescent with 
 parameter $\alpha \in \{0.5,1,1.5\}$ and for the omega-coalescent with parameters
-$N_t \in \{10,20,30\}$ and $r \in \{0.1,1,10\}$. In the beta-coalescent, the distribution
+$N \in \{10,20,30\}$ and $r \in \{0.1,1,10\}$. In the beta-coalescent, the distribution
 shifts towards more larger multimerger events as the parameter $\alpha$ decreases.
 In the omega-coalescent a wider range of behaviours is obtained when varying the two parameters
-$N_t$ and $r$. For a given value of $N_t$, decreasing the value of $r$ results in more
+$N$ and $r$. For a given value of $N$, decreasing the value of $r$ results in more
 larger events. Conversely, for a given value of $r$ we can see that increasing the
-value of $N_t$ reduces the probability of larger events.
+value of $N$ reduces the probability of larger events.
 
 \begin{figure}[!p]
 \begin{center}
@@ -630,7 +644,7 @@ the size $k$ of this event is drawn according to Equation \refeq{eq:nextsize},
 and the $k$ lineages that coalesce are chosen uniformly amongst the $n$ lineages.
 This process is repeated iteratively until all lineages have coalesced.
 Figure \ref{fig:trees} shows examples of trees simulated for a sample of size $n=20$,
-constant population size $N_t=30$ and dispersion parameter $r \in \{0.1,1,10,100\}$. 
+constant population size $N=30$ and dispersion parameter $r \in \{0.1,1,10,100\}$. 
 It is already clear from these single realisations that the lower values of $r$ result
 in trees with more larger multimerger events and lower time to the most recent common ancestor,
 but to quantify these properties we need to consider many trees.
@@ -673,7 +687,7 @@ Here however we focus on estimation under the omega-coalescent model,
 where the $\lambda_{n,k}$ terms are given by Equation \eqref{eq:omega}.
 There are therefore two parameters to estimate which have direct and important 
 biological meaning:
-the effective population size $N_t$ (which remains constant) and the dispersion
+the effective population size $N$ (which remains constant) and the dispersion
 parameter $r$ of the Negative-Binomial offspring distribution. 
 We perform estimation simply by maximising the likelihood in Equation \eqref{eq:likelihood},
 using the Brent algorithm \citep{brent1971algorithm} when estimating a single parameter
@@ -692,7 +706,7 @@ of both parameters.
 \end{figure}
 
 We simulated 100 genealogies from the omega-coalescent model each of which had
-$n=100$ leaves, with parameter $N_t$ drawn uniformly at random between 100 and 500
+$n=100$ leaves, with parameter $N$ drawn uniformly at random between 100 and 500
 and parameter $r$ drawn uniformly at random between 0.01 and 2.
 If we assume knowledge of the dispersion parameter, then estimating the population size 
 works really well (Figure \ref{fig:estim}A). Conversely we obtain good result when 
@@ -700,7 +714,7 @@ estimating the dispersion parameter given a known population size
 (Figure \ref{fig:estim}B). However, attempting to estimate both parameters at the same
 time performed significantly less well (Figures \ref{fig:estim}C and D). 
 To illustrate the cause of this, we consider a simulation for which the true 
-parameters were $N_t=200$ and $r=0.5$, 
+parameters were $N=200$ and $r=0.5$, 
 and we construct the likelihood surface (Figure \ref{fig:estim}E).
 This shows a strong inverse tradeoff between the two parameters, which is
 why it is harder to infer both parameters jointly.
