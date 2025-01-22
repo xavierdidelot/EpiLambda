@@ -25,3 +25,9 @@ test_that("Exclusive probabilities add up to one.", {
   n=10;nt=20;k=1:n;expect_equal(sum(pois_exclusive(n=n,k=k,nt=nt)*choose(n-1,k-1)),1)
   n=10;nt=20;k=1:n;expect_equal(sum(negbin_exclusive(n=n,k=k,nt=nt,r=0.1)*choose(n-1,k-1)),1)
 })
+
+test_that("Exclusive probabilities are consistent.", {
+  n=10;k=3;nt=15
+  expect_equal(pois_exclusive(n,k,nt),pois_exclusive(n+1,k,nt)+pois_exclusive(n+1,k+1,nt))
+  expect_equal(negbin_exclusive(n,k,nt,r=0.5),negbin_exclusive(n+1,k,nt,r=0.5)+negbin_exclusive(n+1,k+1,nt,r=0.5))
+})
