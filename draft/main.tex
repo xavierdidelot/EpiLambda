@@ -1,4 +1,4 @@
- \documentclass{article}
+\documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage[top=3cm, bottom=3cm, left=3cm,right=3cm]{geometry}
 %\usepackage[numbers,round]{natbib}
@@ -339,7 +339,11 @@ individuals, in a population of size $N_t=10$, $N_t=20$ or $N_t=30$.
 
 \section{Negative-Binomial offspring distribution case}
 
-In this section we consider that the offspring distribution is $\alpha_t=\text{Negative-Binomial}(r,p)$ with parameters $(r,p)$ set by moment-matching the mean $R_t$ and variance $V_t$ of the offspring distribution
+In this section we consider that the offspring distribution is 
+Negative-Binomial, a distribution often used to model superspreading individuals
+\citep{Lloyd-Smith2005} and which can also be used to model superspreading events 
+\citep{Craddock2025}.
+Let $\alpha_t=\text{Negative-Binomial}(r,p)$ with parameters $(r,p)$ set by moment-matching the mean $R_t$ and variance $V_t$ of the offspring distribution
 which are assumed constant over time.
 The resulting parameters for this distribution are $r=R_t^2/(V_t-R_t)$ and $p=R_t/V_t$.
 In this case, we have:
