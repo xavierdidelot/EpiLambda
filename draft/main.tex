@@ -512,7 +512,8 @@ In the Negative-Binomial case we have $V_t/R_t=1/p=1+R_t/r$ so that Equation \eq
 simplifies to $(r+1)/(N_t r)$ which agrees with our Equation \eqref{eq:negbinapprox}. 
 Conversely, if we substitute the method of moments estimator 
 $r=R_t^2/(V_t-R_t)$
-in Equation \eqref{eq:negbinapprox} we obtain the Equation \eqref{eq:fraser}.
+in Equation \eqref{eq:negbinapprox} we obtain the Equation \eqref{eq:fraser}. 
+[[Do we need to mention simultaneous multiple mergers decaying fast as well or at least mention that they have been neglected? -DH]]
 
 \section{Definition of a new lambda-coalescent model}
 
@@ -722,7 +723,7 @@ parameters were $N=200$ and $r=0.5$,
 and we construct the likelihood surface (Figure \ref{fig:estim}E).
 This shows a strong inverse tradeoff between the two parameters, which is
 why it is harder to infer both parameters jointly.
-
+[[Is it worth mentioning any potential relationship to variance-effective population size of the sorts one gets in cannings type models and similar? This might explain the poor identifiability - DH]]
 \section{Implementation}
 
 We implemented the analytical methods described in this paper in a 
@@ -779,7 +780,10 @@ must rely on ancestral dating estimation with no notion of event
 co-occurrence \citep{Volz2017,Didelot2018,Bouckaert2019,Helekal2024}. 
 We therefore introduced a 
 continuous time approximation in Equation \ref{eq:omega} so that ancestry events 
-do not co-occur. 
+do not co-occur. [[Would it be worth doing an exact simulation and comparing how much of an error there is? In the exact coalescent for WF the most common mergers other than binary are simultaneous binary mergers and 3-mergers. This would presumably lead to an overestimate of the coalescent rate and an underestimate of the variance if neglected.]]
+
+[[UNSURE ABOUT PLACEMENT AND PHRASING -DH]]
+There is a clear relationship between this work and the work of \citep{fu_exact_2006} on the exact coalescent for the Wright-Fisher process. The exact coalescent for the Wright-Fisher corresponds to exact, discrete times genealogies of a finite-size Wright-Fisher process. Unlike this work, multiple simultaneous mergers aren't neglected, population size is assumed to be constant in all rate calculations, and the offspring distribution has a variance of $1$ for all individuals.
 
 Finally, it should be noted that our model describes the transmission tree during
 an outbreak, which is different from a phylogeny \citep{Jombart2011}. 
@@ -803,7 +807,7 @@ We acknowledge funding from the National Institute for Health Research (NIHR) He
 \clearpage
 \bibliographystyle{elsarticle-harv}
 %\bibliography{biblio,/Users/u1775021/all.bib}
-\bibliography{biblio}
+\bibliography{biblio, epilambda}
 
 \end{document}
 
