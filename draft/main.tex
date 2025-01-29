@@ -49,7 +49,7 @@ Xavier Didelot$^{1,2,*}$, David Helekal$^{3}$, Ian Roberts$^{2}$
 $^1$ School of Life Sciences, University of Warwick, Coventry, United Kingdom\\
 $^2$ Department of Statistics, University of Warwick, Coventry, United Kingdom\\
 $^3$ Department of Immunology and Infectious Diseases, Harvard T. H. Chan School of Public Health, Boston, Massachusetts, USA\\
-$^*$ Corresponding author. Tel: 0044 (0)2476 572827. Email: \verb+xavier.didelot@gmail.com+
+$^*$ Corresponding author. Tel: 0044 (0)2476 572827. Email: \verb+xavier.didelot@warwick.ac.uk+
 
 \vspace*{2cm}
 Running title: Ancestry for outbreaks with superspreading
@@ -438,7 +438,7 @@ for both the inclusive (Figure \ref{fig:negbin}B) and the exclusive coalescence
 probabilities (Figure \ref{fig:negbin}C).
 When $r$ is lower the dispersion of the
 offspring distribution increases, so that 
-both the inclusive and exclusive probabilities of larger multimerger events are increased
+both the inclusive and exclusive probabilities of larger multiple merger events are increased
 compared to the Poisson case.
 In particular, when $r=0.1$ we see that the exclusive probability can increase
 with the size of the event considered (Figure \ref{fig:negbin}C). This happens because
@@ -448,18 +448,21 @@ of the ancestor needs to have had at least one sampled offspring.
 
 \section{Limit when the population size is large}
 
-If we consider that the population size $N_t$ is fixed and large, we can show the connections
+Here we consider that the population size $N_t$ is fixed and large, so that 
+we can show the connections
 between our results and several previous studies on the ancestral process of infectious diseases.
 In the Poisson case, from Equations \eqref{eq:PoisInclusiveProb} and \eqref{eq:PoisExclusiveProb} we can see that both inclusive and exclusive probabilities
 are of order $\mathcal{O}(N_t^{1-k})$. We can therefore ignore events with $k>2$
-and retain only the events with $k=2$ which occur with the same inclusive and exclusive
+and retain only the events with $k=2$, which means that there are only binary coalescent events
+and no multiple merger events.
+The binary coalescent events occur with the same inclusive and exclusive
 probabilities:
 \begin{equation}
 p_{2,t}(N_t, N_{t+1})=p_{n,2,t}(N_t, N_{t+1})=\frac{1}{N_t}\label{eq:poissonapprox}
 \end{equation}
 
 For the Negative-Binomial case, from Equations \eqref{eq:NegBinInclusiveProb} and \eqref{eq:NegBinExclusiveProb} we can rewrite using Gamma functions and apply the 
-form of Stirling's equation given in Equation \refeq{eq:stirling} to show that 
+form of Stirling's equation given in Equation \eqref{eq:stirling} to show that 
 once again both inclusive and exclusive probabilities are also of order $\mathcal{O}(N_t^{1-k})$. 
 We can therefore once again ignore events with $k>2$
 and retain only the events with $k=2$ which occur with the same inclusive and 
@@ -512,8 +515,8 @@ In the Negative-Binomial case we have $V_t/R_t=1/p=1+R_t/r$ so that Equation \eq
 simplifies to $(r+1)/(N_t r)$ which agrees with our Equation \eqref{eq:negbinapprox}. 
 Conversely, if we substitute the method of moments estimator 
 $r=R_t^2/(V_t-R_t)$
-in Equation \eqref{eq:negbinapprox} we obtain the Equation \eqref{eq:fraser}. 
-[[Do we need to mention simultaneous multiple mergers decaying fast as well or at least mention that they have been neglected? -DH]]
+in Equation \eqref{eq:negbinapprox} we obtain the Equation \eqref{eq:fraser}
+originally from \citet{Fraser2017}. 
 
 \section{Definition of a new lambda-coalescent model}
 
@@ -521,10 +524,10 @@ The coalescent model \citep{Kingman1982,Kingman1982a} describes the ancestry of 
 evolving according to many forward-in-time models such as the Wright-Fisher model \citep{Wright1931,Fisher1930}, 
 the Moran model \citep{Moran1958} and the Cannings exchangeable model \citep{Cannings1974}.
 Since the coalescent considers a large population in which each individual only has a number of offspring that is small
-compared to the population size, coalescent trees are always binary and do not feature multimergers,
+compared to the population size, coalescent trees are always binary and do not feature multiple mergers,
 making them unsuitable to represent the ancestry of outbreaks considered in this study.
 However, the lambda-coalescent model is an extension of the coalescent model that 
-allows multimergers
+allows multiple mergers
 \citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,donnellyParticleRepresentationsMeasureValued1999}. 
 
 A lambda-coalescent model is defined by a probability measure 
@@ -616,7 +619,7 @@ with various parameters.
 Figure \ref{fig:compare} compares this distribution for $n=10$ in the beta-coalescent with 
 parameter $\alpha \in \{0.5,1,1.5\}$ and for the omega-coalescent with parameters
 $N \in \{10,20,30\}$ and $r \in \{0.1,1,10\}$. In the beta-coalescent, the distribution
-shifts towards more larger multimerger events as the parameter $\alpha$ decreases.
+shifts towards more larger multiple merger events as the parameter $\alpha$ decreases.
 In the omega-coalescent a wider range of behaviours is obtained when varying the two parameters
 $N$ and $r$. For a given value of $N$, decreasing the value of $r$ results in more
 larger events. Conversely, for a given value of $r$ we can see that increasing the
@@ -635,28 +638,28 @@ $r=1$ (B), $r=10$ (C) and $r=100$ (D).
 \begin{center}
 \includegraphics[width=15cm]{../run/figureStats.pdf}
 \end{center}
-\caption{Summary statistics for trees simulated under the omega-coalescent with $r=0.1$, $r=1$, $r=10$ and $r=100$, namely number of multimergers (A) the size of the largest multimerger (B), the time to the most recent common ancestor (C) and the stemminess (D). 
+\caption{Summary statistics for trees simulated under the omega-coalescent with $r=0.1$, $r=1$, $r=10$ and $r=100$, namely number of multiple mergers (A) the size of the largest multiple merger (B), the time to the most recent common ancestor (C) and the stemminess (D). 
 \label{fig:stats}}
 \end{figure}
 
 
 Genealogies can be simulation from the omega-coalescent model 
-defined in Equation \ref{eq:omega} using the same algorithm
+defined in Equation \eqref{eq:omega} using the same algorithm
 as for other lambda-coalescent models \citep{pitmanCoalescentsMultipleCollisions1999}.
 Given $n$ lineages, the next coalescent event happens after a time that is 
 exponentially distributed with rate $\sum_{i=2}^n \binom{n}{i}\lambda_{n,i}$,
-the size $k$ of this event is drawn according to Equation \refeq{eq:nextsize},
+the size $k$ of this event is drawn according to Equation \eqref{eq:nextsize},
 and the $k$ lineages that coalesce are chosen uniformly amongst the $n$ lineages.
 This process is repeated iteratively until all lineages have coalesced.
 Figure \ref{fig:trees} shows examples of trees simulated for a sample of size $n=20$,
 constant population size $N=30$ and dispersion parameter $r \in \{0.1,1,10,100\}$. 
 It is already clear from these single realisations that the lower values of $r$ result
-in trees with more larger multimerger events and lower time to the most recent common ancestor,
+in trees with more larger multiple merger events and lower time to the most recent common ancestor,
 but to quantify these properties we need to consider many trees.
 Figure \ref{fig:stats} shows summary statistics for 10,000 trees simulated in the same conditions
 as the individual trees shown in Figure \ref{fig:trees}. 
 As the dispersion parameter increases from $r=0.1$
-to $r=100$ multimerger events become less and less likely and less large
+to $r=100$ multiple merger events become less and less likely and less large
 (Figure \ref{fig:stats}A and B), and the 
 time to the most recent common ancestor increases
 (Figure \ref{fig:stats}C).
@@ -700,7 +703,7 @@ and the L-BFGS-B algorithm \citep{byrd1995limited} when estimating both paramete
 
 \begin{figure}[!p]
 \begin{center}
-\includegraphics[width=14cm]{../run/figureEstim.pdf}
+\includegraphics[width=13cm]{../run/figureEstim.pdf}
 \end{center}
 \caption{Maximum likelihood estimation of parameters. (A) Estimation of the population
 size given the dispersion parameter. (B) Estimation of the dispersion parameter
@@ -723,7 +726,14 @@ parameters were $N=200$ and $r=0.5$,
 and we construct the likelihood surface (Figure \ref{fig:estim}E).
 This shows a strong inverse tradeoff between the two parameters, which is
 why it is harder to infer both parameters jointly.
-[[Is it worth mentioning any potential relationship to variance-effective population size of the sorts one gets in cannings type models and similar? This might explain the poor identifiability - DH]]
+This poor identifiability is analogous to the situation of a large population following 
+the Cannings models \citep{Cannings1974}. In this case the 
+coalescent process is fully determined by the effective population size 
+$N_\mathrm{e}=N/\sigma^2$ as previously noted \citep{Kingman1982}, where $N$ is the 
+population size and $\sigma^2$ is the variance in the number of offspring. Consequently
+there is a full tradeoff between $N$ and $\sigma^2$, so that the ratio $N_\mathrm{e}$
+can be estimated but not the parameters $N$ and $\sigma^2$ separately.
+
 \section{Implementation}
 
 We implemented the analytical methods described in this paper in a 
@@ -750,7 +760,7 @@ the coalescent \citep{Griffiths1994,Pybus2000,Ho2011skylinereview} and the beta-
 Allowing the population size to vary could be especially useful for the omega-coalescent
 for several reasons. Firstly, since it is aimed at relatively small outbreaks, it is likely that
 their sizes varies significantly. Secondly, 
-the probability of multimerger events of various sizes
+the probability of multiple merger events of various sizes
 depends explicitly on the population size in Equation \eqref{eq:NegBinExclusiveProb}.
 Changes in population size will therefore have an effect on the distribution of
 events observed, as can be seen for example in Figure \ref{fig:compare}.
@@ -779,11 +789,13 @@ However the exact timing of ancestry events is never available so that we
 must rely on ancestral dating estimation with no notion of event
 co-occurrence \citep{Volz2017,Didelot2018,Bouckaert2019,Helekal2024}. 
 We therefore introduced a 
-continuous time approximation in Equation \ref{eq:omega} so that ancestry events 
-do not co-occur. [[Would it be worth doing an exact simulation and comparing how much of an error there is? In the exact coalescent for WF the most common mergers other than binary are simultaneous binary mergers and 3-mergers. This would presumably lead to an overestimate of the coalescent rate and an underestimate of the variance if neglected.]]
-
-[[UNSURE ABOUT PLACEMENT AND PHRASING -DH]]
-There is a clear relationship between this work and the work of \citep{fu_exact_2006} on the exact coalescent for the Wright-Fisher process. The exact coalescent for the Wright-Fisher corresponds to exact, discrete times genealogies of a finite-size Wright-Fisher process. Unlike this work, multiple simultaneous mergers aren't neglected, population size is assumed to be constant in all rate calculations, and the offspring distribution has a variance of $1$ for all individuals.
+continuous time approximation in Equation \eqref{eq:omega} so that ancestry events 
+do not co-occur.
+The exact coalescent process for the discrete time Wright-Fisher process in a small 
+population has been previously described \citep{fu_exact_2006}. 
+It would be difficult however to extend this approach to the more complex
+forward-in-time model we considered here, with variable population size and specific offspring
+distribution, which further justifies our continuous time approximation. 
 
 Finally, it should be noted that our model describes the transmission tree during
 an outbreak, which is different from a phylogeny \citep{Jombart2011}. 
@@ -795,7 +807,7 @@ the gap between transmission and phylogenetic trees
 that each transmission event happens independently from one infector
 to each of its infectees. This is not necessarily true especially when considering
 superspreading events in which many individuals can become infected
-simultaneously \citep{Riley2003,Wallinga2004,hoAccountingPotentialOverdispersion2023}.
+simultaneously \citep{Riley2003,Wallinga2004,hoAccountingPotentialOverdispersion2023,Craddock2025}.
 In conclusion, we have described a new ancestral model for infectious disease
 outbreaks, which we hope will be useful especially in settings where 
 the outbreaks are small or in the presence of high transmission heterogeneity.
