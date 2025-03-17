@@ -55,7 +55,7 @@ $^*$ Corresponding author. Tel: 0044 (0)2476 572827. Email: \verb+xavier.didelot
 Running title: Ancestry for outbreaks with superspreading
 
 \vspace*{2cm}
-Keywords: infectious disease epidemiology modelling; offspring distribution; superspreading; outbreaks; lambda-coalescent model; multiple mergers
+Keywords: infectious disease epidemiology modelling; offspring distribution; superspreading; outbreaks; Lambda-coalescent model; multiple mergers
 
 \newpage
 \section*{Abstract}
@@ -71,9 +71,9 @@ To compute these probabilities requires knowledge of the offspring distribution,
 which determines how many infections each infected individual causes. 
 We consider transmission both without and with superspreading, in the form of a 
 Poisson and a Negative-Binomial offspring distribution, respectively. 
-We show how our results can be incorporated into a new lambda-coalescent model
+We show how our results can be incorporated into a new Lambda-coalescent model
 which allows multiple lineages to coalesce together. 
-We call this new model the omega-coalescent, we compare it
+We call this new model the Omega-coalescent, we compare it
 with previously proposed alternatives, and advocate its use
 in future studies of infectious disease outbreaks.
 
@@ -82,7 +82,7 @@ in future studies of infectious disease outbreaks.
 
 An outbreak of an infectious disease typically starts when a single or a small number
 of infected individuals appear within a susceptible population. Each infected individual
-may come in contact and transmit the disease to each of the susceptible individuals, who will then
+may come in contact with and transmit the disease to each of the susceptible individuals, who will then
 become infected in their turn and spread the disease further. Most mathematical models of infectious diseases
 describe situations where the disease is at an equilibrium, when the number
 of infected individuals is high and/or with a significant part of the population already infected
@@ -131,7 +131,7 @@ offspring distributions that follow a Poisson and a Negative-Binomial distributi
 The main novelty of our approach is that we consider that the overall population size is small,
 but we show that in the limit where the population size is large, our results agree with several previous
 studies \citep{Volz2012a,koelleRatesCoalescenceCommon2012,Fraser2017}.
-Finally, we show how our results can be incorporated into a new lambda-coalescent model 
+Finally, we show how our results can be incorporated into a new Lambda-coalescent model 
 \citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,
 donnellyParticleRepresentationsMeasureValued1999} and compare it with previously
 proposed models.
@@ -197,10 +197,10 @@ The $k$-th falling factorial moments $\mathbb{E} \big[ \frac{S_{t,1}!}{(S_{t,1} 
 Generally, we observe a sample of individuals from each generation rather than the entire population.
 In this case, we are interested in the exclusive coalescence probability $p_{n,k,t}(N_t, N_{t+1})$ that a specific subset of $k$ individuals amongst $n$ sampled individuals arose from a common infector one generation in the past given knowledge of the total population sizes $N_t$ and $N_{t+1}$.
 %
-Let us first assume full knowledge about offspring counts of the individuals at time $N_t$ amongst the sample at time $N_{t+1}$, namely ${\bf x}_t = (x_{t,1}, \dots, x_{t,N_t})$ such that $x_{t,1}+...+x_{t,N_t}=n$. 
+Let us first assume full knowledge about offspring counts of the individuals at time $t$ amongst the sample at time $t+1$, namely ${\bf x}_t = (x_{t,1}, \dots, x_{t,N_t})$ such that $x_{t,1}+...+x_{t,N_t}=n$. 
 Note that $X_{t,i}$ does not follow the same offspring distribution as $S_{t,i}$. We have:
 	\begin{align}
-		p_{n,k,t}({\bf x}_t, N_t)
+		p_{n,k,t}({\bf X}_t={\bf x}_t, N_t)
 			& = \sum_{i=1}^{N_t} \frac{\binom{x_{t,i}}{k}}{\binom{n}{k}} \mathbb{I} \{ x_{t,i} = k \}\nonumber\\
 			& = \sum_{i=1}^{N_t} \frac{x_{t,i}!}{(x_{t,i} - k)!} \frac{(n-k)!}{n!} \mathbb{I} \{ x_{t,i} = k \}
 	\end{align}
@@ -518,7 +518,7 @@ $r=R_t^2/(V_t-R_t)$
 in Equation \eqref{eq:negbinapprox} we obtain the Equation \eqref{eq:fraser}
 originally from \citet{Fraser2017}. 
 
-\section{Definition of a new lambda-coalescent model}
+\section{Definition of a new Lambda-coalescent model}
 
 The coalescent model \citep{Kingman1982,Kingman1982a} describes the ancestry of a sample from a large population 
 evolving according to many forward-in-time models such as the Wright-Fisher model \citep{Wright1931,Fisher1930}, 
@@ -526,11 +526,14 @@ the Moran model \citep{Moran1958} and the Cannings exchangeable model \citep{Can
 Since the coalescent considers a large population in which each individual only has a number of offspring that is small
 compared to the population size, coalescent trees are always binary and do not feature multiple mergers,
 making them unsuitable to represent the ancestry of outbreaks considered in this study.
-However, the lambda-coalescent model is an extension of the coalescent model that 
-allows multiple mergers
+However, if the population size is small in any of the aforementioned forward-in-time
+models, multiple mergers can occur, where more than two sampled individuals
+have the same ancestor. 
+The Lambda-coalescent model is an extension of the coalescent model that 
+allows for such multiple merger events
 \citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,donnellyParticleRepresentationsMeasureValued1999}. 
 
-A lambda-coalescent model is defined by a probability measure 
+A Lambda-coalescent model is defined by a probability measure 
 $\Lambda(\mathrm{d} x)$ on the interval $[0,1]$, from which we deduce
 the rate $\lambda_{n,k}$ at which any subset of $k$ lineages within a set of $n$ observed lineages 
 coalesce:
@@ -539,10 +542,10 @@ coalesce:
     \lambda_{n,k} = \int_{0}^{1}{x^{k-2}(1-x)^{n-k}\,\Lambda(\mathrm{d} x)}\label{eq:lambda}
 \end{equation}
 
-The beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} is a 
-specific type of lambda-coalescent that has been used recently in several studies
+The Beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} is a 
+specific type of Lambda-coalescent that has been used recently in several studies
 analysing genetic data from infectious disease agents \citep{Hoscheit2019,Menardo2021,Helekal2024,zhangMultipleMergerCoalescent2024}.
-The beta-coalescent model 
+The Beta-coalescent model 
 has a single parameter $\alpha \in [0,2]$ and is defined as:
 
 \begin{equation}
@@ -557,18 +560,18 @@ By combining Equations \eqref{eq:lambda} and \eqref{eq:beta0} we deduce that:
 \label{eq:beta}
 \end{equation}
 
-Special cases of the beta-coalescent 
+Special cases of the Beta-coalescent 
 include $\alpha=2$ corresponding to the Kingman coalescent,
 $\alpha=1$ which is known as the Bolthausen-Sznitman coalescent
 and $\alpha=0$ for which the phylogeny is always star-shaped.
 
-We now define a new lambda-coalescent based on the Negative-Binomial case described previously. We call this new lambda-coalescent model the omega-coalescent (where omega stands
+We now define a new Lambda-coalescent based on the Negative-Binomial case described previously. We call this new Lambda-coalescent model the Omega-coalescent (where Omega stands
 for outbreak).
 For ease of comparison with other coalescent models, we consider that time is continuous
 and that the population size remains constant equal to $N_t=N$. 
 The exclusive coalescent probability $p_{n,k,t}(N_t, N_{t+1})$ in the Negative-Binomial case 
 given by Equation \eqref{eq:NegBinExclusiveProb} can be used to determine the corresponding 
-rate of the  omega-coalescent, if we consider that the probability of each event in discrete time
+rate of the  Omega-coalescent, if we consider that the probability of each event in discrete time
 is equal to the constant rate of this event happening in continuous time: 
 \begin{equation}
 \lambda_{n,k}=p_{n,k,t}(N_t=N, N_{t+1}=N)=\frac{N \mathrm{B}(k+r, n-k+N r-r)}{\mathrm{B}(r, N r-r)}
@@ -580,8 +583,14 @@ approximately in number of transmission generations.
 For example to measure time in decimal days instead, the time scale
 would need to be multiplied by the mean of the generation time 
 distribution measured in days \citep{Svensson2007}.
+From Equations \ref{eq:lambda} and \ref{eq:omega} we can deduce the 
+probability measure associated with the Omega-coalescent:
+\begin{equation}
+\Lambda(\mathrm{d}x)=\frac{Nx^{r+1}(1-x)^{Nr-r-1}}{\mathrm{B}(r,Nr-r)}\mathrm{d}x
+\label{eq:omega0}
+\end{equation}
 
-For a lambda-coalescent model to be consistent, 
+For a Lambda-coalescent model to be consistent, 
 when a multiple merger of size $k$ amongst $n$ lineages occurs, if 
 an additional lineage is revealed it must either take part in the multiple merger or 
 remain unaffected \citep{berestyckiRecentProgressCoalescent2009}.
@@ -590,16 +599,16 @@ This implies that the rates must satisfy:
 \lambda_{n,k}=\lambda_{n+1,k}+\lambda_{n+1,k+1}
 \label{eq:consistency}
 \end{equation}
-This consistency property is easily verified for the beta-coalescent in Equation \eqref{eq:beta}
-and likewise for the omega-coalescent in Equation \eqref{eq:omega}, in both
+This consistency property is easily verified for the Beta-coalescent in Equation \eqref{eq:beta}
+and likewise for the Omega-coalescent in Equation \eqref{eq:omega}, in both
 cases using recursive properties of the Beta functions used in the respective definitions.
 
-The omega-coalescent has two parameters: the constant population size $N$ and
+The Omega-coalescent has two parameters: the constant population size $N$ and
 the dispersion parameter $r$. 
-In order to compare the omega-coalescent defined in Equation \eqref{eq:omega}
-with other models such as the beta-coalescent defined in Equation \eqref{eq:beta}, we consider 
+In order to compare the Omega-coalescent defined in Equation \eqref{eq:omega}
+with other models such as the Beta-coalescent defined in Equation \eqref{eq:beta}, we consider 
 the distribution of the size $k$ of the next event among
-a set of $n$ lineages. For any lambda-coalescent this can be computed as:
+a set of $n$ lineages. For any Lambda-coalescent this can be computed as:
 
 \begin{equation}
 p(k|n)=\frac{\binom{n}{k}\lambda_{n,k}}{\sum_{i=2}^n \binom{n}{i}\lambda_{n,i}}
@@ -611,16 +620,16 @@ p(k|n)=\frac{\binom{n}{k}\lambda_{n,k}}{\sum_{i=2}^n \binom{n}{i}\lambda_{n,i}}
 \includegraphics[width=15cm]{../run/figureCompare.pdf}
 \end{center}
 \caption{Distribution of the size of the next event among a set of $n=10$ lineages, 
-compared between the beta-coalescent and the omega-coalescent model 
+compared between the Beta-coalescent and the Omega-coalescent model 
 with various parameters.
 \label{fig:compare}}
 \end{figure}
 
-Figure \ref{fig:compare} compares this distribution for $n=10$ in the beta-coalescent with 
-parameter $\alpha \in \{0.5,1,1.5\}$ and for the omega-coalescent with parameters
-$N \in \{10,20,30\}$ and $r \in \{0.1,1,10\}$. In the beta-coalescent, the distribution
+Figure \ref{fig:compare} compares this distribution for $n=10$ in the Beta-coalescent with 
+parameter $\alpha \in \{0.5,1,1.5\}$ and for the Omega-coalescent with parameters
+$N \in \{10,20,30\}$ and $r \in \{0.1,1,10\}$. In the Beta-coalescent, the distribution
 shifts towards more larger multiple merger events as the parameter $\alpha$ decreases.
-In the omega-coalescent a wider range of behaviours is obtained when varying the two parameters
+In the Omega-coalescent a wider range of behaviours is obtained when varying the two parameters
 $N$ and $r$. For a given value of $N$, decreasing the value of $r$ results in more
 larger events. Conversely, for a given value of $r$ we can see that increasing the
 value of $N$ reduces the probability of larger events.
@@ -629,7 +638,7 @@ value of $N$ reduces the probability of larger events.
 \begin{center}
 \includegraphics[width=15cm]{../run/figureTree.pdf}
 \end{center}
-\caption{Example of trees simulated under the omega-coalescent with $r=0.1$ (A),
+\caption{Example of trees simulated under the Omega-coalescent with $r=0.1$ (A),
 $r=1$ (B), $r=10$ (C) and $r=100$ (D).
 \label{fig:trees}}
 \end{figure}
@@ -638,14 +647,14 @@ $r=1$ (B), $r=10$ (C) and $r=100$ (D).
 \begin{center}
 \includegraphics[width=15cm]{../run/figureStats.pdf}
 \end{center}
-\caption{Summary statistics for trees simulated under the omega-coalescent with $r=0.1$, $r=1$, $r=10$ and $r=100$, namely number of multiple mergers (A) the size of the largest multiple merger (B), the time to the most recent common ancestor (C) and the stemminess (D). 
+\caption{Summary statistics for trees simulated under the Omega-coalescent with $r=0.1$, $r=1$, $r=10$ and $r=100$, namely number of multiple mergers (A) the size of the largest multiple merger (B), the time to the most recent common ancestor (C) and the stemminess (D). 
 \label{fig:stats}}
 \end{figure}
 
 
-Genealogies can be simulation from the omega-coalescent model 
+Genealogies can be simulated from the Omega-coalescent model 
 defined in Equation \eqref{eq:omega} using the same algorithm
-as for other lambda-coalescent models \citep{pitmanCoalescentsMultipleCollisions1999}.
+as for other Lambda-coalescent models \citep{pitmanCoalescentsMultipleCollisions1999}.
 Given $n$ lineages, the next coalescent event happens after a time that is 
 exponentially distributed with rate $\sum_{i=2}^n \binom{n}{i}\lambda_{n,i}$,
 the size $k$ of this event is drawn according to Equation \eqref{eq:nextsize},
@@ -678,7 +687,7 @@ sampling time,
 $t_1,...,t_c$ the times of the coalescent nodes in increasing order and $k_i$ the number
 of lineages coalescing at time $t_i$. The number of lineages existing between
 time $t_{i-1}$ and $t_i$ is then $n_i=n-\sum_{j=1}^{i-1} k_j$.
-Under a lambda-coalescent model, the genealogy $T$ has likelihood:
+Under a Lambda-coalescent model, the genealogy $T$ has likelihood:
 
 \begin{equation}
 p(T|\Lambda)=\prod_{i=1}^{c}\lambda_{n_i,k_i}\exp\left(-\sum_{j=2}^{n_i}\binom{n_i}{j}\lambda_{n_i,j}(t_i-t_{i-1})\right)
@@ -691,7 +700,7 @@ lineages to coalesce within a set of $n_i$.
 Estimating the lambda measure from Equation \eqref{eq:lambda} 
 in general is a difficult problem
 \citep{Koskela2018a,miropinaEstimatingLambdaMeasure2023}.
-Here however we focus on estimation under the omega-coalescent model,
+Here however we focus on estimation under the Omega-coalescent model,
 where the $\lambda_{n,k}$ terms are given by Equation \eqref{eq:omega}.
 There are therefore two parameters to estimate which have direct and important 
 biological meaning:
@@ -713,7 +722,7 @@ of both parameters.
 \label{fig:estim}}
 \end{figure}
 
-We simulated 100 genealogies from the omega-coalescent model each of which had
+We simulated 100 genealogies from the Omega-coalescent model each of which had
 $n=100$ leaves, with parameter $N$ drawn uniformly at random between 100 and 500
 and parameter $r$ drawn uniformly at random between 0.01 and 2.
 If we assume knowledge of the dispersion parameter, then estimating the population size 
@@ -748,16 +757,16 @@ The R package \verb+ape+ was used to store, manipulate and visualise phylogeneti
 We have described an ancestral process for infectious diseases
 which is relevant to the analysis of outbreaks of a relatively small size,
 and to diseases with transmission heterogeneity.
-We have shown how this process can be incorporated into a new lambda-coalescent
-which we called the omega-coalescent. We only considered the
+We have shown how this process can be incorporated into a new Lambda-coalescent
+which we called the Omega-coalescent. We only considered the
 situation where all samples are taken at the same time, but
-the omega-coalescent could be extended to allow temporally offset leaves 
-following similar work on the coalescent \citep{Drummond2003} and the beta-coalescent \citep{Hoscheit2019}.
+the Omega-coalescent could be extended to allow temporally offset leaves 
+following similar work on the coalescent \citep{Drummond2003} and the Beta-coalescent \citep{Hoscheit2019}.
 We also made the simplifying assumption of a constant population size,
 but this could be relaxed 
 following the same approach as previously described for integrating variable population size into
-the coalescent \citep{Griffiths1994,Pybus2000,Ho2011skylinereview} and the beta-coalescent \citep{Hoscheit2019,zhangMultipleMergerCoalescent2024}.
-Allowing the population size to vary could be especially useful for the omega-coalescent
+the coalescent \citep{Griffiths1994,Pybus2000,Ho2011skylinereview} and the Beta-coalescent \citep{Hoscheit2019,zhangMultipleMergerCoalescent2024}.
+Allowing the population size to vary could be especially useful for the Omega-coalescent
 for several reasons. Firstly, since it is aimed at relatively small outbreaks, it is likely that
 their sizes varies significantly. Secondly, 
 the probability of multiple merger events of various sizes
@@ -768,19 +777,19 @@ Thirdly, joint inference of a varying population size could help break the other
 difficult joint inference of a fixed population size with the dispersion parameter 
 (Figure \ref{fig:estim}).
 
-We compared the omega-coalescent only to the beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} in Figure \ref{fig:compare}
+We compared the Omega-coalescent only to the Beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} in Figure \ref{fig:compare}
 as it is the model that has been most frequently used for infectious diseases
 \citep{Hoscheit2019,Menardo2021,Helekal2024}.
-Several other lambda-coalescent models have been proposed previously, such as 
+Several other Lambda-coalescent models have been proposed previously, such as 
 the Dirac coalescent \citep{eldonCoalescentProcessesWhen2006},
 the Durrett-Schweinsberg coalescent \citep{Durrett2005a} or the
 extended Beta-coalescent \citep{Helekal2024}. However, none of these models
-is equivalent to the omega-coalescent model. Indeed these previously
-described lambda-coalescent models are mostly
+is equivalent to the Omega-coalescent model. Indeed these previously
+described Lambda-coalescent models are mostly
 concerned with situations where an individual can be the father of a significant
 portion of a population in spite of the population being large, as opposed to the 
 small populations with superspreading we considered here.
-The xi-coalescent models are extensions to the lambda-coalescent models that admit multiple 
+The xi-coalescent models are extensions to the Lambda-coalescent models that admit multiple 
 simultaneous mergers \citep{schweinsbergCoalescentsSimultaneousMultiple2000}.
 This is clearly relevant to our basic discrete time model for small outbreaks,
 since in small populations it is quite likely that separate subsets of individuals
