@@ -362,7 +362,7 @@ and similarly to the Poisson offspring distribution case we identify that the co
 	\end{align}
 }
 
-\noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$. This is the probability mass function of a Beta-Binomial distribution and therefore we deduce that:
+\noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)=\int t^{x-1} (1-t)^{y-1} \mathrm{d}t$. This is the probability mass function of a Beta-Binomial distribution and therefore we deduce that:
 
 \begin{equation}
 S_{t,1} \bigg| \bigg(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg) \sim \text{Beta-Binomial}(N_{t+1},r, (N_t - 1)r)
@@ -533,7 +533,7 @@ The Lambda-coalescent model is an extension of the coalescent model that
 allows for such multiple merger events
 \citep{pitmanCoalescentsMultipleCollisions1999,sagitovGeneralCoalescentAsynchronous1999,donnellyParticleRepresentationsMeasureValued1999}. 
 
-A Lambda-coalescent model is defined by a probability measure 
+A Lambda-coalescent model is defined by a Lambda measure 
 $\Lambda(\mathrm{d} x)$ on the interval $[0,1]$, from which we deduce
 the rate $\lambda_{n,k}$ at which any subset of $k$ lineages within a set of $n$ observed lineages 
 coalesce:
@@ -584,7 +584,7 @@ For example to measure time in decimal days instead, the time scale
 would need to be multiplied by the mean of the generation time 
 distribution measured in days \citep{Svensson2007}.
 From Equations \ref{eq:lambda} and \ref{eq:omega} we can deduce the 
-probability measure associated with the Omega-coalescent:
+Lambda measure associated with the Omega-coalescent:
 \begin{equation}
 \Lambda(\mathrm{d}x)=\frac{Nx^{r+1}(1-x)^{Nr-r-1}}{\mathrm{B}(r,Nr-r)}\mathrm{d}x
 \label{eq:omega0}
@@ -593,7 +593,7 @@ probability measure associated with the Omega-coalescent:
 For a Lambda-coalescent model to be consistent, 
 when a multiple merger of size $k$ amongst $n$ lineages occurs, if 
 an additional lineage is revealed it must either take part in the multiple merger or 
-remain unaffected \citep{berestyckiRecentProgressCoalescent2009}.
+remain unaffected \citep{berestyckiRecentProgressCoalescent2009,miropinaEstimatingLambdaMeasure2023}.
 This implies that the rates must satisfy: 
 \begin{equation}
 \lambda_{n,k}=\lambda_{n+1,k}+\lambda_{n+1,k+1}
@@ -697,7 +697,7 @@ p(T|\Lambda)=\prod_{i=1}^{c}\lambda_{n_i,k_i}\exp\left(-\sum_{j=2}^{n_i}\binom{n
 Note that in Equation \eqref{eq:likelihood} the term $\binom{n_i}{k_i}$  term from the
 coalescent rate cancels out with its reciprocal from the probability of sampling $k_i$ specific
 lineages to coalesce within a set of $n_i$.
-Estimating the lambda measure from Equation \eqref{eq:lambda} 
+Estimating the Lambda measure from Equation \eqref{eq:lambda} 
 in general is a difficult problem
 \citep{Koskela2018a,miropinaEstimatingLambdaMeasure2023}.
 Here however we focus on estimation under the Omega-coalescent model,
