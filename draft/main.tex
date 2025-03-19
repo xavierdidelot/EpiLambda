@@ -226,7 +226,7 @@ Similarly to the inclusive coalescence probability in Equation \eqref{eq:General
 %Note that $X_{t,i}$ does not follow the same offspring distribution as $S_{t,i}$.
 %$(X_{t,1}, \dots, X_{t, N_t})$ consists of $n$ individuals sampled from generation $t+1$ without replacement - there is no guarantee that all offspring from any given parent are included in the sample.
 
-\subsection{Complementarity of exclusive coalescence probabilities}
+%\subsection{Complementarity of exclusive coalescence probabilities}
 
 If we consider one of the lines observed amongst a set of $n$, it can either remain uncoalesced
 with probability $p_{n,1,t}(N_t, N_{t+1})$ or coalesce in an event of size $k$ with probability $p_{n,k,t}(N_t, N_{t+1})$ with any set of $k-1$ lines among the $n-1$ other lines, leading to the following complementarity equation: 
@@ -235,7 +235,8 @@ with probability $p_{n,1,t}(N_t, N_{t+1})$ or coalesce in an event of size $k$ w
 \sum_{k=1}^n \binom{n-1}{k-1} p_{n,k,t}(N_t, N_{t+1}) =1
 \end{equation}
 
-We can show that it is indeed satisfied by the formula in Equation \eqref{eq:GeneralExclusiveProb}:
+We can show that it is indeed satisfied by the formula in Equation \eqref{eq:GeneralExclusiveProb},
+thus providing a sanity check on this formula:
 
 	\begin{align}
 		\sum_{k=1}^n \binom{n-1}{k-1} p_{n,k,t}(N_t, N_{t+1})
@@ -255,6 +256,7 @@ We can show that it is indeed satisfied by the formula in Equation \eqref{eq:Gen
 			& = \frac{1}{n} \mathbb{E}\left[ \sum_{i=1}^{N_t} X_i \bigg| \sum_{i=1}^{N_t} X_i = n\right] \nonumber\\%\tag{Swap expectation, sum \it (possibly questionable?)} \\
 			& = 1%\frac{n}{N_t}
 	\end{align}
+	
 	
 \section{Poisson offspring distribution case}
 
@@ -312,7 +314,10 @@ the exclusive probability of coalescence for $k$ lines from a sample of $n$ $(n 
 	\begin{equation}
 		p_{n,k,t}(N_t, N_{t+1}) = \frac{(N_t-1)^{n-k}}{N_t^{n-1}}\label{eq:PoisExclusiveProb}
 	\end{equation}
-	
+
+The definitions of the inclusive and exclusive coalescence probabilities imply that the former
+is a special case of the latter, with specifically $p_{k,t}(N_t, N_{t+1})=p_{k,k,t}(N_t, N_{t+1})$
+and this is clearly verified in Equations \eqref{eq:PoisInclusiveProb} and  \eqref{eq:PoisExclusiveProb}.	
 It is interesting to note that neither the inclusive nor the exclusive coalescence probability
 depend on the mean $R_t$ of the Poisson offspring distribution or the size $N_{t+1}$
 of the population at time $t+1$. Both only depend on the population size $N_t$ at time $t$.
@@ -401,6 +406,9 @@ p_{n,k,t}(N_t, N_{t+1})=\frac{N_t \mathrm{B}(k+r, n-k+N_t r-r)}{\mathrm{B}(r, N_
 \label{eq:NegBinExclusiveProb}
 \end{equation}
 
+As for the Poisson case we can check that $p_{k,t}(N_t, N_{t+1})=p_{k,k,t}(N_t, N_{t+1})$
+using the formulas in Equations \eqref{eq:NegBinInclusiveProb} and  \eqref{eq:NegBinExclusiveProb}
+and the definition of the Beta function.	
 It is interesting to note that as for the Poisson case, the inclusive and exclusive coalescence probabilities do not depend on the size $N_{t+1}$ of the population at time $t+1$.
 They both depend on the 
 Negative-Binomial offspring distribution only through the dispersion parameter $r$.
