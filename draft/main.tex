@@ -321,6 +321,10 @@ and this is clearly verified in Equations \eqref{eq:PoisInclusiveProb} and  \eqr
 It is interesting to note that neither the inclusive nor the exclusive coalescence probability
 depend on the mean $R_t$ of the Poisson offspring distribution or the size $N_{t+1}$
 of the population at time $t+1$. Both only depend on the population size $N_t$ at time $t$.
+The intuition behind this result is the same as for the models of \citet{Cannings1974}:
+each individual at time $t+1$ has the same probability of having any ancestor at time $t$,
+irrespective of the population size at time $t+1$ and of the offspring distribution of the ancestors at time $t$,
+as long as they are exchangeable.
 The inclusive coalescent probability in Equation \eqref{eq:PoisInclusiveProb}
 can also be obtained conceptually by considering
 that among the $k$ lines, the first one has an ancestor with probability one, 
@@ -367,7 +371,7 @@ and similarly to the Poisson offspring distribution case we identify that the co
 	\end{align}
 }
 
-\noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)=\int t^{x-1} (1-t)^{y-1} \mathrm{d}t$. This is the probability mass function of a Beta-Binomial distribution and therefore we deduce that:
+\noindent where  $\mathrm{B}(x,y)$ denotes the Beta function defined as $\mathrm{B}(x,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)=\int_0^1 t^{x-1} (1-t)^{y-1} \mathrm{d}t$. This is the probability mass function of a Beta-Binomial distribution and therefore we deduce that:
 
 \begin{equation}
 S_{t,1} \bigg| \bigg(\sum_{i=1}^{N_t} S_{t,i} = N_{t+1} \bigg) \sim \text{Beta-Binomial}(N_{t+1},r, (N_t - 1)r)
@@ -459,6 +463,10 @@ of the ancestor needs to have had at least one sampled offspring.
 Here we consider that the population size $N_t$ is fixed and large, so that 
 we can show the connections
 between our results and several previous studies on the ancestral process of infectious diseases.
+For a population of large size to have multiple merger events, the number of individuals
+contributed by a single parent in the previous generation needs to not be negligibly small compared
+to the population size, so that it is possible for an individual to at least occasionally produce enough 
+offspring to contribute a non-negligible fraction of the population \citep{schweinsbergCoalescentProcessesObtained2003}. 
 In the Poisson case, from Equations \eqref{eq:PoisInclusiveProb} and \eqref{eq:PoisExclusiveProb} we can see that both inclusive and exclusive probabilities
 are of order $\mathcal{O}(N_t^{1-k})$. We can therefore ignore events with $k>2$
 and retain only the events with $k=2$, which means that there are only binary coalescent events
