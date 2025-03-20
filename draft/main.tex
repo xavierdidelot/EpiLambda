@@ -43,12 +43,13 @@
 %Journal target:  Journal of Theoretical Biology? Theoretical Population Biology?
 
 \vspace*{2cm}
-Xavier Didelot$^{1,2,*}$, David Helekal$^{3}$, Ian Roberts$^{2}$
+Xavier Didelot$^{1,2,*}$, David Helekal$^{3}$, Ian Roberts$^{2,4}$
 
 \vspace*{2cm}
 $^1$ School of Life Sciences, University of Warwick, Coventry, United Kingdom\\
 $^2$ Department of Statistics, University of Warwick, Coventry, United Kingdom\\
 $^3$ Department of Immunology and Infectious Diseases, Harvard T. H. Chan School of Public Health, Boston, Massachusetts, USA\\
+$^4$ Pandemic Sciences Institute, University of Oxford, Oxford, United Kingdom\\
 $^*$ Corresponding author. Tel: 0044 (0)2476 572827. Email: \verb+xavier.didelot@warwick.ac.uk+
 
 \vspace*{2cm}
@@ -464,12 +465,16 @@ of the ancestor needs to have had at least one sampled offspring.
 Here we consider that the population size $N_t$ is fixed and large, so that 
 we can show the connections
 between our results and several previous studies on the ancestral process of infectious diseases.
+We only consider the population made of infected individuals, with no representation of infected individuals, 
+so that the notation $N_t$ is consistent with its previous use so far.
 For a population of large size to have multiple merger events, the number of individuals
 contributed by a single parent in the previous generation needs to not be negligibly small compared
 to the population size, so that it is possible for an individual to at least occasionally produce enough 
-offspring to contribute a non-negligible fraction of the population \citep{schweinsbergCoalescentProcessesObtained2003}. 
+offspring to contribute a non-negligible fraction of the population \citep{schweinsbergCoalescentProcessesObtained2003,berestyckiRecentProgressCoalescent2009}. 
 In the Poisson case, from Equations \eqref{eq:PoisInclusiveProb} and \eqref{eq:PoisExclusiveProb} we can see that both inclusive and exclusive probabilities
-are of order $\mathcal{O}(N_t^{1-k})$. We can therefore ignore events with $k>2$
+are of order $\mathcal{O}(N_t^{1-k})$. When time is measured in units scaled by the population size
+as in the standard coalescent model \citep{Kingman1982},
+we can therefore ignore events with $k>2$
 and retain only the events with $k=2$, which means that there are only binary coalescent events
 and no multiple merger events.
 The binary coalescent events occur with the same inclusive and exclusive
@@ -694,8 +699,8 @@ which is defined as the sum of lengths of internal branches divided by the total
 Stemminess is usually taken as a sign of population size dynamics
 \citep{fialaFactorsDeterminingAccuracy1985,Didelot2009d},
 which would be misleading here since all simulations assumed
-a constant population size.
-
+a constant population size. The patterns of summary statistics 
+shown in Figure \ref{fig:stats} for $N=30$ and $n=20$ are consistent across different values of these parameters.
 
 \section{Parameter inference}
 
@@ -780,19 +785,30 @@ situation where all samples are taken at the same time, but
 the Omega-coalescent could be extended to allow temporally offset leaves 
 following similar work on the coalescent \citep{Drummond2003} and the Beta-coalescent \citep{Hoscheit2019}.
 We also made the simplifying assumption of a constant population size,
-but this could be relaxed 
-following the same approach as previously described for integrating variable population size into
-the coalescent \citep{Griffiths1994,Pybus2000,Ho2011skylinereview} and the Beta-coalescent \citep{Hoscheit2019,zhangMultipleMergerCoalescent2024}.
-Allowing the population size to vary could be especially useful for the Omega-coalescent
-for several reasons. Firstly, since it is aimed at relatively small outbreaks, it is likely that
-their sizes varies significantly. Secondly, 
-the probability of multiple merger events of various sizes
+but this choice was motivated by mathematical convenience and simplicity rather than 
+biological realism. 
+Considering the Omega-coalescent with variable population size in future work could be especially important,
+since this model aims to describe relatively small outbreaks, in which the number of infected 
+individuals is likely to vary significantly. 
+For example, in a stochastic version of the 
+Susceptible-Infectious-Susceptible (SIS) or Susceptible-Infectious-Recovered (SIR)
+models with basic reproduction number greater than one,
+the early phase of a new outbreak is expected to show exponential growth,
+with much stochasticity \citep{Allen2008}.
+Furthermore, 
+we showed that the probability of multiple merger events of various sizes
 depends explicitly on the population size in Equation \eqref{eq:NegBinExclusiveProb}.
 Changes in population size will therefore have an effect on the distribution of
 events observed, as can be seen for example in Figure \ref{fig:compare}.
-Thirdly, joint inference of a varying population size could help break the otherwise
-difficult joint inference of a fixed population size with the dispersion parameter 
-(Figure \ref{fig:estim}).
+It should be possible to relax the constant size assumption 
+following the same approach as previously described for integrating variable population size into
+the coalescent \citep{Griffiths1994,Pybus2000,Ho2011skylinereview} and the Beta-coalescent \citep{Hoscheit2019,zhangMultipleMergerCoalescent2024}.
+We showed that it is difficult to jointly infer a fixed population size with the dispersion parameter 
+(Figure \ref{fig:estim}). Bayesian inference with an informative prior on at least one of these two parameters
+could help resolve this situation. Allowing the population size to vary could also help with
+the identifiability of these two parameters, since their tradeoff would not be the same for different
+values of the population size. Investigating the Omega-coalescent with variable population size
+therefore seems a promising avenue for future research.
 
 We compared the Omega-coalescent only to the Beta-coalescent \citep{schweinsbergCoalescentProcessesObtained2003} in Figure \ref{fig:compare}
 as it is the model that has been most frequently used for infectious diseases
